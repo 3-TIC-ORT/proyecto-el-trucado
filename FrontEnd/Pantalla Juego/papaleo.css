@@ -84,3 +84,6 @@ body{
     visibility: hidden;     
     pointer-events: none; 
 }
+.Repartir{
+    margin: 20px;
+}

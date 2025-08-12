@@ -5,7 +5,7 @@ function crearcarta () {
     if (numeropalo == 1){
         palo = "espada"
     }
-    else if (numeropalo == 2){
+    else if (numeropalo == 2){   
         palo = "basto"
     }
     else if (numeropalo == 3){
@@ -22,7 +22,6 @@ function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
     document.getElementById(idcarta).style.backgroundSize = "cover"
 }
-
 
 //Crear cartas no repetidas y asignar imagen solo a las nustras
 let cartas = []
@@ -81,14 +80,14 @@ function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro,
 
 //Establecer el valor Envido y Jerárquico
 function EVNR(numero, palo){
-    valorenvido
+    let valorenvido = 0
     if (numero >= 10) {
         valorenvido = 0 // Los 10 11 y 12 valen 0, por ahora
     } else {
         valorenvido = numero // del 1 al 7 valen su número
     }
 
-    jerarquia = 0
+    let jerarquia = 0
     if (numero == 1 && palo == "espada"){
         jerarquia = 20
     }
@@ -150,7 +149,7 @@ function EVNR(numero, palo){
         jerarquia = 1
     }
 
-    return(valorenvido, jerarquia)
+    return { valorenvido: valorenvido, jerarquia: jerarquia };
 }
 
 
@@ -163,6 +162,7 @@ click1.addEventListener("click", function(){
     if (cartastiradas < 4){
         click1.classList.add("oculto")
         CartasCentro("N", carta1.numero, carta1.palo)
+        let CC1 = EVNR(carta1.numero, carta1.palo)
     }
 })
 click2 = document.getElementById("carta2")
@@ -171,6 +171,7 @@ click2.addEventListener("click", function(){
     if (cartastiradas < 4){
     click2.classList.add("oculto")
     CartasCentro("N", carta2.numero, carta2.palo)
+    let CC2 = EVNR(carta2.numero, carta2.palo)
     }
 })
 click3 = document.getElementById("carta3")
@@ -179,6 +180,7 @@ click3.addEventListener("click", function(){
     if (cartastiradas < 4){
     click3.classList.add("oculto")
     CartasCentro("N", carta3.numero, carta3.palo)
+    let CC3 = EVNR(carta3.numero, carta3.palo)
     }
 })
 click4 = document.getElementById("carta4")
@@ -187,6 +189,7 @@ click4.addEventListener("click", function(){
     if (cartastiradas < 4){
     click4.classList.add("oculto")
     CartasCentro("N", carta4.numero, carta4.palo)
+    let CC4 = EVNR(carta4.numero, carta4.palo)
     }
 })
 click5 = document.getElementById("carta5")
@@ -195,6 +198,7 @@ click5.addEventListener("click", function(){
     if (cartastiradas < 4){
     click5.classList.add("oculto")
     CartasCentro("N", carta5.numero, carta5.palo)
+    let CC5 = EVNR(carta5.numero, carta5.palo)
     }
 })
 
