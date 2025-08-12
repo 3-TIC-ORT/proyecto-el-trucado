@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow: hidden;
+}
+
+/* Barra de Puntaje arriba */
+.marcador {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(117, 10, 10);
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+#nos{
+    margin-left: 10%;
+}
+#ellos{
+    margin-left: 40%;
+}
+.puntaje{
+    height: 20px;
+}
+
+/*Carta del Bot*/
+.cartaoponente{
+    width: 90px;
+    height: 150px;
+    border-radius: 8px;
+    transition: transform 0.5s;
+    margin-left: 10px;
+    border: solid 3px;
+    background-image: url(IMAGENES/Parte\ Trasera\ Cartas.png);
+    background-size: cover;
+    margin-top: 1.5%;
+}
+
+/*Cartas del Jugador*/
+.carta2{
+    width: 90px;
+    height: 150px;
+    border-radius: 8px;
+    transition: transform 0.5s;
+    margin-left: 10px;
+    margin-top: 1%;
+}
+.carta2:hover{
+    transform: scale(1.1);
+    border: solid 3px;   
+}
+
+/*Separacion de las cartal a la izquierda*/
+#carta6{
+    margin-left: 30%;
+}
+#carta1{
+    margin-left: 30%;
+}
+
+.CartasCentro{
+    width: 45px;
+    height: 75px;
+    border-radius: 8px;
+    margin-left: 10px;
+    margin-top: 1%;
+    visibility: hidden
+}
+#CCE1{
+    margin-left: 43.5%;
+}
+#CCN1{
+    margin-left: 43.5%;
+}
+
+/* Clase No Visible y No Tocable */
+.oculto{
+    visibility: hidden;     
+    pointer-events: none; 
+}
