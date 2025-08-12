@@ -19,25 +19,26 @@ function crearcarta () {
 
 //Poner Imagenes a Cartas
 function identificar_cartas (idcarta, numero, palo){
-        document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
-        document.getElementById(idcarta).style.backgroundSize = "cover"
-    }
+    document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
+    document.getElementById(idcarta).style.backgroundSize = "cover"
+}
 
 
 //Crear cartas no repetidas y asignar imagen solo a las nustras
 let cartas = []
 for (let i = 1; i <= 10; i++) {
-  let nuevaCarta = crearcarta()
-  // Mientras haya repetición con alguna carta ya creada
-  while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
-    nuevaCarta = crearcarta()
-  }
-  cartas.push(nuevaCarta)
-  // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
-  if (i <= 10){
-  identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
-  }
+    let nuevaCarta = crearcarta()
+    // Mientras haya repetición con alguna carta ya creada
+    while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
+        nuevaCarta = crearcarta()
+    }
+    cartas.push(nuevaCarta)
+    // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
+    if (i <= 10){
+        identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
+    }
 }
+
 //Cartas Nuestras
 let carta1 = cartas[0]
 let carta2 = cartas[1]
@@ -78,6 +79,79 @@ function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro,
     }
 }
 
+//Establecer el valor Envido y Jerárquico
+function EVNR(numero, palo){
+    valorenvido
+    if (numero >= 10) {
+        valorenvido = 0 // Los 10 11 y 12 valen 0, por ahora
+    } else {
+        valorenvido = numero // del 1 al 7 valen su número
+    }
+
+    jerarquia = 0
+    if (numero == 1 && palo == "espada"){
+        jerarquia = 20
+    }
+    else if (numero == 1 && palo == "basto"){
+        jerarquia = 19
+    }
+    else if (numero == 9 && palo == "espada"){
+        jerarquia = 18
+    }
+    else if (numero == 9 && palo == "oro"){
+        jerarquia = 17
+    }
+    else if (numero == 8 && palo == "espada"){
+        jerarquia = 16
+    }
+    else if (numero == 8 && palo == "oro"){
+        jerarquia = 15
+    }
+    else if (numero == 7 && palo == "espada"){
+        jerarquia = 14
+    }
+    else if (numero == 7 && palo == "oro"){
+        jerarquia = 13
+    }
+    else if (numero == 3){
+        jerarquia = 12
+    }
+    else if (numero == 2){
+        jerarquia = 11
+    }
+    else if (numero == 1 && (palo == "oro" || palo == "copa")){
+        jerarquia = 10
+    }
+    else if (numero == 12){
+        jerarquia = 9
+    }
+    else if (numero == 11){
+        jerarquia = 8
+    }
+    else if (numero == 10){
+        jerarquia = 7
+    }
+    else if (numero == 9 && (palo == "basto" || palo == "copa")){
+        jerarquia = 6
+    }
+    else if (numero == 8 && (palo == "basto" || palo == "copa")){
+        jerarquia = 5
+    }
+    else if (numero == 7 && (palo == "basto" || palo == "copa")){
+        jerarquia = 4
+    }
+    else if (numero == 6){
+        jerarquia = 3
+    }
+    else if (numero == 5){
+        jerarquia = 2
+    }
+    else if (numero == 4){
+        jerarquia = 1
+    }
+
+    return(valorenvido, jerarquia)
+}
 
 
 //Tirar solo 3 Cartas Nosotros
@@ -168,10 +242,6 @@ click10.addEventListener("click", function(){
     CartasCentro("E", carta10.numero, carta10.palo)
     }
 })
-
-
-
-
 
 
 
