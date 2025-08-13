@@ -17,7 +17,7 @@ function crearcarta () {
     return { numero, palo }
 }
 
-//Poner Imagenes a Cartas
+//Función para oner Imagenes a Cartas
 function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
     document.getElementById(idcarta).style.backgroundSize = "cover"
@@ -27,7 +27,7 @@ function identificar_cartas (idcarta, numero, palo){
 let cartas = []
 for (let i = 1; i <= 10; i++) {
     let nuevaCarta = crearcarta()
-    // Mientras haya repetición con alguna carta ya creada
+    // Evitar cartas Repetidas
     while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
         nuevaCarta = crearcarta()
     }
@@ -38,14 +38,14 @@ for (let i = 1; i <= 10; i++) {
     }
 }
 
-//Cartas Nuestras
+//Cartas Nuestras (carta1 - 5)
 let carta1 = cartas[0]
 let carta2 = cartas[1]
 let carta3 = cartas[2]
 let carta4 = cartas[3]
 let carta5 = cartas[4]
 
-//Cartas Bot
+//Cartas Bot (carta6 - 10)
 let carta6 = cartas[5]
 let carta7 = cartas[6]
 let carta8 = cartas[7]
@@ -54,9 +54,8 @@ let carta10 = cartas[9]
 
 
 
-
 //Tirar Cartas en Orden
-function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
+function CartasCentro(quien, numero, palo, cartax) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
     let CartasCentro2 = document.getElementById("CC" + quien + "2")
     let CartasCentro3 = document.getElementById("CC" + quien + "3")
@@ -67,14 +66,20 @@ function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro,
             } else {
                 identificar_cartas("CC" + quien + "3", numero, palo)
                 document.getElementById("CC" + quien + "3").style.visibility = "visible"
+                window["cartamedio3" + quien] = { ...cartax }
+                return window["cartamedio3" + quien]
             }
         } else {
             identificar_cartas("CC" + quien + "2", numero, palo)
             document.getElementById("CC" + quien + "2").style.visibility = "visible"
+            window["cartamedio2" + quien] = { ...cartax }
+            return window["cartamedio2" + quien]
         }
     } else {
         identificar_cartas("CC" + quien + "1", numero, palo)
         document.getElementById("CC" + quien + "1").style.visibility = "visible"
+        window["cartamedio1" + quien] = { ...cartax }
+        return window["cartamedio1" + quien]
     }
 }
 
@@ -153,99 +158,99 @@ function EVNR(numero, palo){
 }
 
 
-//Tirar solo 3 Cartas Nosotros
-let cartastiradas = 0
+let turno = "A" 
+if (turno == "A"){
+    //Tirar solo 3 Cartas Nosotros
+    let cartastiradas = 0
 
-click1 = document.getElementById("carta1")
-click1.addEventListener("click", function(){
-    cartastiradas = cartastiradas + 1
-    if (cartastiradas < 4){
-        click1.classList.add("oculto")
-        CartasCentro("N", carta1.numero, carta1.palo)
-        let CC1 = EVNR(carta1.numero, carta1.palo)
-    }
-})
-click2 = document.getElementById("carta2")
-click2.addEventListener("click", function(){
-    cartastiradas = cartastiradas + 1
-    if (cartastiradas < 4){
-    click2.classList.add("oculto")
-    CartasCentro("N", carta2.numero, carta2.palo)
-    let CC2 = EVNR(carta2.numero, carta2.palo)
-    }
-})
-click3 = document.getElementById("carta3")
-click3.addEventListener("click", function(){
-    cartastiradas = cartastiradas + 1
-    if (cartastiradas < 4){
-    click3.classList.add("oculto")
-    CartasCentro("N", carta3.numero, carta3.palo)
-    let CC3 = EVNR(carta3.numero, carta3.palo)
-    }
-})
-click4 = document.getElementById("carta4")
-click4.addEventListener("click", function(){
-    cartastiradas = cartastiradas + 1
-    if (cartastiradas < 4){
-    click4.classList.add("oculto")
-    CartasCentro("N", carta4.numero, carta4.palo)
-    let CC4 = EVNR(carta4.numero, carta4.palo)
-    }
-})
-click5 = document.getElementById("carta5")
-click5.addEventListener("click", function(){
-    cartastiradas = cartastiradas + 1
-    if (cartastiradas < 4){
-    click5.classList.add("oculto")
-    CartasCentro("N", carta5.numero, carta5.palo)
-    let CC5 = EVNR(carta5.numero, carta5.palo)
-    }
-})
+    click1 = document.getElementById("carta1")
+    click1.addEventListener("click", function(){
+        cartastiradas = cartastiradas + 1
+        if (cartastiradas < 4){
+            click1.classList.add("oculto")
+            CartasCentro("N", carta1.numero, carta1.palo, carta1)
+        }
+    })
+    click2 = document.getElementById("carta2")
+    click2.addEventListener("click", function(){
+        cartastiradas = cartastiradas + 1
+        if (cartastiradas < 4){
+        click2.classList.add("oculto")
+        CartasCentro("N", carta2.numero, carta2.palo, carta2)
+        }
+    })
+    click3 = document.getElementById("carta3")
+    click3.addEventListener("click", function(){
+        cartastiradas = cartastiradas + 1
+        if (cartastiradas < 4){
+        click3.classList.add("oculto")
+        CartasCentro("N", carta3.numero, carta3.palo, carta3)
+        }
+    })
+    click4 = document.getElementById("carta4")
+    click4.addEventListener("click", function(){
+        cartastiradas = cartastiradas + 1
+        if (cartastiradas < 4){
+        click4.classList.add("oculto")
+        CartasCentro("N", carta4.numero, carta4.palo, carta4)
+        }
+    })
+    click5 = document.getElementById("carta5")
+    click5.addEventListener("click", function(){
+        cartastiradas = cartastiradas + 1
+        if (cartastiradas < 4){
+        click5.classList.add("oculto")
+        CartasCentro("N", carta5.numero, carta5.palo, carta5)
+        }
+    })
+}
 
+if (turno == "A"){
+    //Tirar solo 3 Cartas BOT
+    let cartastiro = 0
 
-//Tirar solo 3 Cartas BOT
-let cartastiro = 0
+    click6 = document.getElementById("carta6")
+    click6.addEventListener("click", function(){
+        cartastiro = cartastiro + 1
+        if (cartastiro < 4){
+            click6.classList.add("oculto")
+            CartasCentro("E", carta6.numero, carta6.palo, carta6)
+            }
+    })
+    click7 = document.getElementById("carta7")
+    click7.addEventListener("click", function(){
+        cartastiro = cartastiro + 1
+        if (cartastiro < 4){
+        click7.classList.add("oculto")
+        CartasCentro("E", carta7.numero, carta7.palo, carta7)
+        }
+    })
+    click8 = document.getElementById("carta8")
+    click8.addEventListener("click", function(){
+        cartastiro = cartastiro + 1
+        if (cartastiro < 4){
+        click8.classList.add("oculto")
+        CartasCentro("E", carta8.numero, carta8.palo, carta8)
+        }
+    })
+    click9 = document.getElementById("carta9")
+    click9.addEventListener("click", function(){
+        cartastiro = cartastiro + 1
+        if (cartastiro < 4){
+        click9.classList.add("oculto")
+        CartasCentro("E", carta9.numero, carta9.palo, carta9)
+        }
+    })
+    click10 = document.getElementById("carta10")
+    click10.addEventListener("click", function(){
+        cartastiro = cartastiro + 1
+        if (cartastiro < 4){
+        click10.classList.add("oculto")
+        CartasCentro("E", carta10.numero, carta10.palo, carta10)
+        }
+    })
+}
 
-click6 = document.getElementById("carta6")
-click6.addEventListener("click", function(){
-    cartastiro = cartastiro + 1
-    if (cartastiro < 4){
-        click6.classList.add("oculto")
-        CartasCentro("E", carta6.numero, carta6.palo)
-    }
-})
-click7 = document.getElementById("carta7")
-click7.addEventListener("click", function(){
-    cartastiro = cartastiro + 1
-    if (cartastiro < 4){
-    click7.classList.add("oculto")
-    CartasCentro("E", carta7.numero, carta7.palo)
-    }
-})
-click8 = document.getElementById("carta8")
-click8.addEventListener("click", function(){
-    cartastiro = cartastiro + 1
-    if (cartastiro < 4){
-    click8.classList.add("oculto")
-    CartasCentro("E", carta8.numero, carta8.palo)
-    }
-})
-click9 = document.getElementById("carta9")
-click9.addEventListener("click", function(){
-    cartastiro = cartastiro + 1
-    if (cartastiro < 4){
-    click9.classList.add("oculto")
-    CartasCentro("E", carta9.numero, carta9.palo)
-    }
-})
-click10 = document.getElementById("carta10")
-click10.addEventListener("click", function(){
-    cartastiro = cartastiro + 1
-    if (cartastiro < 4){
-    click10.classList.add("oculto")
-    CartasCentro("E", carta10.numero, carta10.palo)
-    }
-})
 
 
 
