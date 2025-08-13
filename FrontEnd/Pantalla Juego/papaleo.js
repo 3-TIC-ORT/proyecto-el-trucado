@@ -158,11 +158,12 @@ function EVNR(numero, palo){
 }
 
 
-let turno = "A" 
-if (turno == "A"){
+let turno = "A"
+
+if (turno === "A"){
     //Tirar solo 3 Cartas Nosotros
     let cartastiradas = 0
-
+    
     click1 = document.getElementById("carta1")
     click1.addEventListener("click", function(){
         cartastiradas = cartastiradas + 1
@@ -205,10 +206,10 @@ if (turno == "A"){
     })
 }
 
-if (turno == "A"){
+if (turno === "A"){
     //Tirar solo 3 Cartas BOT
     let cartastiro = 0
-
+    
     click6 = document.getElementById("carta6")
     click6.addEventListener("click", function(){
         cartastiro = cartastiro + 1
