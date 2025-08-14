@@ -55,7 +55,7 @@ let carta10 = cartas[9]
 
 
 //Tirar Cartas en Orden
-function CartasCentro(quien, numero, palo, cartax) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
+function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
     let CartasCentro2 = document.getElementById("CC" + quien + "2")
     let CartasCentro3 = document.getElementById("CC" + quien + "3")
@@ -66,20 +66,14 @@ function CartasCentro(quien, numero, palo, cartax) { //quien (N = Nuestras Carta
             } else {
                 identificar_cartas("CC" + quien + "3", numero, palo)
                 document.getElementById("CC" + quien + "3").style.visibility = "visible"
-                window["cartamedio3" + quien] = { ...cartax }
-                return window["cartamedio3" + quien]
             }
         } else {
             identificar_cartas("CC" + quien + "2", numero, palo)
             document.getElementById("CC" + quien + "2").style.visibility = "visible"
-            window["cartamedio2" + quien] = { ...cartax }
-            return window["cartamedio2" + quien]
         }
     } else {
         identificar_cartas("CC" + quien + "1", numero, palo)
         document.getElementById("CC" + quien + "1").style.visibility = "visible"
-        window["cartamedio1" + quien] = { ...cartax }
-        return window["cartamedio1" + quien]
     }
 }
 
@@ -158,18 +152,20 @@ function EVNR(numero, palo){
 }
 
 
-let turno = "A"
 
-if (turno === "A"){
     //Tirar solo 3 Cartas Nosotros
     let cartastiradas = 0
-    
+    let estatscartas
+
     click1 = document.getElementById("carta1")
     click1.addEventListener("click", function(){
         cartastiradas = cartastiradas + 1
         if (cartastiradas < 4){
             click1.classList.add("oculto")
             CartasCentro("N", carta1.numero, carta1.palo, carta1)
+            estatscartas = EVNR(carta1.numero, carta1.palo)
+            carta1.valorenvido = estatscartas.valorenvido
+            carta1.jerarquia = estatscartas.jerarquia
         }
     })
     click2 = document.getElementById("carta2")
@@ -178,6 +174,9 @@ if (turno === "A"){
         if (cartastiradas < 4){
         click2.classList.add("oculto")
         CartasCentro("N", carta2.numero, carta2.palo, carta2)
+        estatscartas = EVNR(carta2.numero, carta2.palo)
+        carta2.valorenvido = estatscartas.valorenvido
+        carta2.jerarquia = estatscartas.jerarquia
         }
     })
     click3 = document.getElementById("carta3")
@@ -186,6 +185,9 @@ if (turno === "A"){
         if (cartastiradas < 4){
         click3.classList.add("oculto")
         CartasCentro("N", carta3.numero, carta3.palo, carta3)
+        estatscartas = EVNR(carta3.numero, carta3.palo)
+        carta3.valorenvido = estatscartas.valorenvido
+        carta3.jerarquia = estatscartas.jerarquia
         }
     })
     click4 = document.getElementById("carta4")
@@ -194,6 +196,9 @@ if (turno === "A"){
         if (cartastiradas < 4){
         click4.classList.add("oculto")
         CartasCentro("N", carta4.numero, carta4.palo, carta4)
+        estatscartas = EVNR(carta4.numero, carta4.palo)
+        carta4.valorenvido = estatscartas.valorenvido
+        carta4.jerarquia = estatscartas.jerarquia
         }
     })
     click5 = document.getElementById("carta5")
@@ -202,11 +207,13 @@ if (turno === "A"){
         if (cartastiradas < 4){
         click5.classList.add("oculto")
         CartasCentro("N", carta5.numero, carta5.palo, carta5)
+        estatscartas = EVNR(carta5.numero, carta5.palo)
+        carta5.valorenvido = estatscartas.valorenvido
+        carta5.jerarquia = estatscartas.jerarquia
         }
     })
-}
 
-if (turno === "A"){
+
     //Tirar solo 3 Cartas BOT
     let cartastiro = 0
     
@@ -216,6 +223,9 @@ if (turno === "A"){
         if (cartastiro < 4){
             click6.classList.add("oculto")
             CartasCentro("E", carta6.numero, carta6.palo, carta6)
+            estatscartas = EVNR(carta6.numero, carta6.palo)
+            carta6.valorenvido = estatscartas.valorenvido
+            carta6.jerarquia = estatscartas.jerarquia
             }
     })
     click7 = document.getElementById("carta7")
@@ -224,6 +234,9 @@ if (turno === "A"){
         if (cartastiro < 4){
         click7.classList.add("oculto")
         CartasCentro("E", carta7.numero, carta7.palo, carta7)
+        estatscartas = EVNR(carta7.numero, carta7.palo)
+        carta7.valorenvido = estatscartas.valorenvido
+        carta7.jerarquia = estatscartas.jerarquia
         }
     })
     click8 = document.getElementById("carta8")
@@ -232,6 +245,9 @@ if (turno === "A"){
         if (cartastiro < 4){
         click8.classList.add("oculto")
         CartasCentro("E", carta8.numero, carta8.palo, carta8)
+        estatscartas = EVNR(carta8.numero, carta8.palo)
+        carta8.valorenvido = estatscartas.valorenvido
+        carta8.jerarquia = estatscartas.jerarquia
         }
     })
     click9 = document.getElementById("carta9")
@@ -240,6 +256,9 @@ if (turno === "A"){
         if (cartastiro < 4){
         click9.classList.add("oculto")
         CartasCentro("E", carta9.numero, carta9.palo, carta9)
+        estatscartas = EVNR(carta9.numero, carta9.palo)
+        carta9.valorenvido = estatscartas.valorenvido
+        carta9.jerarquia = estatscartas.jerarquia
         }
     })
     click10 = document.getElementById("carta10")
@@ -248,9 +267,12 @@ if (turno === "A"){
         if (cartastiro < 4){
         click10.classList.add("oculto")
         CartasCentro("E", carta10.numero, carta10.palo, carta10)
+        estatscartas = EVNR(carta10.numero, carta10.palo)
+        carta10.valorenvido = estatscartas.valorenvido
+        carta10.jerarquia = estatscartas.jerarquia
         }
     })
-}
+
 
 
 
