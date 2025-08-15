@@ -1,5 +1,5 @@
 //Función crear carta Aleatoria
-function crearcarta () {
+function crearcarta() {
     numero = Math.floor(Math.random() * 12) + 1
     numeropalo = Math.floor(Math.random() * 4) + 1
     if (numeropalo == 1){
@@ -156,142 +156,193 @@ function EVNR(numero, palo){
     return { valorenvido: valorenvido, jerarquia: jerarquia };
 }
 
-crearmazo()
 
 
+//Cartas Centro Nosotros
 let CartaCentroN1 = null
 let CartaCentroN2 = null
 let CartaCentroN3 = null
 
-//Tirar solo 3 Cartas Nosotros
-let cartastiradas = 0
-
-function guardarCartaCentroNOS(carta) {
-    if (cartastiradas === 1){
-        CartaCentroN1 = { ...carta }
-    }
-    else if (cartastiradas === 2){
-        CartaCentroN2 = { ...carta }
-    }
-    else if (cartastiradas === 3){
-        CartaCentroN3 = { ...carta }
-    }
-}
-    
-    click1 = document.getElementById("carta1")
-    click1.addEventListener("click", function(){
-        cartastiradas++
-        if (cartastiradas <= 3){
-            click1.classList.add("oculto")
-            CartasCentro("N", carta1.numero, carta1.palo, carta1)
-            guardarCartaCentroNOS(carta1)
-        }
-    })
-    click2 = document.getElementById("carta2")
-    click2.addEventListener("click", function(){
-        cartastiradas++
-        if (cartastiradas <= 3){
-            click2.classList.add("oculto")
-            CartasCentro("N", carta2.numero, carta2.palo, carta2)
-            guardarCartaCentroNOS(carta2)
-        }
-    })
-    click3 = document.getElementById("carta3")
-    click3.addEventListener("click", function(){
-        cartastiradas++
-        if (cartastiradas <= 3){
-            click3.classList.add("oculto")
-            CartasCentro("N", carta3.numero, carta3.palo, carta3)
-            guardarCartaCentroNOS(carta3)
-        }
-    })
-    click4 = document.getElementById("carta4")
-    click4.addEventListener("click", function(){
-        cartastiradas++
-        if (cartastiradas <= 3){
-            click4.classList.add("oculto")
-            CartasCentro("N", carta4.numero, carta4.palo, carta4)
-            guardarCartaCentroNOS(carta4)
-        }
-    })
-    click5 = document.getElementById("carta5")
-    click5.addEventListener("click", function(){
-        cartastiradas++
-        if (cartastiradas <= 3){
-            click5.classList.add("oculto")
-            CartasCentro("N", carta5.numero, carta5.palo, carta5)
-            guardarCartaCentroNOS(carta5)
-        }
-    })
-
-
-
+//Cartas Centro Ellos
 let CartaCentroE1 = null
 let CartaCentroE2 = null
 let CartaCentroE3 = null
 
-//Tirar solo 3 Cartas BOT
-let cartastiro = 0
+crearmazo()
 
-function guardarCartaCentroELLOS(carta) {
-    if (cartastiro === 1){
-        CartaCentroE1 = { ...carta }
+//Tirar solo 3 Cartas Nosotros
+let cartastiradas = 0
+
+//Función que iguala a las cartas del centro a las que se tiran
+function guardarCartaCentro(carta, jugador) { //N = NOSOTROS, E = ELLOS
+    if (jugador === "N"){
+        if (cartastiradas === 1){
+            CartaCentroN1 = { ...carta }
+            alert(CartaCentroN1.numero + " de " + CartaCentroN1.palo + " con una jerarquia de " + CartaCentroN1.jerarquia + " y valor de envido de " + CartaCentroN1.valorenvido)
+        }
+        else if (cartastiradas === 2){
+            CartaCentroN2 = { ...carta }
+            alert(CartaCentroN2.numero + " de " + CartaCentroN2.palo + " con una jerarquia de " + CartaCentroN2.jerarquia + " y valor de envido de " + CartaCentroN2.valorenvido)
+        }
+        else if (cartastiradas === 3){
+            CartaCentroN3 = { ...carta }
+            alert(CartaCentroN3.numero + " de " + CartaCentroN3.palo + " con una jerarquia de " + CartaCentroN3.jerarquia + " y valor de envido de " + CartaCentroN3.valorenvido)
+        }
     }
-    else if (cartastiro === 2){
-        CartaCentroE2 = { ...carta }
-    }
-    else if (cartastiro === 3){
-        CartaCentroE3 = { ...carta }
+    else if (jugador === "E"){
+        if (cartastiro === 1){
+            CartaCentroE1 = { ...carta }
+            alert(CartaCentroE1.numero + " de " + CartaCentroE1.palo + " con una jerarquia de " + CartaCentroE1.jerarquia + " y valor de envido de " + CartaCentroE1.valorenvido)
+        }
+        else if (cartastiro === 2){
+            CartaCentroE2 = { ...carta }
+            alert(CartaCentroE2.numero + " de " + CartaCentroE2.palo + " con una jerarquia de " + CartaCentroE2.jerarquia + " y valor de envido de " + CartaCentroE2.valorenvido)
+        }
+        else if (cartastiro === 3){
+            CartaCentroE3 = { ...carta }
+            alert(CartaCentroE3.numero + " de " + CartaCentroE3.palo + " con una jerarquia de " + CartaCentroE3.jerarquia + " y valor de envido de " + CartaCentroE3.valorenvido)
+        }
     }
 }
+
+//Solo tirar en tu turno
+let turno = "Jugador"
+function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
+    if (turno === "Jugador") {
+        turno = "Bot"
+    } else {
+        turno = "Jugador"
+    }
+    alert("Turno: " + turno)
+}
+
+
+    click1 = document.getElementById("carta1")
+    click1.addEventListener("click", function(){
+        if (turno === "Jugador"){
+            cartastiradas++
+            if (cartastiradas <= 3){
+                click1.classList.add("oculto")
+                CartasCentro("N", carta1.numero, carta1.palo, carta1)
+                guardarCartaCentro(carta1, "N")
+                cambiarTurno()
+            }
+        }
+    })
+    click2 = document.getElementById("carta2")
+    click2.addEventListener("click", function(){
+        if (turno === "Jugador"){
+            cartastiradas++
+            if (cartastiradas <= 3){
+                click2.classList.add("oculto")
+                CartasCentro("N", carta2.numero, carta2.palo, carta2)
+                guardarCartaCentro(carta2, "N")
+                cambiarTurno()
+            }
+        }
+    })
+    click3 = document.getElementById("carta3")
+    click3.addEventListener("click", function(){
+        if (turno === "Jugador"){
+            cartastiradas++
+            if (cartastiradas <= 3){
+                click3.classList.add("oculto")
+                CartasCentro("N", carta3.numero, carta3.palo, carta3)
+                guardarCartaCentro(carta3, "N")
+                cambiarTurno()
+            }
+        }
+    })
+    click4 = document.getElementById("carta4")
+    click4.addEventListener("click", function(){
+        if (turno === "Jugador"){
+            cartastiradas++
+            if (cartastiradas <= 3){
+                click4.classList.add("oculto")
+                CartasCentro("N", carta4.numero, carta4.palo, carta4)
+                guardarCartaCentro(carta4, "N")
+                cambiarTurno()
+            }
+        }
+    })
+    click5 = document.getElementById("carta5")
+    click5.addEventListener("click", function(){
+        if (turno === "Jugador"){
+            cartastiradas++
+            if (cartastiradas <= 3){
+                click5.classList.add("oculto")
+                CartasCentro("N", carta5.numero, carta5.palo, carta5)
+                guardarCartaCentro(carta5, "N")
+                cambiarTurno()
+            }
+        }
+    })
+
+
+
+//Tirar solo 3 Cartas BOT
+let cartastiro = 0
   
     click6 = document.getElementById("carta6")
     click6.addEventListener("click", function(){
-        cartastiro++
-        if (cartastiro <= 3){
-            click6.classList.add("oculto")
-            CartasCentro("E", carta6.numero, carta6.palo, carta6)
-            guardarCartaCentroELLOS(carta6)
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click6.classList.add("oculto")
+                CartasCentro("E", carta6.numero, carta6.palo, carta6)
+                guardarCartaCentro(carta6, "E")
+                cambiarTurno()
             }
+        }
     })
     click7 = document.getElementById("carta7")
     click7.addEventListener("click", function(){
-        cartastiro++
-        if (cartastiro <= 3){
-            click7.classList.add("oculto")
-            CartasCentro("E", carta7.numero, carta7.palo, carta7)
-            guardarCartaCentroELLOS(carta7)
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click7.classList.add("oculto")
+                CartasCentro("E", carta7.numero, carta7.palo, carta7)
+                guardarCartaCentro(carta7, "E")
+                cambiarTurno()
+            }
         }
     })
     click8 = document.getElementById("carta8")
     click8.addEventListener("click", function(){
-        cartastiro++
-        if (cartastiro <= 3){
-            click8.classList.add("oculto")
-            CartasCentro("E", carta8.numero, carta8.palo, carta8)
-            guardarCartaCentroELLOS(carta8)
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click8.classList.add("oculto")
+                CartasCentro("E", carta8.numero, carta8.palo, carta8)
+                guardarCartaCentro(carta8, "E")
+                cambiarTurno()
+            }
         }
     })
     click9 = document.getElementById("carta9")
     click9.addEventListener("click", function(){
-        cartastiro++
-        if (cartastiro <= 3){
-            click9.classList.add("oculto")
-            CartasCentro("E", carta9.numero, carta9.palo, carta9)
-            guardarCartaCentroELLOS(carta9)
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click9.classList.add("oculto")
+                CartasCentro("E", carta9.numero, carta9.palo, carta9)
+                guardarCartaCentro(carta9, "E")
+                cambiarTurno()
+            }
         }
     })
     click10 = document.getElementById("carta10")
     click10.addEventListener("click", function(){
-        cartastiro++
-        if (cartastiro <= 3){
-            click10.classList.add("oculto")
-            CartasCentro("E", carta10.numero, carta10.palo, carta10)
-            guardarCartaCentroELLOS(carta10)
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click10.classList.add("oculto")
+                CartasCentro("E", carta10.numero, carta10.palo, carta10)
+                guardarCartaCentro(carta10, "E" )
+                cambiarTurno()
+            }
         }
     })
-
-
 
 
 //Parte Enc argada de Sumar Puntos
