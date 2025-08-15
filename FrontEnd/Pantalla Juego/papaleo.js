@@ -17,12 +17,14 @@ function crearcarta () {
     return { numero, palo }
 }
 
-//Función para oner Imagenes a Cartas
+//Función para poner Imagenes a Cartas
 function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
     document.getElementById(idcarta).style.backgroundSize = "cover"
 }
 
+//Función que crea las 10 cartas y les pone imagenes
+function crearmazo(){
 //Crear cartas no repetidas y asignar imagen solo a las nustras
 let cartas = []
 for (let i = 1; i <= 10; i++) {
@@ -39,26 +41,26 @@ for (let i = 1; i <= 10; i++) {
 }
 
 //Cartas Nuestras (carta1 - 5)
-let carta1 = cartas[0]
-let carta2 = cartas[1]
-let carta3 = cartas[2]
-let carta4 = cartas[3]
-let carta5 = cartas[4]
+carta1 = cartas[0]
+carta2 = cartas[1]
+carta3 = cartas[2]
+carta4 = cartas[3]
+carta5 = cartas[4]
 
 //Cartas Bot (carta6 - 10)
-let carta6 = cartas[5]
-let carta7 = cartas[6]
-let carta8 = cartas[7]
-let carta9 = cartas[8]
-let carta10 = cartas[9]
-
-
+carta6 = cartas[5]
+carta7 = cartas[6]
+carta8 = cartas[7]
+carta9 = cartas[8]
+carta10 = cartas[9]
+}
 
 //Tirar Cartas en Orden
-function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
+function CartasCentro(quien, numero, palo, cartax) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
     let CartasCentro2 = document.getElementById("CC" + quien + "2")
     let CartasCentro3 = document.getElementById("CC" + quien + "3")
+    let estatscartas
     if (CartasCentro1.style.backgroundImage != "" && CartasCentro1.style.backgroundImage != "none") {
         if (CartasCentro2.style.backgroundImage != "" && CartasCentro2.style.backgroundImage != "none") {
             if (CartasCentro3.style.backgroundImage != "" && CartasCentro3.style.backgroundImage != "none") {
@@ -75,6 +77,9 @@ function CartasCentro(quien, numero, palo) { //quien (N = Nuestras Carta Centro,
         identificar_cartas("CC" + quien + "1", numero, palo)
         document.getElementById("CC" + quien + "1").style.visibility = "visible"
     }
+    estatscartas = EVNR(cartax.numero, cartax.palo)
+    cartax.valorenvido = estatscartas.valorenvido
+    cartax.jerarquia = estatscartas.jerarquia
 }
 
 //Establecer el valor Envido y Jerárquico
@@ -151,140 +156,153 @@ function EVNR(numero, palo){
     return { valorenvido: valorenvido, jerarquia: jerarquia };
 }
 
+crearmazo()
 
 
-    //Tirar solo 3 Cartas Nosotros
-    let cartastiradas = 0
-    let estatscartas
+let CartaCentroN1 = null
+let CartaCentroN2 = null
+let CartaCentroN3 = null
 
+//Tirar solo 3 Cartas Nosotros
+let cartastiradas = 0
+
+function guardarCartaCentroNOS(carta) {
+    if (cartastiradas === 1){
+        CartaCentroN1 = { ...carta }
+    }
+    else if (cartastiradas === 2){
+        CartaCentroN2 = { ...carta }
+    }
+    else if (cartastiradas === 3){
+        CartaCentroN3 = { ...carta }
+    }
+}
+    
     click1 = document.getElementById("carta1")
     click1.addEventListener("click", function(){
-        cartastiradas = cartastiradas + 1
-        if (cartastiradas < 4){
+        cartastiradas++
+        if (cartastiradas <= 3){
             click1.classList.add("oculto")
             CartasCentro("N", carta1.numero, carta1.palo, carta1)
-            estatscartas = EVNR(carta1.numero, carta1.palo)
-            carta1.valorenvido = estatscartas.valorenvido
-            carta1.jerarquia = estatscartas.jerarquia
+            guardarCartaCentroNOS(carta1)
         }
     })
     click2 = document.getElementById("carta2")
     click2.addEventListener("click", function(){
-        cartastiradas = cartastiradas + 1
-        if (cartastiradas < 4){
-        click2.classList.add("oculto")
-        CartasCentro("N", carta2.numero, carta2.palo, carta2)
-        estatscartas = EVNR(carta2.numero, carta2.palo)
-        carta2.valorenvido = estatscartas.valorenvido
-        carta2.jerarquia = estatscartas.jerarquia
+        cartastiradas++
+        if (cartastiradas <= 3){
+            click2.classList.add("oculto")
+            CartasCentro("N", carta2.numero, carta2.palo, carta2)
+            guardarCartaCentroNOS(carta2)
         }
     })
     click3 = document.getElementById("carta3")
     click3.addEventListener("click", function(){
-        cartastiradas = cartastiradas + 1
-        if (cartastiradas < 4){
-        click3.classList.add("oculto")
-        CartasCentro("N", carta3.numero, carta3.palo, carta3)
-        estatscartas = EVNR(carta3.numero, carta3.palo)
-        carta3.valorenvido = estatscartas.valorenvido
-        carta3.jerarquia = estatscartas.jerarquia
+        cartastiradas++
+        if (cartastiradas <= 3){
+            click3.classList.add("oculto")
+            CartasCentro("N", carta3.numero, carta3.palo, carta3)
+            guardarCartaCentroNOS(carta3)
         }
     })
     click4 = document.getElementById("carta4")
     click4.addEventListener("click", function(){
-        cartastiradas = cartastiradas + 1
-        if (cartastiradas < 4){
-        click4.classList.add("oculto")
-        CartasCentro("N", carta4.numero, carta4.palo, carta4)
-        estatscartas = EVNR(carta4.numero, carta4.palo)
-        carta4.valorenvido = estatscartas.valorenvido
-        carta4.jerarquia = estatscartas.jerarquia
+        cartastiradas++
+        if (cartastiradas <= 3){
+            click4.classList.add("oculto")
+            CartasCentro("N", carta4.numero, carta4.palo, carta4)
+            guardarCartaCentroNOS(carta4)
         }
     })
     click5 = document.getElementById("carta5")
     click5.addEventListener("click", function(){
-        cartastiradas = cartastiradas + 1
-        if (cartastiradas < 4){
-        click5.classList.add("oculto")
-        CartasCentro("N", carta5.numero, carta5.palo, carta5)
-        estatscartas = EVNR(carta5.numero, carta5.palo)
-        carta5.valorenvido = estatscartas.valorenvido
-        carta5.jerarquia = estatscartas.jerarquia
+        cartastiradas++
+        if (cartastiradas <= 3){
+            click5.classList.add("oculto")
+            CartasCentro("N", carta5.numero, carta5.palo, carta5)
+            guardarCartaCentroNOS(carta5)
         }
     })
 
 
-    //Tirar solo 3 Cartas BOT
-    let cartastiro = 0
-    
+
+let CartaCentroE1 = null
+let CartaCentroE2 = null
+let CartaCentroE3 = null
+
+//Tirar solo 3 Cartas BOT
+let cartastiro = 0
+
+function guardarCartaCentroELLOS(carta) {
+    if (cartastiro === 1){
+        CartaCentroE1 = { ...carta }
+    }
+    else if (cartastiro === 2){
+        CartaCentroE2 = { ...carta }
+    }
+    else if (cartastiro === 3){
+        CartaCentroE3 = { ...carta }
+    }
+}
+  
     click6 = document.getElementById("carta6")
     click6.addEventListener("click", function(){
-        cartastiro = cartastiro + 1
-        if (cartastiro < 4){
+        cartastiro++
+        if (cartastiro <= 3){
             click6.classList.add("oculto")
             CartasCentro("E", carta6.numero, carta6.palo, carta6)
-            estatscartas = EVNR(carta6.numero, carta6.palo)
-            carta6.valorenvido = estatscartas.valorenvido
-            carta6.jerarquia = estatscartas.jerarquia
+            guardarCartaCentroELLOS(carta6)
             }
     })
     click7 = document.getElementById("carta7")
     click7.addEventListener("click", function(){
-        cartastiro = cartastiro + 1
-        if (cartastiro < 4){
-        click7.classList.add("oculto")
-        CartasCentro("E", carta7.numero, carta7.palo, carta7)
-        estatscartas = EVNR(carta7.numero, carta7.palo)
-        carta7.valorenvido = estatscartas.valorenvido
-        carta7.jerarquia = estatscartas.jerarquia
+        cartastiro++
+        if (cartastiro <= 3){
+            click7.classList.add("oculto")
+            CartasCentro("E", carta7.numero, carta7.palo, carta7)
+            guardarCartaCentroELLOS(carta7)
         }
     })
     click8 = document.getElementById("carta8")
     click8.addEventListener("click", function(){
-        cartastiro = cartastiro + 1
-        if (cartastiro < 4){
-        click8.classList.add("oculto")
-        CartasCentro("E", carta8.numero, carta8.palo, carta8)
-        estatscartas = EVNR(carta8.numero, carta8.palo)
-        carta8.valorenvido = estatscartas.valorenvido
-        carta8.jerarquia = estatscartas.jerarquia
+        cartastiro++
+        if (cartastiro <= 3){
+            click8.classList.add("oculto")
+            CartasCentro("E", carta8.numero, carta8.palo, carta8)
+            guardarCartaCentroELLOS(carta8)
         }
     })
     click9 = document.getElementById("carta9")
     click9.addEventListener("click", function(){
-        cartastiro = cartastiro + 1
-        if (cartastiro < 4){
-        click9.classList.add("oculto")
-        CartasCentro("E", carta9.numero, carta9.palo, carta9)
-        estatscartas = EVNR(carta9.numero, carta9.palo)
-        carta9.valorenvido = estatscartas.valorenvido
-        carta9.jerarquia = estatscartas.jerarquia
+        cartastiro++
+        if (cartastiro <= 3){
+            click9.classList.add("oculto")
+            CartasCentro("E", carta9.numero, carta9.palo, carta9)
+            guardarCartaCentroELLOS(carta9)
         }
     })
     click10 = document.getElementById("carta10")
     click10.addEventListener("click", function(){
-        cartastiro = cartastiro + 1
-        if (cartastiro < 4){
-        click10.classList.add("oculto")
-        CartasCentro("E", carta10.numero, carta10.palo, carta10)
-        estatscartas = EVNR(carta10.numero, carta10.palo)
-        carta10.valorenvido = estatscartas.valorenvido
-        carta10.jerarquia = estatscartas.jerarquia
+        cartastiro++
+        if (cartastiro <= 3){
+            click10.classList.add("oculto")
+            CartasCentro("E", carta10.numero, carta10.palo, carta10)
+            guardarCartaCentroELLOS(carta10)
         }
     })
 
 
 
 
-
-//Parte Encargada de Sumar Puntos
-let puntosAcumulados = {}
+//Parte Enc argada de Sumar Puntos
+let puntosAcumulados = {} //Guarda puntos para despues sumarlos
 if (!puntosAcumulados[id]) {
     puntosAcumulados[id] = 0
 }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
 
+//Función que suma puntos y pone im agenes
 function sumarPuntos(idcarta, sumar){ //el idcarta "NOS" es nuestro puntaje y "ELLOS" es el puntaje del bot
     let puntos = 0
     puntos = puntos + sumar
@@ -380,6 +398,4 @@ function sumarPuntos(idcarta, sumar){ //el idcarta "NOS" es nuestro puntaje y "E
         else {
             img6.src = imagenTransparente
         }
-    
-
 }
