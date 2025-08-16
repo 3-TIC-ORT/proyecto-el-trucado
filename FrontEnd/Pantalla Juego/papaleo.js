@@ -156,7 +156,7 @@ function EVNR(numero, palo){
     return { valorenvido: valorenvido, jerarquia: jerarquia };
 }
 
-
+crearmazo()
 
 //Cartas Centro Nosotros
 let CartaCentroN1 = null
@@ -168,7 +168,7 @@ let CartaCentroE1 = null
 let CartaCentroE2 = null
 let CartaCentroE3 = null
 
-crearmazo()
+
 
 //Tirar solo 3 Cartas Nosotros
 let cartastiradas = 0
@@ -205,15 +205,90 @@ function guardarCartaCentro(carta, jugador) { //N = NOSOTROS, E = ELLOS
     }
 }
 
-//Solo tirar en tu turno
-let turno = "Jugador"
+//Elige quien empieza al azar, 1/2
+function TurnoAzar(){
+    Nturno = Math.floor(Math.random() * 2) + 1
+    if (Nturno === 1){
+        Cturno = "Jugador"
+    }
+    else{
+        Cturno = "Bot"
+    }
+    return (Cturno) 
+}
+
+let turno = TurnoAzar()
+//Texto que dice turno
+let TXTurno = document.getElementById("Turno").textContent = "Turno: " + turno
+
+//Función que revisa y prepara la comparación de cartas
+let rondaCentro = 1  // 1 = revisa N1/E1, 2 = revisa N2/E2, 3 = revisa N3/E3
+function verificarCartas() {
+    if (rondaCentro === 1 && CartaCentroN1 && CartaCentroE1) {
+        CompararCartas(CartaCentroN1, CartaCentroE1)
+        CartaCentroN1 = null
+        CartaCentroE1 = null
+        rondaCentro = 2
+    }
+    else if (rondaCentro === 2 && CartaCentroN2 && CartaCentroE2) {
+        CompararCartas(CartaCentroN2, CartaCentroE2)
+        CartaCentroN2 = null
+        CartaCentroE2 = null
+        rondaCentro = 3
+    }
+    else if (rondaCentro === 3 && CartaCentroN3 && CartaCentroE3) {
+        CompararCartas(CartaCentroN3, CartaCentroE3)
+        CartaCentroN3 = null
+        CartaCentroE3 = null
+        rondaCentro = 1 // vuelve a la primera ronda
+    }
+    else{
+        cambiarTurno()
+    }
+}
+
+//Función que dice que carta ganó
+let N_ganadas = 0
+let E_ganadas = 0
+function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
+    if (carta1.jerarquia > carta2.jerarquia){
+        turno = "Jugador"
+        N_ganadas++
+    }
+    else if (carta2.jerarquia > carta1.jerarquia){
+        turno = "Bot"
+        E_ganadas++
+    }
+    else{
+        E_ganadas = E_ganadas + 0.5
+        N_ganadas = N_ganadas + 0.5
+        cambiarTurno()
+    }
+    alert("Jugador = " + N_ganadas)
+    alert("Bot = " + E_ganadas)
+    if (N_ganadas >= 1.5){
+        alert("Gana Nosotros")
+        sumarPuntos("NOS", 1)
+        N_ganadas = 0
+        crearmazo()
+    }
+    if (E_ganadas >= 1.5){
+        alert("Gana Bot")
+        crearmazo()
+        sumarPuntos("ELLOS", 1)
+        E_ganadas = 0
+    }
+}
+
+
+
+//Cambia el turno
 function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     if (turno === "Jugador") {
         turno = "Bot"
     } else {
         turno = "Jugador"
     }
-    alert("Turno: " + turno)
 }
 
 
@@ -225,7 +300,7 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
                 click1.classList.add("oculto")
                 CartasCentro("N", carta1.numero, carta1.palo, carta1)
                 guardarCartaCentro(carta1, "N")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -237,7 +312,7 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
                 click2.classList.add("oculto")
                 CartasCentro("N", carta2.numero, carta2.palo, carta2)
                 guardarCartaCentro(carta2, "N")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -249,7 +324,7 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
                 click3.classList.add("oculto")
                 CartasCentro("N", carta3.numero, carta3.palo, carta3)
                 guardarCartaCentro(carta3, "N")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -261,7 +336,7 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
                 click4.classList.add("oculto")
                 CartasCentro("N", carta4.numero, carta4.palo, carta4)
                 guardarCartaCentro(carta4, "N")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -273,7 +348,7 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
                 click5.classList.add("oculto")
                 CartasCentro("N", carta5.numero, carta5.palo, carta5)
                 guardarCartaCentro(carta5, "N")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -291,7 +366,7 @@ let cartastiro = 0
                 click6.classList.add("oculto")
                 CartasCentro("E", carta6.numero, carta6.palo, carta6)
                 guardarCartaCentro(carta6, "E")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -303,7 +378,7 @@ let cartastiro = 0
                 click7.classList.add("oculto")
                 CartasCentro("E", carta7.numero, carta7.palo, carta7)
                 guardarCartaCentro(carta7, "E")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -315,7 +390,7 @@ let cartastiro = 0
                 click8.classList.add("oculto")
                 CartasCentro("E", carta8.numero, carta8.palo, carta8)
                 guardarCartaCentro(carta8, "E")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -327,7 +402,7 @@ let cartastiro = 0
                 click9.classList.add("oculto")
                 CartasCentro("E", carta9.numero, carta9.palo, carta9)
                 guardarCartaCentro(carta9, "E")
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
@@ -339,7 +414,7 @@ let cartastiro = 0
                 click10.classList.add("oculto")
                 CartasCentro("E", carta10.numero, carta10.palo, carta10)
                 guardarCartaCentro(carta10, "E" )
-                cambiarTurno()
+                verificarCartas()
             }
         }
     })
