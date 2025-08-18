@@ -1,3 +1,7 @@
+//Variable que sirve para la función de agregar puntos
+let puntosAcumulados = {}; // Guarda puntos acumulados por id
+
+
 //Función crear carta Aleatoria
 function crearcarta() {
     numero = Math.floor(Math.random() * 12) + 1
@@ -214,12 +218,13 @@ function TurnoAzar(){
     else{
         Cturno = "Bot"
     }
-    return (Cturno) 
+    return (Cturno)
 }
 
 let turno = TurnoAzar()
 //Texto que dice turno
-let TXTurno = document.getElementById("Turno").textContent = "Turno: " + turno
+let TXTurno = document.getElementById("Turno")
+TXTurno.textContent = "Turno: " + turno
 
 //Función que revisa y prepara la comparación de cartas
 let rondaCentro = 1  // 1 = revisa N1/E1, 2 = revisa N2/E2, 3 = revisa N3/E3
@@ -253,31 +258,38 @@ let E_ganadas = 0
 function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
     if (carta1.jerarquia > carta2.jerarquia){
         turno = "Jugador"
+        TXTurno.textContent = "Turno: Jugador"
         N_ganadas++
     }
     else if (carta2.jerarquia > carta1.jerarquia){
         turno = "Bot"
+        TXTurno.textContent = "Turno: Bot"
         E_ganadas++
     }
-    else{
+    else if (carta1.jerarquia = carta2.jerarquia){
         E_ganadas = E_ganadas + 0.5
         N_ganadas = N_ganadas + 0.5
         cambiarTurno()
     }
-    alert("Jugador = " + N_ganadas)
-    alert("Bot = " + E_ganadas)
-    if (N_ganadas >= 1.5){
-        alert("Gana Nosotros")
-        sumarPuntos("NOS", 1)
+
+    if (N_ganadas == E_ganadas == 1.5){
+        alert ("Empate")
         N_ganadas = 0
-        crearmazo()
-    }
-    if (E_ganadas >= 1.5){
-        alert("Gana Bot")
-        crearmazo()
-        sumarPuntos("ELLOS", 1)
         E_ganadas = 0
     }
+    else if (N_ganadas >= 1.5){
+        alert("Gana Nosotros")
+        GuardarPuntos("NOS", 1)
+        N_ganadas = 0
+        E_ganadas = 0
+    }
+    else if (E_ganadas >= 1.5){
+        alert("Gana Bot")
+        GuardarPuntos("ELLOS", 1)
+        E_ganadas = 0
+        N_ganadas = 0
+    }
+    
 }
 
 
@@ -289,6 +301,7 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     } else {
         turno = "Jugador"
     }
+    TXTurno.textContent = "Turno: " + turno
 }
 
 
@@ -421,107 +434,42 @@ let cartastiro = 0
 
 
 //Parte Enc argada de Sumar Puntos
-let puntosAcumulados = {} //Guarda puntos para despues sumarlos
-if (!puntosAcumulados[id]) {
-    puntosAcumulados[id] = 0
-}
+//Llamar a esta función para agregar puntos y sumarlos
+function GuardarPuntos(id, sumar) { //
+    if (!puntosAcumulados[id]) {
+        puntosAcumulados[id] = 0
+    }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
 
-//Función que suma puntos y pone im agenes
-function sumarPuntos(idcarta, sumar){ //el idcarta "NOS" es nuestro puntaje y "ELLOS" es el puntaje del bot
-    let puntos = 0
-    puntos = puntos + sumar
-    imagenTransparente = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAuMBgfsCyBYAAAAASUVORK5CYII="
-
-    let img1 = document.getElementById(idcarta + "1")
-    let img2 = document.getElementById(idcarta + "2")
-    let img3 = document.getElementById(idcarta + "3")
-    let img4 = document.getElementById(idcarta + "4")
-    let img5 = document.getElementById(idcarta + "5")
-    let img6 = document.getElementById(idcarta + "6")
-
-    if (puntos > 30) {
-        img6.src = "IMAGENES/Fosforo5.png"
-    }
     
-        let resto = puntos
+}
 
-        // Imagen1
+
+//Función que se encarga de sumar puntos, pero no debe llamarsela directamente
+function sumarPuntos(idcarta, puntos) {
+    let imagenTransparente = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAuMBgfsCyBYAAAAASUVORK5CYII="
+    let imgs = [
+        document.getElementById(idcarta + "1"),
+        document.getElementById(idcarta + "2"),
+        document.getElementById(idcarta + "3"),
+        document.getElementById(idcarta + "4"),
+        document.getElementById(idcarta + "5"),
+        document.getElementById(idcarta + "6"),
+    ]
+    let resto = puntos;
+
+    for (let i = 0; i < 6; i++) {
         if (resto >= 5){
-            img1.src = "IMAGENES/Fosforo5.png"
+            imgs[i].src = "IMAGENES/Fosforo5.png"
             resto -= 5
-        } 
+        }
         else if (resto > 0){
-            img1.src = "IMAGENES/Fosforo" + resto + ".png"
+            imgs[i].src = "IMAGENES/Fosforo" + resto + ".png"
             resto = 0
         }
         else{
-            img1.src = imagenTransparente
+            imgs[i].src = imagenTransparente
         }
-
-        // Imagen 2
-        if (resto >= 5) {
-            img2.src = "IMAGENES/Fosforo5.png"
-            resto -= 5
-        }
-        else if (resto > 0) {
-            img2.src = "IMAGENES/Fosforo" + resto + ".png"
-            resto = 0
-        }
-        else {
-            img2.src = imagenTransparente
-        }
-
-        // Imagen 3
-        if (resto >= 5) {
-            img3.src = "IMAGENES/Fosforo5.png"
-            resto -= 5
-        }
-        else if (resto > 0) {
-            img3.src = "IMAGENES/Fosforo" + resto + ".png"
-            resto = 0
-        }
-        else {
-            img3.src = imagenTransparente
-        }
-
-        // Imagen 4
-        if (resto >= 5) {
-            img4.src = "IMAGENES/Fosforo5.png"
-            resto -= 5
-        }
-        else if (resto > 0) {
-            img4.src = "IMAGENES/Fosforo" + resto + ".png"
-            resto = 0
-        }
-        else {
-            img4.src = imagenTransparente
-        }
-
-        // Imagen 5
-        if (resto >= 5) {
-            img5.src = "IMAGENES/Fosforo5.png"
-            resto -= 5
-        }
-        else if (resto > 0) {
-            img5.src = "IMAGENES/Fosforo" + resto + ".png"
-            resto = 0
-        }
-        else {
-            img5.src = imagenTransparente
-        }
-
-        // Imagen 6
-        if (resto >= 5) {
-            img6.src = "IMAGENES/Fosforo5.png"
-            resto -= 5
-        }
-        else if (resto > 0) {
-            img6.src = "IMAGENES/Fosforo" + resto + ".png"
-            resto = 0
-        }
-        else {
-            img6.src = imagenTransparente
-        }
+    }
 }
