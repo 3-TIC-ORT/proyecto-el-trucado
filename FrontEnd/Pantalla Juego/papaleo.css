@@ -10,23 +10,41 @@ body{
 .marcador {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
-    background: rgb(117, 10, 10);
+    right: 0;
+    height: 100%;
+    background: rgb(99, 5, 5);
     color: white;
     padding: 10px;
     font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
-    align-items: center;
-}
-#nos{
-    margin-left: 10%;
-}
-#ellos{
-    margin-left: 40%;
 }
 .puntaje{
-    height: 20px;
+    height: 70px;
+    margin-top: 10px;
+    position: absolute;
+    margin-left: 5px;
+}
+.linea{
+    height: 100%;
+    width: 10px;
+    margin-top: 0;
+    background-color: rgb(255, 255, 255);
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
+#ellos{
+    margin-right: 20px;
+    font-size: 25px;
+    padding-bottom: 100px;
+    margin-top: 10px;
+}
+#nos{
+    margin-right: 20px;
+    font-size: 25px;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 

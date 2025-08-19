@@ -214,29 +214,23 @@ function guardarCartaCentro(carta, jugador) { //N = NOSOTROS, E = ELLOS
     if (jugador === "N"){
         if (cartastiradas === 1){
             CartaCentroN1 = { ...carta }
-            alert(CartaCentroN1.numero + " de " + CartaCentroN1.palo + " con una jerarquia de " + CartaCentroN1.jerarquia + " y valor de envido de " + CartaCentroN1.valorenvido)
         }
         else if (cartastiradas === 2){
             CartaCentroN2 = { ...carta }
-            alert(CartaCentroN2.numero + " de " + CartaCentroN2.palo + " con una jerarquia de " + CartaCentroN2.jerarquia + " y valor de envido de " + CartaCentroN2.valorenvido)
         }
         else if (cartastiradas === 3){
             CartaCentroN3 = { ...carta }
-            alert(CartaCentroN3.numero + " de " + CartaCentroN3.palo + " con una jerarquia de " + CartaCentroN3.jerarquia + " y valor de envido de " + CartaCentroN3.valorenvido)
         }
     }
     else if (jugador === "E"){
         if (cartastiro === 1){
             CartaCentroE1 = { ...carta }
-            alert(CartaCentroE1.numero + " de " + CartaCentroE1.palo + " con una jerarquia de " + CartaCentroE1.jerarquia + " y valor de envido de " + CartaCentroE1.valorenvido)
         }
         else if (cartastiro === 2){
             CartaCentroE2 = { ...carta }
-            alert(CartaCentroE2.numero + " de " + CartaCentroE2.palo + " con una jerarquia de " + CartaCentroE2.jerarquia + " y valor de envido de " + CartaCentroE2.valorenvido)
         }
         else if (cartastiro === 3){
             CartaCentroE3 = { ...carta }
-            alert(CartaCentroE3.numero + " de " + CartaCentroE3.palo + " con una jerarquia de " + CartaCentroE3.jerarquia + " y valor de envido de " + CartaCentroE3.valorenvido)
         }
     }
 }
@@ -310,12 +304,12 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     }
     else if (N_ganadas >= 1.5){
         alert("Gana Nosotros")
-        GuardarPuntos("NOS", 1)
+        GuardarPuntos("NOS", 5)
         resetearRonda()
     }
     else if (E_ganadas >= 1.5){
         alert("Gana Bot")
-        GuardarPuntos("ELLOS", 1)
+        GuardarPuntos("ELLOS", 5)
         resetearRonda()
     }
     
