@@ -1,7 +1,6 @@
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
 
-
 //Función crear carta Aleatoria
 function crearcarta() {
     numero = Math.floor(Math.random() * 12) + 1
@@ -25,6 +24,39 @@ function crearcarta() {
 function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
     document.getElementById(idcarta).style.backgroundSize = "cover"
+}
+
+//Función que resetea todos los valores de la ronda y llama a crearmazo()
+function resetearRonda() {
+    N_ganadas = 0
+    E_ganadas = 0
+    cartastiradas = 0
+    cartastiro = 0
+    CartaCentroN1 = null
+    CartaCentroN2 = null
+    CartaCentroN3 = null
+    CartaCentroE1 = null
+    CartaCentroE2 = null
+    CartaCentroE3 = null
+    rondaCentro = 1
+
+    // Ocultar cartas del centro
+    for (let i = 1; i <= 3; i++) {
+        document.getElementById("CCN" + i).style.backgroundImage = "none"
+        document.getElementById("CCN" + i).style.visibility = "hidden"
+        document.getElementById("CCE" + i).style.backgroundImage = "none"
+        document.getElementById("CCE" + i).style.visibility = "hidden"
+    }
+
+    // Mostrar nuevamente las cartas de jugador y bot
+    for (let i = 1; i <= 10; i++) {
+        let carta = document.getElementById("carta" + i)
+        carta.classList.remove("oculto")
+    }
+
+    crearmazo()
+    turno = TurnoAzar()
+    TXTurno.textContent = "Turno: " + turno
 }
 
 //Función que crea las 10 cartas y les pone imagenes
@@ -274,20 +306,17 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
 
     if (N_ganadas == E_ganadas == 1.5){
         alert ("Empate")
-        N_ganadas = 0
-        E_ganadas = 0
+        resetearRonda()
     }
     else if (N_ganadas >= 1.5){
         alert("Gana Nosotros")
         GuardarPuntos("NOS", 1)
-        N_ganadas = 0
-        E_ganadas = 0
+        resetearRonda()
     }
     else if (E_ganadas >= 1.5){
         alert("Gana Bot")
         GuardarPuntos("ELLOS", 1)
-        E_ganadas = 0
-        N_ganadas = 0
+        resetearRonda()
     }
     
 }
