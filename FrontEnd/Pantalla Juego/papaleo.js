@@ -304,12 +304,12 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     }
     else if (N_ganadas >= 1.5){
         alert("Gana Nosotros")
-        GuardarPuntos("NOS", 5)
+        GuardarPuntos("NOS", 1)
         resetearRonda()
     }
     else if (E_ganadas >= 1.5){
         alert("Gana Bot")
-        GuardarPuntos("ELLOS", 5)
+        GuardarPuntos("ELLOS", 1)
         resetearRonda()
     }
     
