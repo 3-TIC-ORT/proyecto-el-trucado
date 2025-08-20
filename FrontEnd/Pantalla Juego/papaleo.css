@@ -36,8 +36,8 @@ body{
     background-color: rgb(255, 255, 255);
     margin-right: 20px;
     margin-left: 20px;
-
 }
+/*Conjunto de Imagenes del puntaje*/
 #ellos{
     margin-right: 25px;
     font-size: 25px;
@@ -65,7 +65,6 @@ body{
     margin-top: 50px;
 }
 
-
 /*Cartas del Jugador*/
 .carta2{
     width: 90px;
@@ -74,6 +73,7 @@ body{
     transition: transform 0.5s;
     margin-left: 10px;
     margin-top: 0;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 .carta2:hover{
     transform: scale(1.1);
@@ -100,11 +100,12 @@ body{
     visibility: hidden
 }
 #CCE1{
-    margin-left: 43.5%;
+    margin-left: 40%;
 }
 #CCN1{
-    margin-left: 43.5%;
+    margin-left: 38%;
 }
+
 
 /* Clase No Visible y No Tocable */
 .oculto{
@@ -112,10 +113,42 @@ body{
     pointer-events: none; 
 }
 
+
 /*Texto Turno*/
 #Turno{
+    position: absolute;
     margin-left: 10px;
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
+    color: white;
+    margin:-15px;
+    background-color: rgb(99, 5, 5);
+    padding: 30px;
+    border: solid 5px;
+    border-color: black;
+    border-radius: 20px;
+}
+
+/*Mazo*/
+#Mazo{
+    position: absolute;
+    width: 90px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    margin-left: 200px;
+    margin-top: 100px;
+}
+/*Mate*/
+#Mate{
+    position: absolute;
+    width: 120px;
+    margin-left: 320px;
+    margin-top: 20px;
+}
+/*Don Satur*/
+#Don-Satur{
+    position: absolute;
+    width: 170px;
+    margin-left: 70px;
+    margin-top: 350px;
 }
