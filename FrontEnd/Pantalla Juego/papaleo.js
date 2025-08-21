@@ -297,21 +297,23 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
         N_ganadas = N_ganadas + 0.5
         cambiarTurno()
     }
-
-    if (N_ganadas == E_ganadas == 1.5){
-        alert ("Empate")
-        resetearRonda()
-    }
-    else if (N_ganadas >= 1.5){
-        alert("Gana Nosotros")
-        GuardarPuntos("NOS", 1)
-        resetearRonda()
-    }
-    else if (E_ganadas >= 1.5){
-        alert("Gana Bot")
-        GuardarPuntos("ELLOS", 1)
-        resetearRonda()
-    }
+    setTimeout(function() {
+        if (N_ganadas == E_ganadas == 1.5){
+            alert ("Empate")
+            resetearRonda()
+        }
+        else if (N_ganadas >= 1.5){
+            alert("Gana Nosotros")
+            GuardarPuntos("NOS", 15)
+            resetearRonda()
+        }
+        else if (E_ganadas >= 1.5){
+            alert("Gana Bot")
+            GuardarPuntos("ELLOS", 15)
+            resetearRonda()
+        }
+      }, 500)
+    
     
 }
 
@@ -464,11 +466,13 @@ function GuardarPuntos(id, sumar) { //
     }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
-
-    
+    if (puntosAcumulados[id] >= 30){
+        setTimeout(function() {
+            location.reload()
+        }, 1000)
+        
+    }
 }
-
-
 //Función que se encarga de sumar puntos, pero no debe llamarsela directamente
 function sumarPuntos(idcarta, puntos) {
     let imagenTransparente = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAuMBgfsCyBYAAAAASUVORK5CYII="
