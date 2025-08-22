@@ -133,10 +133,28 @@ body{
 /*Mazo*/
 #Mazo{
     position: absolute;
+    z-index: 2;
     width: 90px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     margin-left: 200px;
     margin-top: 100px;
+    transition: transform 1s;
+}
+#Mazo:hover{
+    transform: translate(-100px, 20px);
+}
+#TEXTO{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    color: white;
+    margin-left: 200px;
+    margin-top: 150px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#Mazo-Texto:hover #TEXTO{
+    display: block;
 }
 /*Mate*/
 #Mate{
