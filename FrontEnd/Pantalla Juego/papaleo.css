@@ -169,3 +169,20 @@ body{
 #Don-Satur:hover{
     transform: scale(1.5) rotate(-30deg);
 }
+
+.BarraInferior{
+    background-color: rgb(99, 5, 5);
+    height: 125px;
+    width: 80%;
+}
+.BarraInferiorBTN{
+    margin: 0;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 60px;
+    margin-left: 90px;
+    background-color: rgb(99, 5, 5);
+    border: solid 10px rgb(133, 133, 2);
+    border-radius: 10px;
+}
