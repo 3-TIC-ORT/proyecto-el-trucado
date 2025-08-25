@@ -30,6 +30,7 @@ function identificar_cartas (idcarta, numero, palo){
 function resetearRonda() {
     N_ganadas = 0
     E_ganadas = 0
+    empatadas = 0
     cartastiradas = 0
     cartastiro = 0
     CartaCentroN1 = null
@@ -55,7 +56,6 @@ function resetearRonda() {
     }
 
     crearmazo()
-    turno = TurnoAzar()
     TXTurno.textContent = "Turno: " + turno
 }
 
@@ -248,6 +248,15 @@ function TurnoAzar(){
 }
 
 let turno = TurnoAzar()
+//Turno de la siguiente partida
+let turnoF
+if (turno === "Jugador"){
+    turnoF = "Bot"
+}
+else if (turno === "Bot"){
+    turnoF = "Jugador"
+}
+
 //Texto que dice turno
 let TXTurno = document.getElementById("Turno")
 TXTurno.textContent = "Turno: " + turno
@@ -281,37 +290,40 @@ function verificarCartas() {
 //Función que dice que carta ganó
 let N_ganadas = 0
 let E_ganadas = 0
+let empatadas = 0
 function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
     if (carta1.jerarquia > carta2.jerarquia){
         turno = "Jugador"
         TXTurno.textContent = "Turno: Jugador"
-        N_ganadas++
+        N_ganadas = N_ganadas + 1.5
     }
     else if (carta2.jerarquia > carta1.jerarquia){
         turno = "Bot"
         TXTurno.textContent = "Turno: Bot"
-        E_ganadas++
+        E_ganadas = E_ganadas + 1.5
     }
-    else if (carta1.jerarquia = carta2.jerarquia){
+    else if (carta1.jerarquia === carta2.jerarquia){
         E_ganadas = E_ganadas + 0.5
         N_ganadas = N_ganadas + 0.5
+        empatadas++
         cambiarTurno()
     }
     setTimeout(function() {
-        if (N_ganadas == E_ganadas == 1.5){
+        if (empatadas === 3){
             alert ("Empate")
             resetearRonda()
         }
-        else if (N_ganadas >= 1.5){
+        else if (N_ganadas >= 2){
             alert("Gana Nosotros")
-            GuardarPuntos("NOS", 15)
+            GuardarPuntos("NOS", 10)
             resetearRonda()
         }
-        else if (E_ganadas >= 1.5){
+        else if (E_ganadas >= 2){
             alert("Gana Bot")
-            GuardarPuntos("ELLOS", 15)
+            GuardarPuntos("ELLOS", 10)
             resetearRonda()
         }
+        
       }, 500)
     
     
