@@ -470,6 +470,31 @@ let cartastiro = 0
     })
 
 
+let mazo = document.getElementById("irmazo")
+mazo.addEventListener("click", function(){
+    if (turno === "Jugador"){
+        if (cartastiradas === 0 && cartastiro === 0){
+            GuardarPuntos("ELLOS", 2)
+            setTimeout(function() {
+                resetearRonda()
+            }, 500) 
+        }
+        else{
+            GuardarPuntos("ELLOS", 1)
+            setTimeout(function() {
+                resetearRonda()
+            }, 500)
+        }
+    }
+})
+
+
+
+
+
+
+
+
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
 function GuardarPuntos(id, sumar) { //
