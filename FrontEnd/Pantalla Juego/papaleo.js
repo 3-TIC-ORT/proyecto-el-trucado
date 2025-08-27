@@ -1,7 +1,7 @@
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
 
-//Función crear carta Aleatoria
+//Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
     numero = Math.floor(Math.random() * 12) + 1
     numeropalo = Math.floor(Math.random() * 4) + 1
@@ -26,8 +26,9 @@ function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundSize = "cover"
 }
 
-//Función que resetea todos los valores de la ronda y llama a crearmazo()
+//Función que resetea valores y llama a crearmazo() para empezar la partida de nuevo
 function resetearRonda() {
+    //Todos los valores vuelven a original, 0
     N_ganadas = 0
     E_ganadas = 0
     empatadas = 0
@@ -49,30 +50,35 @@ function resetearRonda() {
         document.getElementById("CCE" + i).style.visibility = "hidden"
     }
 
-    // Mostrar nuevamente las cartas de jugador y bot
+    // Mostrar nuevamente las cartas de los 2 jugadores
     for (let i = 1; i <= 10; i++) {
         let carta = document.getElementById("carta" + i)
         carta.classList.remove("oculto")
     }
 
+    //El turno se intercala entre rondas
     turno = turnoF
     turnoF = (turnoF === "Jugador") ? "Bot" : "Jugador"
+
+    //Crea el mazo nuevo, cambia el texto del turno y actualiza los botones
     crearmazo()
     TXTurno.textContent = "Turno: " + turno
     actualizarBoton()
 }
 
-//Función que crea las 10 cartas y les pone imagenes
+//Función que crea las 10 cartas y les pone imagenes solo a las nuestras
 function crearmazo(){
-//Crear cartas no repetidas y asignar imagen solo a las nustras
+
 let cartas = []
 for (let i = 1; i <= 10; i++) {
+    //Crea las cartas para cada carta
     let nuevaCarta = crearcarta()
     // Evitar cartas Repetidas
     while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
         nuevaCarta = crearcarta()
     }
     cartas.push(nuevaCarta)
+
     // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
     if (i <= 10){
         identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
@@ -94,16 +100,19 @@ carta9 = cartas[8]
 carta10 = cartas[9]
 }
 
-//Tirar Cartas en Orden
-function CartasCentro(quien, numero, palo, cartax) { //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
+//Tirar Cartas en Orden y pone imagenes de la respectiva carta
+function CartasCentro(quien, numero, palo, cartax) { 
+//quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
     let CartasCentro2 = document.getElementById("CC" + quien + "2")
     let CartasCentro3 = document.getElementById("CC" + quien + "3")
     let estatscartas
+    //Revisa si ya tienen imagenes y si tiene le pone a las que no tienen imagenes
     if (CartasCentro1.style.backgroundImage != "" && CartasCentro1.style.backgroundImage != "none") {
         if (CartasCentro2.style.backgroundImage != "" && CartasCentro2.style.backgroundImage != "none") {
             if (CartasCentro3.style.backgroundImage != "" && CartasCentro3.style.backgroundImage != "none") {
-                // Los tres tienen imagen
+                // Los tres tienen imagen, no pasa nada
+                console.log("Ya tiraste 3 carta")
             } else {
                 identificar_cartas("CC" + quien + "3", numero, palo)
                 document.getElementById("CC" + quien + "3").style.visibility = "visible"
@@ -116,12 +125,13 @@ function CartasCentro(quien, numero, palo, cartax) { //quien (N = Nuestras Carta
         identificar_cartas("CC" + quien + "1", numero, palo)
         document.getElementById("CC" + quien + "1").style.visibility = "visible"
     }
+    //Llama a EVNR para saber su jerarquia y el valor tanto
     estatscartas = EVNR(cartax.numero, cartax.palo)
     cartax.valorenvido = estatscartas.valorenvido
     cartax.jerarquia = estatscartas.jerarquia
 }
 
-//Establecer el valor Envido y Jerárquico
+//Establecer el valor Envido y Jerárquico dependiendo de la carta
 function EVNR(numero, palo){
     let valorenvido = 0
     if (numero >= 10) {
@@ -195,6 +205,7 @@ function EVNR(numero, palo){
     return { valorenvido: valorenvido, jerarquia: jerarquia };
 }
 
+//Crea el mazo para crear la primer mano, no preguntes porque esta aca
 crearmazo()
 
 //Cartas Centro Nosotros
@@ -250,7 +261,6 @@ function TurnoAzar(){
 }
 
 let turno = TurnoAzar()
-
 //Turno de la siguiente partida
 let turnoF
 if (turno === "Jugador"){
@@ -486,7 +496,7 @@ actualizarBoton()
 
 mazo.addEventListener("click", function(){
     if (turno === "Jugador"){
-        if (cartastiradas === 0){
+        if (cartastiradas === 0 && cartastiro === 0){
             GuardarPuntos("ELLOS", 2)
         } else {
             GuardarPuntos("ELLOS", 1)
