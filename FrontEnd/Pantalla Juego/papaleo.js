@@ -344,8 +344,6 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     
 }
 
-
-
 //Cambia el turno
 function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     if (turno === "Jugador") {
