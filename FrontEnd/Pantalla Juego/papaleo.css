@@ -173,39 +173,42 @@ body{
 
 .BarraInferiorBTN{
     margin: 0;
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
     background-color: rgb(85, 48, 6);
     color: white;
     font-weight: bold;
-    font-size: 40px;
-    border: solid 10px rgb(163, 163, 9);
-    border-radius: 5px;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(163, 163, 9);
+    border-radius: 0.3125rem;
     transition: all 0.5s;
 }
 .BarraInferiorBTN:hover{
     transform: scale(1.2);
-    font-size: 50px;
-    border: solid 5px rgb(163, 163, 9);
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-right: 15px;
+    font-size: 3.125rem;
+    border: solid 0.3125rem rgb(163, 163, 9);
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-right: 0.9375rem;
 }
 
 .BarraInferiorBTN-NH{
     margin: 0;
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    background-color: rgb(120, 120, 120);
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(56, 56, 56);
     color: white;
     font-weight: bold;
-    font-size: 40px;
-    border: solid 10px rgb(150, 150, 150);
-    border-radius: 5px;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(150, 150, 150);
+    border-radius: 0.3125rem;
+    pointer-events: none;
+    opacity: 0.8;
+    transition: all 0.5s;
 }

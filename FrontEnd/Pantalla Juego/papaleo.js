@@ -55,8 +55,11 @@ function resetearRonda() {
         carta.classList.remove("oculto")
     }
 
+    turno = turnoF
+    turnoF = (turnoF === "Jugador") ? "Bot" : "Jugador"
     crearmazo()
     TXTurno.textContent = "Turno: " + turno
+    actualizarBoton()
 }
 
 //Función que crea las 10 cartas y les pone imagenes
@@ -206,8 +209,7 @@ let CartaCentroE3 = null
 
 
 
-//Tirar solo 3 Cartas Nosotros
-let cartastiradas = 0
+
 
 //Función que iguala a las cartas del centro a las que se tiran
 function guardarCartaCentro(carta, jugador) { //N = NOSOTROS, E = ELLOS
@@ -248,6 +250,7 @@ function TurnoAzar(){
 }
 
 let turno = TurnoAzar()
+
 //Turno de la siguiente partida
 let turnoF
 if (turno === "Jugador"){
@@ -308,6 +311,8 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
         empatadas++
         cambiarTurno()
     }
+    //Actualiza el boton para activarlo si es el caso
+    actualizarBoton()
     setTimeout(function() {
         if (empatadas === 3){
             alert ("Empate")
@@ -315,12 +320,12 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
         }
         else if (N_ganadas >= 2){
             alert("Gana Nosotros")
-            GuardarPuntos("NOS", 10)
+            GuardarPuntos("NOS", 1)
             resetearRonda()
         }
         else if (E_ganadas >= 2){
             alert("Gana Bot")
-            GuardarPuntos("ELLOS", 10)
+            GuardarPuntos("ELLOS", 1)
             resetearRonda()
         }
         
@@ -339,69 +344,72 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
         turno = "Jugador"
     }
     TXTurno.textContent = "Turno: " + turno
+    actualizarBoton()
 }
 
+//Tirar solo 3 Cartas Nosotros
+let cartastiradas = 0
 
-    click1 = document.getElementById("carta1")
-    click1.addEventListener("click", function(){
-        if (turno === "Jugador"){
-            cartastiradas++
-            if (cartastiradas <= 3){
-                click1.classList.add("oculto")
-                CartasCentro("N", carta1.numero, carta1.palo, carta1)
-                guardarCartaCentro(carta1, "N")
-                verificarCartas()
-            }
-        }
-    })
-    click2 = document.getElementById("carta2")
-    click2.addEventListener("click", function(){
-        if (turno === "Jugador"){
-            cartastiradas++
-            if (cartastiradas <= 3){
-                click2.classList.add("oculto")
-                CartasCentro("N", carta2.numero, carta2.palo, carta2)
-                guardarCartaCentro(carta2, "N")
-                verificarCartas()
-            }
-        }
-    })
-    click3 = document.getElementById("carta3")
-    click3.addEventListener("click", function(){
-        if (turno === "Jugador"){
-            cartastiradas++
-            if (cartastiradas <= 3){
-                click3.classList.add("oculto")
-                CartasCentro("N", carta3.numero, carta3.palo, carta3)
-                guardarCartaCentro(carta3, "N")
-                verificarCartas()
-            }
-        }
-    })
-    click4 = document.getElementById("carta4")
-    click4.addEventListener("click", function(){
-        if (turno === "Jugador"){
-            cartastiradas++
-            if (cartastiradas <= 3){
-                click4.classList.add("oculto")
-                CartasCentro("N", carta4.numero, carta4.palo, carta4)
-                guardarCartaCentro(carta4, "N")
-                verificarCartas()
-            }
-        }
-    })
-    click5 = document.getElementById("carta5")
-    click5.addEventListener("click", function(){
-        if (turno === "Jugador"){
-            cartastiradas++
-            if (cartastiradas <= 3){
-                click5.classList.add("oculto")
-                CartasCentro("N", carta5.numero, carta5.palo, carta5)
-                guardarCartaCentro(carta5, "N")
-                verificarCartas()
-            }
-        }
-    })
+click1 = document.getElementById("carta1") 
+click1.addEventListener("click", function(){ 
+    if (turno === "Jugador"){ 
+        cartastiradas++ 
+        if (cartastiradas <= 3){ 
+            click1.classList.add("oculto") 
+            CartasCentro("N", carta1.numero, carta1.palo, carta1) 
+            guardarCartaCentro(carta1, "N") 
+            verificarCartas() 
+        } 
+    } 
+}) 
+click2 = document.getElementById("carta2") 
+click2.addEventListener("click", function(){ 
+    if (turno === "Jugador"){ cartastiradas++ 
+        if (cartastiradas <= 3){ 
+            click2.classList.add("oculto") 
+            CartasCentro("N", carta2.numero, carta2.palo, carta2) 
+            guardarCartaCentro(carta2, "N") 
+            verificarCartas() 
+        } 
+    } 
+}) 
+click3 = document.getElementById("carta3") 
+click3.addEventListener("click", function(){ 
+    if (turno === "Jugador"){ 
+        cartastiradas++ 
+        if (cartastiradas <= 3){ 
+            click3.classList.add("oculto") 
+            CartasCentro("N", carta3.numero, carta3.palo, carta3) 
+            guardarCartaCentro(carta3, "N") 
+            verificarCartas() 
+        } 
+    } 
+}) 
+click4 = document.getElementById("carta4") 
+click4.addEventListener("click", function(){ 
+    if (turno === "Jugador"){
+        cartastiradas++ 
+        if (cartastiradas <= 3){ 
+            click4.classList.add("oculto") 
+            CartasCentro("N", carta4.numero, carta4.palo, carta4) 
+            guardarCartaCentro(carta4, "N") 
+            verificarCartas() 
+        } 
+    } 
+}) 
+click5 = document.getElementById("carta5") 
+click5.addEventListener("click", function(){ 
+    if (turno === "Jugador"){ 
+        cartastiradas++ 
+        if (cartastiradas <= 3){ 
+            click5.classList.add("oculto") 
+            CartasCentro("N", carta5.numero, carta5.palo, carta5) 
+            guardarCartaCentro(carta5, "N") 
+            verificarCartas() 
+        } 
+    } 
+})
+
 
 
 
@@ -470,28 +478,53 @@ let cartastiro = 0
     })
 
 
+let truco = document.getElementById("truco")
+let envido = document.getElementById("envido")
+let flor = document.getElementById("flor")
 let mazo = document.getElementById("irmazo")
+actualizarBoton()
+
 mazo.addEventListener("click", function(){
     if (turno === "Jugador"){
-        if (cartastiradas === 0 && cartastiro === 0){
+        if (cartastiradas === 0){
             GuardarPuntos("ELLOS", 2)
-            setTimeout(function() {
-                resetearRonda()
-            }, 500) 
-        }
-        else{
+        } else {
             GuardarPuntos("ELLOS", 1)
-            setTimeout(function() {
-                resetearRonda()
-            }, 500)
         }
+        setTimeout(function() {
+            resetearRonda()
+        }, 500)
     }
 })
 
 
 
 
+// Según el turno habilita o inhabilita el uso de los botones
+function actualizarBoton(){
+    if (turno === "Bot"){
+        truco.classList.remove("BarraInferiorBTN")
+        envido.classList.remove("BarraInferiorBTN")
+        flor.classList.remove("BarraInferiorBTN")
+        mazo.classList.remove("BarraInferiorBTN")
 
+        truco.classList.add("BarraInferiorBTN-NH")
+        envido.classList.add("BarraInferiorBTN-NH")
+        flor.classList.add("BarraInferiorBTN-NH")
+        mazo.classList.add("BarraInferiorBTN-NH")
+    }
+    else if (turno === "Jugador"){
+        truco.classList.add("BarraInferiorBTN")
+        envido.classList.add("BarraInferiorBTN")
+        flor.classList.add("BarraInferiorBTN")
+        mazo.classList.add("BarraInferiorBTN")
+
+        truco.classList.remove("BarraInferiorBTN-NH")
+        envido.classList.remove("BarraInferiorBTN-NH")
+        flor.classList.remove("BarraInferiorBTN-NH")
+        mazo.classList.remove("BarraInferiorBTN-NH")
+    }
+}
 
 
 
