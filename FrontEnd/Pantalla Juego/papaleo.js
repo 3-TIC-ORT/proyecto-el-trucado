@@ -20,7 +20,7 @@ function crearcarta() {
     return { numero, palo }
 }
 
-//Función para poner Imagenes a Cartas
+//Función para poner Imagenes a Cartas dependiendo de su numero y palo
 function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundImage = "url('IMAGENES/" + numero + palo + ".png')"
     document.getElementById(idcarta).style.backgroundSize = "cover"
@@ -34,12 +34,14 @@ function resetearRonda() {
     empatadas = 0
     cartastiradas = 0
     cartastiro = 0
+    //Cartas del centro se vacian
     CartaCentroN1 = null
     CartaCentroN2 = null
     CartaCentroN3 = null
     CartaCentroE1 = null
     CartaCentroE2 = null
     CartaCentroE3 = null
+    //La ronda vuelve a 1
     rondaCentro = 1
 
     // Ocultar cartas del centro
@@ -70,6 +72,7 @@ function resetearRonda() {
 let cartas = []
 function crearmazo(){
 
+//Array donde se guardan cada carta
 cartas = []
 for (let i = 1; i <= 10; i++) {
     //Crea las cartas para cada carta
@@ -113,7 +116,7 @@ function CartasCentro(quien, numero, palo, cartax) {
         if (CartasCentro2.style.backgroundImage != "" && CartasCentro2.style.backgroundImage != "none") {
             if (CartasCentro3.style.backgroundImage != "" && CartasCentro3.style.backgroundImage != "none") {
                 // Los tres tienen imagen, no pasa nada
-                console.log("Ya tiraste 3 carta")
+                console.log("Ya tiraste 3 carta") //opcional
             } else {
                 identificar_cartas("CC" + quien + "3", numero, palo)
                 document.getElementById("CC" + quien + "3").style.visibility = "visible"
@@ -136,34 +139,35 @@ function CartasCentro(quien, numero, palo, cartax) {
 function EVNR(numero, palo){
     let valorenvido = 0
     if (numero >= 10) {
-        valorenvido = 0 // Los 10 11 y 12 valen 0, por ahora
+        valorenvido = 0 // Los 10 11 y 12 valen 0, por ahora :)
     } else {
-        valorenvido = numero // del 1 al 7 valen su número
+        valorenvido = numero // del 1 al 9 valen su número
     }
-
+    //Variable para saber el orden jerárquico
     let jerarquia = 0
-    if (numero == 1 && palo == "espada"){
+
+    if (numero == 1 && palo == "espada"){ //Ancho de Espada
         jerarquia = 20
     }
-    else if (numero == 1 && palo == "basto"){
+    else if (numero == 1 && palo == "basto"){ //Ancho de Basto
         jerarquia = 19
     }
-    else if (numero == 9 && palo == "espada"){
+    else if (numero == 9 && palo == "espada"){ //9 de Espada
         jerarquia = 18
     }
-    else if (numero == 9 && palo == "oro"){
+    else if (numero == 9 && palo == "oro"){ //9 de Oro
         jerarquia = 17
     }
-    else if (numero == 8 && palo == "espada"){
+    else if (numero == 8 && palo == "espada"){ //8 de Espada
         jerarquia = 16
     }
-    else if (numero == 8 && palo == "oro"){
+    else if (numero == 8 && palo == "oro"){ //8 de Oro
         jerarquia = 15
     }
-    else if (numero == 7 && palo == "espada"){
+    else if (numero == 7 && palo == "espada"){ //7 de Espada
         jerarquia = 14
     }
-    else if (numero == 7 && palo == "oro"){
+    else if (numero == 7 && palo == "oro"){ //7 de Oro
         jerarquia = 13
     }
     else if (numero == 3){
@@ -220,11 +224,9 @@ let CartaCentroE2 = null
 let CartaCentroE3 = null
 
 
-
-
-
 //Función que iguala a las cartas del centro a las que se tiran
 function guardarCartaCentro(carta, jugador) { //N = NOSOTROS, E = ELLOS
+    //para el jugador
     if (jugador === "N"){
         if (cartastiradas === 1){
             CartaCentroN1 = { ...carta }
@@ -236,6 +238,7 @@ function guardarCartaCentro(carta, jugador) { //N = NOSOTROS, E = ELLOS
             CartaCentroN3 = { ...carta }
         }
     }
+    //para el bot
     else if (jugador === "E"){
         if (cartastiro === 1){
             CartaCentroE1 = { ...carta }
@@ -278,10 +281,10 @@ let TXTurno = document.getElementById("Turno")
 TXTurno.textContent = "Turno: " + turno
 
 
-
 //Función que revisa y prepara la comparación de cartas
 let rondaCentro = 1  // 1 = revisa N1/E1, 2 = revisa N2/E2, 3 = revisa N3/E3
 function verificarCartas() {
+    //Si las dos cartas del centro tienen imagenes se llama para que las comparen
     if (rondaCentro === 1 && CartaCentroN1 && CartaCentroE1) {
         CompararCartas(CartaCentroN1, CartaCentroE1)
         CartaCentroN1 = null
@@ -310,17 +313,18 @@ let N_ganadas = 0
 let E_ganadas = 0
 let empatadas = 0
 function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
-    if (carta1.jerarquia > carta2.jerarquia){
+    //Compara las 2 cartas que recibe para determinar la ganadora
+    if (carta1.jerarquia > carta2.jerarquia){ //Gana jugador
         turno = "Jugador"
         TXTurno.textContent = "Turno: Jugador"
         N_ganadas = N_ganadas + 1.5
     }
-    else if (carta2.jerarquia > carta1.jerarquia){
+    else if (carta2.jerarquia > carta1.jerarquia){ //Gana bot
         turno = "Bot"
         TXTurno.textContent = "Turno: Bot"
         E_ganadas = E_ganadas + 1.5
     }
-    else if (carta1.jerarquia === carta2.jerarquia){
+    else if (carta1.jerarquia === carta2.jerarquia){ //Empate
         E_ganadas = E_ganadas + 0.5
         N_ganadas = N_ganadas + 0.5
         empatadas++
@@ -328,6 +332,8 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     }
     //Actualiza el boton para activarlo si es el caso
     actualizarBoton()
+    
+    //Revisa si ya se gano la mano y se suman los puntos
     setTimeout(function() {
         if (empatadas === 3){
             alert ("Empate")
@@ -343,13 +349,10 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
             GuardarPuntos("ELLOS", 1)
             resetearRonda()
         }
-        
-      }, 500)
-    
-    
+      }, 500) //Delay para verlo mejor 
 }
 
-//Cambia el turno
+//Cambia el turno al contrario
 function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     if (turno === "Jugador") {
         turno = "Bot"
@@ -424,8 +427,7 @@ click5.addEventListener("click", function(){
 })
 
 
-
-
+//Tirar solo 3 cartas bot
 let cartastiro = 0
 
     click6 = document.getElementById("carta6")
@@ -491,19 +493,14 @@ let cartastiro = 0
 
 
 
-  
-
-
-
-    
-
-
+//Botones de la Barra Inferior
 let truco = document.getElementById("truco")
 let envido = document.getElementById("envido")
 let flor = document.getElementById("flor")
 let mazo = document.getElementById("irmazo")
 actualizarBoton()
 
+//Boton truco
 truco.addEventListener("click", function(){
     setTimeout(function() {
         truco.textContent = "RETRUCO"
@@ -512,6 +509,10 @@ truco.addEventListener("click", function(){
     }, 500)
 })
 
+
+
+
+//Boton mazo
 mazo.addEventListener("click", function(){
     if (turno === "Jugador"){
         if (cartastiradas === 0 && cartastiro === 0){
@@ -524,8 +525,6 @@ mazo.addEventListener("click", function(){
         }, 500)
     }
 })
-
-
 
 
 // Según el turno habilita o inhabilita el uso de los botones

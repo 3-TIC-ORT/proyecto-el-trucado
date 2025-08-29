@@ -7,8 +7,9 @@ body{
     background-image: url(IMAGENES/Fondo\ Mesa\ Poker.png);
     background-size: 80%;
 }
+/*A partir de aca empieza el diseño, lo de arriba no importa*/
 
-/* Barra de Puntaje arriba */
+/* Barra de Puntaje del Lateral */
 .marcador {
     position: fixed;
     top: 0;
@@ -51,6 +52,8 @@ body{
     margin-top: 0.625rem;
 }
 
+
+
 /*Carta del Bot*/
 .cartaoponente{
     width: 5.0625rem;
@@ -79,6 +82,7 @@ body{
     border: solid 3px;   
 }
 
+
 /*Separacion de las cartas a la izquierda*/
 #carta6{
     margin-left: 35%;
@@ -86,6 +90,7 @@ body{
 #carta1{
     margin-left: 20%;
 }
+
 
 /*Cartas del Centro y la separacion de la izquierda*/
 .CartasCentro{
@@ -103,11 +108,14 @@ body{
     margin-left: 38%;
 }
 
+
 /* Clase No Visible y No Tocable */
 .oculto{
     visibility: hidden;     
     pointer-events: none; 
 }
+
+
 
 /*Texto Turno*/
 #Turno{
@@ -125,6 +133,96 @@ body{
     border-radius: 20px;
 }
 
+
+/*Botones de la Barra Inferior*/
+.BarraInferiorBTN{
+    margin: 0;
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(85, 48, 6);
+    color: white;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(163, 163, 9);
+    border-radius: 0.3125rem;
+    transition: all 0.5s;
+}
+.BarraInferiorBTN:hover{
+    transform: scale(1.2);
+    font-size: 3.125rem;
+    border: solid 0.3125rem rgb(163, 163, 9);
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-right: 0.9375rem;
+}
+
+/*Botones desabilitados */
+.BarraInferiorBTN-NH{
+    margin: 0;
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(150, 150, 150);
+    border-radius: 0.3125rem;
+    pointer-events: none;
+    opacity: 0.8;
+    transition: all 0.5s;
+}
+
+/*Lo mismo que lo de arriba pero con palabras largas*/
+.PalabrasLargas{
+    margin: 0;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(85, 48, 6);
+    color: white;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(163, 163, 9);
+    border-radius: 0.3125rem;
+    transition: all 0.5s;
+}
+.PalabrasLargas:hover{
+    transform: scale(1.2);
+    font-size: 3.125rem;
+    border: solid 0.3125rem rgb(163, 163, 9);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-right: 0.9375rem;
+}
+/*No habilitados*/
+.PalabrasLargas-NH{
+    margin: 0;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(150, 150, 150);
+    border-radius: 0.3125rem;
+    pointer-events: none;
+    opacity: 0.8;
+    transition: all 0.5s;
+}
+
+
+/*Decoraciones:*/
 /*Mazo*/
 #Mazo{
     position: absolute;
@@ -170,87 +268,3 @@ body{
     transform: scale(1.5) rotate(-30deg);
 }
 
-
-.BarraInferiorBTN{
-    margin: 0;
-    padding-left: 3.75rem;
-    padding-right: 3.75rem;
-    padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    background-color: rgb(85, 48, 6);
-    color: white;
-    font-weight: bold;
-    font-size: 2.5rem;
-    border: solid 0.625rem rgb(163, 163, 9);
-    border-radius: 0.3125rem;
-    transition: all 0.5s;
-}
-.BarraInferiorBTN:hover{
-    transform: scale(1.2);
-    font-size: 3.125rem;
-    border: solid 0.3125rem rgb(163, 163, 9);
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-    margin-right: 0.9375rem;
-}
-
-.BarraInferiorBTN-NH{
-    margin: 0;
-    padding-left: 3.75rem;
-    padding-right: 3.75rem;
-    padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    background-color: rgb(56, 56, 56);
-    color: white;
-    font-weight: bold;
-    font-size: 2.5rem;
-    border: solid 0.625rem rgb(150, 150, 150);
-    border-radius: 0.3125rem;
-    pointer-events: none;
-    opacity: 0.8;
-    transition: all 0.5s;
-}
-
-
-.PalabrasLargas{
-    margin: 0;
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
-    padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    background-color: rgb(85, 48, 6);
-    color: white;
-    font-weight: bold;
-    font-size: 2.5rem;
-    border: solid 0.625rem rgb(163, 163, 9);
-    border-radius: 0.3125rem;
-    transition: all 0.5s;
-}
-.PalabrasLargas:hover{
-    transform: scale(1.2);
-    font-size: 3.125rem;
-    border: solid 0.3125rem rgb(163, 163, 9);
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-    margin-right: 0.9375rem;
-}
-.PalabrasLargas-NH{
-    margin: 0;
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
-    padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    background-color: rgb(56, 56, 56);
-    color: white;
-    font-weight: bold;
-    font-size: 2.5rem;
-    border: solid 0.625rem rgb(150, 150, 150);
-    border-radius: 0.3125rem;
-    pointer-events: none;
-    opacity: 0.8;
-    transition: all 0.5s;
-}
