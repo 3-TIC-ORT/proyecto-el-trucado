@@ -212,3 +212,45 @@ body{
     opacity: 0.8;
     transition: all 0.5s;
 }
+
+
+.PalabrasLargas{
+    margin: 0;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(85, 48, 6);
+    color: white;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(163, 163, 9);
+    border-radius: 0.3125rem;
+    transition: all 0.5s;
+}
+.PalabrasLargas:hover{
+    transform: scale(1.2);
+    font-size: 3.125rem;
+    border: solid 0.3125rem rgb(163, 163, 9);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-right: 0.9375rem;
+}
+.PalabrasLargas-NH{
+    margin: 0;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: solid 0.625rem rgb(150, 150, 150);
+    border-radius: 0.3125rem;
+    pointer-events: none;
+    opacity: 0.8;
+    transition: all 0.5s;
+}

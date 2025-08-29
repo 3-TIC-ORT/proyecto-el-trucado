@@ -1,0 +1,99 @@
+    click6 = document.getElementById("carta6")
+    click6.addEventListener("click", function(){
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click6.classList.add("oculto")
+                CartasCentro("E", carta6.numero, carta6.palo, carta6)
+                guardarCartaCentro(carta6, "E")
+                verificarCartas()
+            }
+        }
+    })
+    click7 = document.getElementById("carta7")
+    click7.addEventListener("click", function(){
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click7.classList.add("oculto")
+                CartasCentro("E", carta7.numero, carta7.palo, carta7)
+                guardarCartaCentro(carta7, "E")
+                verificarCartas()
+            }
+        }
+    })
+    click8 = document.getElementById("carta8")
+    click8.addEventListener("click", function(){
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click8.classList.add("oculto")
+                CartasCentro("E", carta8.numero, carta8.palo, carta8)
+                guardarCartaCentro(carta8, "E")
+                verificarCartas()
+            }
+        }
+    })
+    click9 = document.getElementById("carta9")
+    click9.addEventListener("click", function(){
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click9.classList.add("oculto")
+                CartasCentro("E", carta9.numero, carta9.palo, carta9)
+                guardarCartaCentro(carta9, "E")
+                verificarCartas()
+            }
+        }
+    })
+    click10 = document.getElementById("carta10")
+    click10.addEventListener("click", function(){
+        if (turno === "Bot"){
+            cartastiro++
+            if (cartastiro <= 3){
+                click10.classList.add("oculto")
+                CartasCentro("E", carta10.numero, carta10.palo, carta10)
+                guardarCartaCentro(carta10, "E" )
+                verificarCartas()
+            }
+        }
+    })
+
+
+Prototipo de Bot:
+
+// Array global para guardar las cartas que el bot ya tiró en esta mano
+let cartasUsadasBot = []
+
+function CartaBot(){
+    // Repetir hasta encontrar una carta que no haya usado
+    let NumeroBot
+    do {
+        NumeroBot = Math.floor(Math.random() * 5) + 1   // valores 1 a 5
+    } while (cartasUsadasBot.includes(NumeroBot))
+
+    // Guardar la carta como usada
+    cartasUsadasBot.push(NumeroBot)
+
+    // Sumar 5 porque las del bot son 6 a 10
+    let NumeroCartaBot = NumeroBot + 5
+    TirarCartasBot(NumeroCartaBot)
+}
+
+//Tirar solo 3 Cartas BOT
+let cartastiro = 0
+
+//Tirar cartas del Bot
+function TirarCartasBot (numerocarta){ //Del 5 al 9 orden de izquierda a derecha
+    setTimeout(function() {
+        BotID = numerocarta +1
+        click = document.getElementById("carta" + BotID)
+        cartastiro++
+        click.classList.add("oculto")
+        let cartaX = cartas[numerocarta]
+        CartasCentro("E", cartaX.numero, cartaX.palo, cartaX)
+        guardarCartaCentro(cartaX, "E")
+        verificarCartas()
+    }, 1000)
+        
+}

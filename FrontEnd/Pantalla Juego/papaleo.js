@@ -67,9 +67,10 @@ function resetearRonda() {
 }
 
 //Función que crea las 10 cartas y les pone imagenes solo a las nuestras
+let cartas = []
 function crearmazo(){
 
-let cartas = []
+cartas = []
 for (let i = 1; i <= 10; i++) {
     //Crea las cartas para cada carta
     let nuevaCarta = crearcarta()
@@ -261,6 +262,8 @@ function TurnoAzar(){
 }
 
 let turno = TurnoAzar()
+
+
 //Turno de la siguiente partida
 let turnoF
 if (turno === "Jugador"){
@@ -273,6 +276,8 @@ else if (turno === "Bot"){
 //Texto que dice turno
 let TXTurno = document.getElementById("Turno")
 TXTurno.textContent = "Turno: " + turno
+
+
 
 //Función que revisa y prepara la comparación de cartas
 let rondaCentro = 1  // 1 = revisa N1/E1, 2 = revisa N2/E2, 3 = revisa N3/E3
@@ -421,9 +426,8 @@ click5.addEventListener("click", function(){
 
 
 
-//Tirar solo 3 Cartas BOT
 let cartastiro = 0
-  
+
     click6 = document.getElementById("carta6")
     click6.addEventListener("click", function(){
         if (turno === "Bot"){
@@ -486,11 +490,27 @@ let cartastiro = 0
     })
 
 
+
+  
+
+
+
+    
+
+
 let truco = document.getElementById("truco")
 let envido = document.getElementById("envido")
 let flor = document.getElementById("flor")
 let mazo = document.getElementById("irmazo")
 actualizarBoton()
+
+truco.addEventListener("click", function(){
+    setTimeout(function() {
+        truco.textContent = "RETRUCO"
+        truco.classList.add("PalabrasLargas")
+        truco.classList.add("PalabrasLargas-NH")
+    }, 500)
+})
 
 mazo.addEventListener("click", function(){
     if (turno === "Jugador"){
