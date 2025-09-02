@@ -498,7 +498,9 @@ let cartastiro = 0
         }
     })
 
-
+//Easter Egg sigma
+let MazoIMG = document.getElementById("Mazo")
+let EasterEgg = document.getElementById("TEXTO")
 
 //Botones de la Barra Inferior
 let truco = document.getElementById("truco")
@@ -516,9 +518,6 @@ truco.addEventListener("click", function(){
     }, 500)
 })
 
-
-
-
 //Boton mazo
 mazo.addEventListener("click", function(){
     if (turno === "Jugador"){
@@ -533,6 +532,25 @@ mazo.addEventListener("click", function(){
     }
 })
 
+
+
+//Función que actualiza la posición del mazo dependiendo del turno
+function actualizarMazo(){
+    if (turnoF === "Jugador"){
+        MazoIMG.classList.add("M_P1")
+        EasterEgg.classList.add("T_P1")
+
+        MazoIMG.classList.remove("M_P2")
+        EasterEgg.classList.remove("T_P2")
+    }
+    else if (turnoF === "Bot"){
+        MazoIMG.classList.add("M_P2")
+        EasterEgg.classList.add("T_P2")
+
+        MazoIMG.classList.remove("M_P1")
+        EasterEgg.classList.remove("T_P1")
+    }
+}
 
 // Según el turno habilita o inhabilita el uso de los botones
 function actualizarBoton(){
@@ -558,13 +576,10 @@ function actualizarBoton(){
         flor.classList.remove("BarraInferiorBTN-NH")
         mazo.classList.remove("BarraInferiorBTN-NH")
     }
+    actualizarMazo()
 }
 
 
-//Función que actualiza la posición del mazo dependiendo del turno
-function actualizarMazo(){
-
-}
 
 
 //Parte Enc argada de Sumar Puntos
