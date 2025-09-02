@@ -58,6 +58,13 @@ function resetearRonda() {
         carta.classList.remove("oculto")
     }
 
+    //Devuelve el boton de truco a lo normal
+    truco.textContent = "TRUCO"
+    truco.classList.remove("PalabrasLargas")
+    truco.classList.remove("PalabrasLargas-NH")
+    truco.classList.add("BarraInferiorBTN")
+
+
     //El turno se intercala entre rondas
     turno = turnoF
     turnoF = (turnoF === "Jugador") ? "Bot" : "Jugador"
@@ -553,6 +560,11 @@ function actualizarBoton(){
     }
 }
 
+
+//Función que actualiza la posición del mazo dependiendo del turno
+function actualizarMazo(){
+
+}
 
 
 //Parte Enc argada de Sumar Puntos
