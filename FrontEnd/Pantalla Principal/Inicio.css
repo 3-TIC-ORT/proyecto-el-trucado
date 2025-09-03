@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("fondo.png");
+    background-image: url("img/fondo 2.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -68,12 +68,12 @@ body {
     position: absolute;
     bottom: 15px;
     left: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.carta {
-    width: 60px;
-    border-radius: 5px;
+    width: 120px;
+    height: 180px;
+    background-image: url("img/Belgrano.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+    transform: rotate(30deg);
 }
