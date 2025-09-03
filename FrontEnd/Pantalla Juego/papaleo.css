@@ -154,6 +154,8 @@ body{
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     margin-top: -2rem;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
 }
 
 /*Botones desabilitados */
@@ -248,7 +250,7 @@ body{
 }
 .T_P1{
     margin-left: 13rem;
-    margin-top: 9rem;
+    margin-top: 8rem;
 }
 .M_P2{
     margin-left: 65rem;
@@ -256,7 +258,7 @@ body{
 }
 .T_P2{
     margin-left: 66rem;
-    margin-top: 23rem;
+    margin-top: 22rem;
 }
 
 

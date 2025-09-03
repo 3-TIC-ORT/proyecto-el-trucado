@@ -551,7 +551,6 @@ function actualizarMazo(){
         EasterEgg.classList.remove("T_P1")
     }
 }
-
 // Según el turno habilita o inhabilita el uso de los botones
 function actualizarBoton(){
     if (turno === "Bot"){
