@@ -130,6 +130,36 @@ body{
     border-radius: 20px;
 }
 
+.Aceptar{
+    display: none;
+    position: absolute;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: -7rem;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    border: solid 0.2rem rgb(163, 163, 9);
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+.Aceptar:hover{
+    transform: scale(1.1);
+}
+#QUIERO{
+    margin-left: 30rem;
+    background-color: rgb(21, 105, 21);
+    padding-top: 2.15rem;
+    padding-bottom: 2.15rem;
+}
+#NOQUIERO{
+    margin-left: 43rem;
+    background-color: rgb(145, 24, 24);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
 
 /*Botones de la Barra Inferior*/
 .BarraInferiorBTN{

@@ -517,6 +517,13 @@ truco.addEventListener("click", function(){
         truco.classList.add("PalabrasLargas-NH")
     }, 500)
 })
+envido.addEventListener("click", function(){
+    setTimeout(function() {
+        truco.textContent = "ENVIDO"
+        envido.textContent = "ENVIDO"
+        flor.textContent = "REAL ENVIDO"
+    }, 500)
+})
 
 //Boton mazo
 mazo.addEventListener("click", function(){
