@@ -510,18 +510,47 @@ let mazo = document.getElementById("irmazo")
 actualizarBoton()
 
 //Boton truco
+let Regresar = false
+let Retruco = false
 truco.addEventListener("click", function(){
     setTimeout(function() {
-        truco.textContent = "RETRUCO"
-        truco.classList.add("PalabrasLargas")
-        truco.classList.add("PalabrasLargas-NH")
+        if (Regresar === false){
+            truco.textContent = "RETRUCO"
+            truco.classList.add("PalabrasLargas")
+            truco.classList.add("PalabrasLargas-NH")
+            Retruco = true
+        }
+        else if (Regresar === true){
+            flor.textContent = "FLOR"
+            flor.classList.remove("PalabrasLargas")
+            flor.classList.add("BarraInferiorBTN")
+            Regresar = false
+            if (Retruco === false){
+                truco.textContent = "TRUCO"
+                truco.classList.remove("PalabrasLargas")
+                truco.classList.remove("PalabrasLargas-NH")
+                truco.classList.add("BarraInferiorBTN")
+            }
+            else if (Retruco === true){
+                truco.textContent = "RETRUCO"
+                truco.classList.add("PalabrasLargas")
+                truco.classList.add("PalabrasLargas-NH")
+            }
+        }
     }, 500)
 })
 envido.addEventListener("click", function(){
     setTimeout(function() {
-        truco.textContent = "ENVIDO"
-        envido.textContent = "ENVIDO"
-        flor.textContent = "REAL ENVIDO"
+            truco.textContent = "REGRESAR"
+            truco.classList.add("PalabrasLargas")
+            truco.classList.remove("BarraInferiorBTN")
+            truco.classList.remove("PalabrasLargas-NH")
+
+            flor.textContent = "REAL ENVIDO"
+            flor.classList.add("PalabrasLargas")
+            flor.classList.remove("BarraInferiorBTN")
+            Regresar = true
+        
     }, 500)
 })
 
@@ -582,7 +611,11 @@ function actualizarBoton(){
         flor.classList.remove("BarraInferiorBTN-NH")
         mazo.classList.remove("BarraInferiorBTN-NH")
     }
+    
     actualizarMazo()
+    if (cartastiradas > 0){
+        envido.classList.add("BarraInferiorBTN-NH")
+    }
 }
 
 
