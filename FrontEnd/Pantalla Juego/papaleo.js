@@ -78,23 +78,28 @@ function resetearRonda() {
 //Función que crea las 10 cartas y les pone imagenes solo a las nuestras
 let cartas = []
 function crearmazo(){
+    //Array donde se guardan cada carta
+    cartas = []
+    for (let i = 1; i <= 10; i++) {
+        //Crea las cartas para cada carta
+        let nuevaCarta = crearcarta()
+        
+        // Evitar cartas Repetidas
+        while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
+            nuevaCarta = crearcarta()
+        }
+        cartas.push(nuevaCarta)
 
-//Array donde se guardan cada carta
-cartas = []
-for (let i = 1; i <= 10; i++) {
-    //Crea las cartas para cada carta
-    let nuevaCarta = crearcarta()
-    // Evitar cartas Repetidas
-    while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
-        nuevaCarta = crearcarta()
-    }
-    cartas.push(nuevaCarta)
+        //Se conoce su jerarquia y su valor envido desde el principio
+        let estatscartas = EVNR(nuevaCarta.numero, nuevaCarta.palo)
+        nuevaCarta.valorenvido = estatscartas.valorenvido
+        nuevaCarta.jerarquia = estatscartas.jerarquia
 
-    // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
-    if (i <= 10){
-        identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
+        // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
+        if (i <= 10){
+            identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
+        }
     }
-}
 
 //Cartas Nuestras (carta1 - 5)
 carta1 = cartas[0]
@@ -136,10 +141,6 @@ function CartasCentro(quien, numero, palo, cartax) {
         identificar_cartas("CC" + quien + "1", numero, palo)
         document.getElementById("CC" + quien + "1").style.visibility = "visible"
     }
-    //Llama a EVNR para saber su jerarquia y el valor tanto
-    estatscartas = EVNR(cartax.numero, cartax.palo)
-    cartax.valorenvido = estatscartas.valorenvido
-    cartax.jerarquia = estatscartas.jerarquia
 }
 
 //Establecer el valor Envido y Jerárquico dependiendo de la carta
@@ -511,31 +512,24 @@ actualizarBoton()
 
 //Boton truco
 let Regresar = false
-let Retruco = false
 truco.addEventListener("click", function(){
     setTimeout(function() {
         if (Regresar === false){
             truco.textContent = "RETRUCO"
             truco.classList.add("PalabrasLargas")
             truco.classList.add("PalabrasLargas-NH")
-            Retruco = true
+            envido.classList.add("BarraInferiorBTN-NH")
+            OpinionBot = prompt("Quiero o No Quiero")
         }
         else if (Regresar === true){
             flor.textContent = "FLOR"
             flor.classList.remove("PalabrasLargas")
             flor.classList.add("BarraInferiorBTN")
             Regresar = false
-            if (Retruco === false){
-                truco.textContent = "TRUCO"
-                truco.classList.remove("PalabrasLargas")
-                truco.classList.remove("PalabrasLargas-NH")
-                truco.classList.add("BarraInferiorBTN")
-            }
-            else if (Retruco === true){
-                truco.textContent = "RETRUCO"
-                truco.classList.add("PalabrasLargas")
-                truco.classList.add("PalabrasLargas-NH")
-            }
+            truco.textContent = "TRUCO"
+            truco.classList.remove("PalabrasLargas")
+            truco.classList.remove("PalabrasLargas-NH")
+            truco.classList.add("BarraInferiorBTN")
         }
     }, 500)
 })
@@ -550,7 +544,6 @@ envido.addEventListener("click", function(){
             flor.classList.add("PalabrasLargas")
             flor.classList.remove("BarraInferiorBTN")
             Regresar = true
-        
     }, 500)
 })
 
