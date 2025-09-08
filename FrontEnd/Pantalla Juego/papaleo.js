@@ -107,6 +107,8 @@ carta2 = cartas[1]
 carta3 = cartas[2]
 carta4 = cartas[3]
 carta5 = cartas[4]
+//Se calcula el envido de jugador
+let EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
 
 //Cartas Bot (carta6 - 10)
 carta6 = cartas[5]
@@ -114,7 +116,45 @@ carta7 = cartas[6]
 carta8 = cartas[7]
 carta9 = cartas[8]
 carta10 = cartas[9]
+//Se calcula el envido de bot
+let EnvidoBot = calcularEnvido(carta6, carta7, carta8, carta9, carta10)
 }
+
+//Función que calcular el envido dependiendo de las 5 cartas que entra
+function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
+    //Se guardan las cartas y un array para los palos
+    let Cartas = [carta1, carta2, carta3, carta4, carta5]
+    let palos = {}
+  
+    Cartas.forEach(carta => {
+      if (!palos[carta.palo]) palos[carta.palo] = []
+      palos[carta.palo].push(carta.valorenvido)
+    })
+  
+    let envidoMaximo = 0
+  
+    for (let palo in palos) {
+      let grupo = palos[palo]
+  
+      if (grupo.length >= 3) {
+        grupo.sort((a, b) => b - a)
+        let suma = grupo[0] + grupo[1] + grupo[2] + 20
+        if (suma > envidoMaximo) envidoMaximo = suma
+  
+      } else if (grupo.length === 2) {
+        let suma = grupo[0] + grupo[1]
+        if (suma > envidoMaximo) envidoMaximo = suma
+  
+      } else {
+        let valor = grupo[0]
+        if (valor > envidoMaximo) envidoMaximo = valor
+      }
+    }
+  
+    let EnvidoJugador = envidoMaximo
+    return EnvidoJugador
+  }
+  
 
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
 function CartasCentro(quien, numero, palo, cartax) { 
