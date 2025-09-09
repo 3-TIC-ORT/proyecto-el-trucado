@@ -1,6 +1,9 @@
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
 
+// Array global para guardar las cartas que el bot ya tiró en esta mano
+let cartasUsadasBot = []
+
 //Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
     numero = Math.floor(Math.random() * 12) + 1
@@ -44,6 +47,9 @@ function resetearRonda() {
     //La ronda vuelve a 1
     rondaCentro = 1
 
+    //Se resetea las cartas que tiro el bot
+    cartasUsadasBot = []
+
     // Ocultar cartas del centro
     for (let i = 1; i <= 3; i++) {
         document.getElementById("CCN" + i).style.backgroundImage = "none"
@@ -55,7 +61,9 @@ function resetearRonda() {
     // Mostrar nuevamente las cartas de los 2 jugadores
     for (let i = 1; i <= 10; i++) {
         let carta = document.getElementById("carta" + i)
-        carta.classList.remove("oculto")
+        if (carta) {
+            carta.classList.remove("oculto")
+        }
     }
 
     //Devuelve el boton de truco a lo normal
@@ -315,7 +323,6 @@ function TurnoAzar(){
 
 let turno = TurnoAzar()
 
-
 //Turno de la siguiente partida
 let turnoF
 if (turno === "Jugador"){
@@ -475,6 +482,7 @@ click5.addEventListener("click", function(){
     } 
 })
 
+//Cartas del BOT
 
 //Tirar solo 3 cartas bot
 let cartastiro = 0
@@ -540,6 +548,43 @@ let cartastiro = 0
         }
     })
 
+//Funcion que selecciona numero random para que el BOT tire cartas aleatorias, PROTOTIPO
+function CartaBot(){
+    if (turno === "Bot"){
+    // Repetir hasta encontrar una carta que no haya usado
+    let NumeroBot
+    do {
+        NumeroBot = Math.floor(Math.random() * 5) + 1   // valores 1 a 5
+    }
+    while (cartasUsadasBot.includes(NumeroBot))
+    
+    // Guardar la carta como usada
+    cartasUsadasBot.push(NumeroBot)
+    
+    // Sumar 5 porque las del bot son 6 a 10
+    let NumeroCartaBot = NumeroBot + 4
+    TirarCartasBot(NumeroCartaBot)
+    }
+    }
+    //Tirar cartas del Bot
+    function TirarCartasBot (numerocarta){ //Del 5 al 9 orden de izquierda a derecha
+        setTimeout(function() {
+            BotID = numerocarta + 1
+            click = document.getElementById("carta" + BotID)
+            cartastiro++
+            click.classList.add("oculto")
+            let cartaX = cartas[numerocarta]
+            CartasCentro("E", cartaX.numero, cartaX.palo, cartaX)
+            guardarCartaCentro(cartaX, "E")
+            verificarCartas()
+        }, 1000)
+            
+    }
+    
+
+
+
+
 //Easter Egg sigma
 let MazoIMG = document.getElementById("Mazo")
 let EasterEgg = document.getElementById("TEXTO")
@@ -551,6 +596,7 @@ let flor = document.getElementById("flor")
 let mazo = document.getElementById("irmazo")
 actualizarBoton()
 
+//Varialbe necesarias para el funcionamiento de la barra inferior
 let BotonEnvido = false
 let EnvidoEnvido = 0
 let Regresar = false
@@ -558,12 +604,14 @@ let Regresar = false
 //Boton truco
 truco.addEventListener("click", function(){
     setTimeout(function() {
+        //Cuando se toca el boton TRUCO
         if (Regresar === false){
             truco.textContent = "RETRUCO"
             truco.classList.add("PalabrasLargas")
             truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
         }
+        //Cuando se toca el boton REGRESAR
         else if (Regresar === true){
             flor.textContent = "FLOR"
             flor.classList.remove("PalabrasLargas")
@@ -583,6 +631,7 @@ truco.addEventListener("click", function(){
 //Boton envido
 envido.addEventListener("click", function(){
     setTimeout(function() {
+        //Se toca el boton ENVIDO, entra al menu envido
         if (BotonEnvido === false){    
             truco.textContent = "REGRESAR"
             truco.classList.add("PalabrasLargas")
@@ -596,6 +645,7 @@ envido.addEventListener("click", function(){
             Regresar = true
             BotonEnvido = true
         }
+        //Se toca envido para cantarlo
         else if (BotonEnvido === true){
             alert ("Envido")
 
@@ -616,6 +666,7 @@ envido.addEventListener("click", function(){
 
 //Boton flor
 flor.addEventListener("click", function(){
+    //Se toca el boton REAL ENVIDO
     if (BotonEnvido === true){
         alert ("Real Envido")
 
