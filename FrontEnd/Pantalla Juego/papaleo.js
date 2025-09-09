@@ -127,33 +127,34 @@ function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
     let palos = {}
   
     Cartas.forEach(carta => {
-      if (!palos[carta.palo]) palos[carta.palo] = []
-      palos[carta.palo].push(carta.valorenvido)
+        if (!palos[carta.palo]) palos[carta.palo] = []
+        palos[carta.palo].push(carta.valorenvido)
     })
   
     let envidoMaximo = 0
   
-    for (let palo in palos) {
-      let grupo = palos[palo]
+    for (let palo in palos){
+        let grupo = palos[palo]
   
-      if (grupo.length >= 3) {
-        grupo.sort((a, b) => b - a)
-        let suma = grupo[0] + grupo[1] + grupo[2] + 20
-        if (suma > envidoMaximo) envidoMaximo = suma
+        if (grupo.length >= 3) {
+            grupo.sort((a, b) => b - a)
+            let suma = grupo[0] + grupo[1] + grupo[2] + 20
+            if (suma > envidoMaximo) envidoMaximo = suma
   
-      } else if (grupo.length === 2) {
-        let suma = grupo[0] + grupo[1]
-        if (suma > envidoMaximo) envidoMaximo = suma
-  
-      } else {
-        let valor = grupo[0]
-        if (valor > envidoMaximo) envidoMaximo = valor
-      }
+        }
+        else if (grupo.length === 2) {
+            let suma = grupo[0] + grupo[1]
+            if (suma > envidoMaximo) envidoMaximo = suma
+        }
+        else{
+            let valor = grupo[0]
+            if (valor > envidoMaximo) envidoMaximo = valor
+        }
     }
   
     let EnvidoJugador = envidoMaximo
     return EnvidoJugador
-  }
+}
   
 
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
@@ -550,8 +551,11 @@ let flor = document.getElementById("flor")
 let mazo = document.getElementById("irmazo")
 actualizarBoton()
 
-//Boton truco
+let BotonEnvido = false
+let EnvidoEnvido = 0
 let Regresar = false
+
+//Boton truco
 truco.addEventListener("click", function(){
     setTimeout(function() {
         if (Regresar === false){
@@ -559,13 +563,15 @@ truco.addEventListener("click", function(){
             truco.classList.add("PalabrasLargas")
             truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
-            OpinionBot = prompt("Quiero o No Quiero")
         }
         else if (Regresar === true){
             flor.textContent = "FLOR"
             flor.classList.remove("PalabrasLargas")
             flor.classList.add("BarraInferiorBTN")
+
             Regresar = false
+            BotonEnvido = false
+
             truco.textContent = "TRUCO"
             truco.classList.remove("PalabrasLargas")
             truco.classList.remove("PalabrasLargas-NH")
@@ -573,8 +579,11 @@ truco.addEventListener("click", function(){
         }
     }, 500)
 })
+
+//Boton envido
 envido.addEventListener("click", function(){
     setTimeout(function() {
+        if (BotonEnvido === false){    
             truco.textContent = "REGRESAR"
             truco.classList.add("PalabrasLargas")
             truco.classList.remove("BarraInferiorBTN")
@@ -583,8 +592,46 @@ envido.addEventListener("click", function(){
             flor.textContent = "REAL ENVIDO"
             flor.classList.add("PalabrasLargas")
             flor.classList.remove("BarraInferiorBTN")
+
             Regresar = true
+            BotonEnvido = true
+        }
+        else if (BotonEnvido === true){
+            alert ("Envido")
+
+            flor.textContent = "FLOR"
+            flor.classList.remove("PalabrasLargas")
+            flor.classList.add("BarraInferiorBTN")
+
+            Regresar = false
+            BotonEnvido = false
+
+            truco.textContent = "TRUCO"
+            truco.classList.remove("PalabrasLargas")
+            truco.classList.remove("PalabrasLargas-NH")
+            truco.classList.add("BarraInferiorBTN")
+        }
     }, 500)
+})
+
+//Boton flor
+flor.addEventListener("click", function(){
+    if (BotonEnvido === true){
+        alert ("Real Envido")
+
+        flor.textContent = "FLOR"
+        flor.classList.remove("PalabrasLargas")
+        flor.classList.add("BarraInferiorBTN")
+
+        Regresar = false
+        BotonEnvido = false
+        envido.classList.add("BarraInferiorBTN-NH")
+
+        truco.textContent = "TRUCO"
+        truco.classList.remove("PalabrasLargas")
+        truco.classList.remove("PalabrasLargas-NH")
+        truco.classList.add("BarraInferiorBTN")
+    }
 })
 
 //Boton mazo
