@@ -565,21 +565,21 @@ function CartaBot(){
     let NumeroCartaBot = NumeroBot + 4
     TirarCartasBot(NumeroCartaBot)
     }
-    }
-    //Tirar cartas del Bot
-    function TirarCartasBot (numerocarta){ //Del 5 al 9 orden de izquierda a derecha
-        setTimeout(function() {
-            BotID = numerocarta + 1
-            click = document.getElementById("carta" + BotID)
-            cartastiro++
-            click.classList.add("oculto")
-            let cartaX = cartas[numerocarta]
-            CartasCentro("E", cartaX.numero, cartaX.palo, cartaX)
-            guardarCartaCentro(cartaX, "E")
-            verificarCartas()
-        }, 1000)
-            
-    }
+}
+
+//Tirar cartas del Bot
+function TirarCartasBot (numerocarta){ //Del 5 al 9 orden de izquierda a derecha
+    setTimeout(function() {
+        BotID = numerocarta + 1
+        click = document.getElementById("carta" + BotID)
+        cartastiro++
+        click.classList.add("oculto")
+        let cartaX = cartas[numerocarta]
+        CartasCentro("E", cartaX.numero, cartaX.palo, cartaX)
+        guardarCartaCentro(cartaX, "E")
+        verificarCartas()
+    }, 1000)  
+}
     
 
 
