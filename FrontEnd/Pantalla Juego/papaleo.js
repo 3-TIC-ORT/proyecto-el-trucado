@@ -6,8 +6,9 @@ let cartasUsadasBot = []
 
 //Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
-    numero = Math.floor(Math.random() * 12) + 1
-    numeropalo = Math.floor(Math.random() * 4) + 1
+    let numero = Math.floor(Math.random() * 12) + 1
+    let numeropalo = Math.floor(Math.random() * 4) + 1
+    let palo
     if (numeropalo == 1){
         palo = "espada"
     }
@@ -116,7 +117,7 @@ carta3 = cartas[2]
 carta4 = cartas[3]
 carta5 = cartas[4]
 //Se calcula el envido de jugador
-let EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
 
 //Cartas Bot (carta6 - 10)
 carta6 = cartas[5]
@@ -125,7 +126,7 @@ carta8 = cartas[7]
 carta9 = cartas[8]
 carta10 = cartas[9]
 //Se calcula el envido de bot
-let EnvidoBot = calcularEnvido(carta6, carta7, carta8, carta9, carta10)
+EnvidoBot = calcularEnvido(carta6, carta7, carta8, carta9, carta10)
 }
 
 //Función que calcular el envido dependiendo de las 5 cartas que entra
