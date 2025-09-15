@@ -7,7 +7,7 @@ let cartasUsadasBot = []
 //Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
     let numero = Math.floor(Math.random() * 12) + 1
-    let numeropalo = Math.floor(Math.random() * 4) + 1
+    let numeropalo = 1
     let palo
     if (numeropalo == 1){
         palo = "espada"
@@ -379,7 +379,7 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     else if (carta2.jerarquia > carta1.jerarquia){ //Gana bot
         turno = "Bot"
         TXTurno.textContent = "Turno: Bot"
-        E_ganadas = E_ganadas + 1.5
+        E_ganadas = E_ganadas + 1.5 
     }
     else if (carta1.jerarquia === carta2.jerarquia){ //Empate
         E_ganadas = E_ganadas + 0.5
@@ -549,33 +549,34 @@ let cartastiro = 0
         }
     })
 
+
+
+
 //Funcion que selecciona numero random para que el BOT tire cartas aleatorias, PROTOTIPO
 function CartaBot(){
-    if (turno === "Bot"){
     // Repetir hasta encontrar una carta que no haya usado
     let NumeroBot
     do {
-        NumeroBot = Math.floor(Math.random() * 5) + 1   // valores 1 a 5
+        NumeroBot = Math.floor(Math.random() * 5) + 6   // valores 6 a 10
     }
     while (cartasUsadasBot.includes(NumeroBot))
     
     // Guardar la carta como usada
     cartasUsadasBot.push(NumeroBot)
     
-    // Sumar 5 porque las del bot son 6 a 10
-    let NumeroCartaBot = NumeroBot + 4
-    TirarCartasBot(NumeroCartaBot)
-    }
+    //Tirar la carta con la función
+    TirarCartasBot(NumeroBot)
 }
-
 //Tirar cartas del Bot
-function TirarCartasBot (numerocarta){ //Del 5 al 9 orden de izquierda a derecha
+function TirarCartasBot (numerocarta){ //Del 6 y al 10 orden de izquierda a derecha
     setTimeout(function() {
-        BotID = numerocarta + 1
-        click = document.getElementById("carta" + BotID)
+        click = document.getElementById("carta" + numerocarta)
         cartastiro++
-        click.classList.add("oculto")
-        let cartaX = cartas[numerocarta]
+        if (click){
+            click.classList.add("oculto")
+        }
+        let BotID = numerocarta - 1
+        let cartaX = cartas[BotID]
         CartasCentro("E", cartaX.numero, cartaX.palo, cartaX)
         guardarCartaCentro(cartaX, "E")
         verificarCartas()
@@ -601,6 +602,7 @@ actualizarBoton()
 let BotonEnvido = false
 let EnvidoEnvido = 0
 let Regresar = false
+let BotonFlor = 0
 
 //Boton truco
 truco.addEventListener("click", function(){
@@ -684,6 +686,13 @@ flor.addEventListener("click", function(){
         truco.classList.remove("PalabrasLargas-NH")
         truco.classList.add("BarraInferiorBTN")
     }
+    else if (BotonEnvido === false){
+        if (BotonFlor === 0){
+            alert ("Flor")
+            GuardarPuntos("NOS", 5)
+            BotonFlor++
+        }
+    }
 })
 
 //Boton mazo
@@ -745,8 +754,24 @@ function actualizarBoton(){
     }
     
     actualizarMazo()
+
+    //Envido desactivado si ya se tiro una carta
     if (cartastiradas > 0){
         envido.classList.add("BarraInferiorBTN-NH")
+    }
+
+    //Flor desactivada si no tenes Flor
+    if (carta1.palo === carta2.palo || carta1.palo === carta3.palo || carta1.palo === carta4.palo || carta1.palo === carta5.palo){
+        //Flor desactivada si ya se tiro una carta
+        if (cartastiradas > 0){
+            flor.classList.add("BarraInferiorBTN-NH")
+        }
+        else{
+            flor.classList.add("BarraInferiorBTN")
+        }
+    }
+    else{
+        flor.classList.add("BarraInferiorBTN-NH")
     }
 }
 
