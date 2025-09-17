@@ -7,7 +7,7 @@ let cartasUsadasBot = []
 //Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
     let numero = Math.floor(Math.random() * 12) + 1
-    let numeropalo = 1
+    let numeropalo = Math.floor(Math.random() * 4) + 1
     let palo
     if (numeropalo == 1){
         palo = "espada"
@@ -772,6 +772,7 @@ function actualizarBoton(){
     }
     else{
         flor.classList.add("BarraInferiorBTN-NH")
+        flor.classList.remove("BarraInferiorBTN")
     }
 }
 
