@@ -7,7 +7,7 @@ let cartasUsadasBot = []
 //Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
     let numero = Math.floor(Math.random() * 12) + 1
-    let numeropalo = Math.floor(Math.random() * 4) + 1
+    let numeropalo = 1
     let palo
     if (numeropalo == 1){
         palo = "espada"
@@ -692,6 +692,9 @@ flor.addEventListener("click", function(){
             GuardarPuntos("NOS", 5)
             BotonFlor++
         }
+        else{
+            flor.classList.add("BarraInferiorBTN-NH")
+        }
     }
 })
 
@@ -761,7 +764,7 @@ function actualizarBoton(){
     }
 
     //Flor desactivada si no tenes Flor
-    if (carta1.palo === carta2.palo || carta1.palo === carta3.palo || carta1.palo === carta4.palo || carta1.palo === carta5.palo){
+    if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo === carta4.palo && carta1.palo === carta5.palo){
         //Flor desactivada si ya se tiro una carta
         if (cartastiradas > 0){
             flor.classList.add("BarraInferiorBTN-NH")
