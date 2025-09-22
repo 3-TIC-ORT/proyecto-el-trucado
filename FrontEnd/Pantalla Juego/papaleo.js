@@ -178,7 +178,7 @@ function CartasCentro(quien, numero, palo, cartax) {
         if (CartasCentro2.style.backgroundImage != "" && CartasCentro2.style.backgroundImage != "none") {
             if (CartasCentro3.style.backgroundImage != "" && CartasCentro3.style.backgroundImage != "none") {
                 // Los tres tienen imagen, no pasa nada
-                console.log("Ya tiraste 3 carta") //opcional
+                console.log("Ya tiraste 3 cartas") //opcional
             } else {
                 identificar_cartas("CC" + quien + "3", numero, palo)
                 document.getElementById("CC" + quien + "3").style.visibility = "visible"
@@ -644,6 +644,7 @@ envido.addEventListener("click", function(){
             flor.textContent = "REAL ENVIDO"
             flor.classList.add("PalabrasLargas")
             flor.classList.remove("BarraInferiorBTN")
+            flor.classList.remove("BarraInferiorBTN-NH")
 
             Regresar = true
             BotonEnvido = true
@@ -654,7 +655,8 @@ envido.addEventListener("click", function(){
 
             flor.textContent = "FLOR"
             flor.classList.remove("PalabrasLargas")
-            flor.classList.add("BarraInferiorBTN")
+            flor.classList.remove("BarraInferiorBTN")
+            flor.classList.add("BarraInferiorBTN-NH")
 
             Regresar = false
             BotonEnvido = false
@@ -675,7 +677,8 @@ flor.addEventListener("click", function(){
 
         flor.textContent = "FLOR"
         flor.classList.remove("PalabrasLargas")
-        flor.classList.add("BarraInferiorBTN")
+        flor.classList.remove("BarraInferiorBTN")
+        flor.classList.add("BarraInferiorBTN-NH")
 
         Regresar = false
         BotonEnvido = false
@@ -690,7 +693,7 @@ flor.addEventListener("click", function(){
         if (BotonFlor === 0){
             alert ("Flor")
             GuardarPuntos("NOS", 5)
-            BotonFlor++
+            BotonFlor = 1
         }
         else{
             flor.classList.add("BarraInferiorBTN-NH")
@@ -763,20 +766,15 @@ function actualizarBoton(){
         envido.classList.add("BarraInferiorBTN-NH")
     }
 
-    //Flor desactivada si no tenes Flor
-    if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo === carta4.palo && carta1.palo === carta5.palo){
-        //Flor desactivada si ya se tiro una carta
-        if (cartastiradas > 0){
-            flor.classList.add("BarraInferiorBTN-NH")
-        }
-        else{
-            flor.classList.add("BarraInferiorBTN")
-        }
-    }
-    else{
-        flor.classList.add("BarraInferiorBTN-NH")
-        flor.classList.remove("BarraInferiorBTN")
-    }
+    
+    // Flor habilitada solo si todas las cartas son del mismo palo y aún no tiraste
+if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo === carta4.palo && carta1.palo === carta5.palo && cartastiradas === 0){
+    flor.classList.remove("BarraInferiorBTN-NH")
+    flor.classList.add("BarraInferiorBTN")
+} else {
+    flor.classList.remove("BarraInferiorBTN")
+    flor.classList.add("BarraInferiorBTN-NH")
+}
 }
 
 

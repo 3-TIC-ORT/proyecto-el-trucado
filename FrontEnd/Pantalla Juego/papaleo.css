@@ -163,8 +163,8 @@ body{
 
 /*Botones de la Barra Inferior*/
 .BarraInferiorBTN{
-    padding-left: 5.85rem;
-    padding-right: 5.85rem;
+    padding-left: 5.75rem;
+    padding-right: 5.75rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: rgb(85, 48, 6);
@@ -190,8 +190,8 @@ body{
 
 /*Botones desabilitados */
 .BarraInferiorBTN-NH{
-    padding-left: 5.85rem;
-    padding-right: 5.85rem;
+    padding-left: 5.75rem;
+    padding-right: 5.75rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: rgb(56, 56, 56);
