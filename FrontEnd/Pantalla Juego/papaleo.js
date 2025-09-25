@@ -73,6 +73,12 @@ function resetearRonda() {
     truco.classList.remove("PalabrasLargas-NH")
     truco.classList.add("BarraInferiorBTN")
 
+    //Varialbe necesarias para el funcionamiento de la barra inferior
+    BotonEnvido = false
+    EnvidoEnvido = 0
+    Regresar = false
+    Cant_Envido = 0
+
 
     //El turno se intercala entre rondas
     turno = turnoF
@@ -602,7 +608,8 @@ actualizarBoton()
 let BotonEnvido = false
 let EnvidoEnvido = 0
 let Regresar = false
-let BotonFlor = 0
+let Cant_Envido = 0
+let PuntosEnvidos 
 
 //Boton truco
 truco.addEventListener("click", function(){
@@ -627,6 +634,8 @@ truco.addEventListener("click", function(){
             truco.classList.remove("PalabrasLargas")
             truco.classList.remove("PalabrasLargas-NH")
             truco.classList.add("BarraInferiorBTN")
+
+            envido.classList.remove("BarraInferiorBTN-NH")
         }
     }, 500)
 })
@@ -648,23 +657,32 @@ envido.addEventListener("click", function(){
 
             Regresar = true
             BotonEnvido = true
+
+            if (Cant_Envido >= 2) {
+                envido.classList.add("BarraInferiorBTN-NH")
+            }
         }
         //Se toca envido para cantarlo
         else if (BotonEnvido === true){
-            alert ("Envido")
+            if (Cant_Envido < 2){
+                alert ("Envido")
 
-            flor.textContent = "FLOR"
-            flor.classList.remove("PalabrasLargas")
-            flor.classList.remove("BarraInferiorBTN")
-            flor.classList.add("BarraInferiorBTN-NH")
+                flor.textContent = "FLOR"
+                flor.classList.remove("PalabrasLargas")
+                flor.classList.remove("BarraInferiorBTN")
+                flor.classList.add("BarraInferiorBTN-NH")
 
-            Regresar = false
-            BotonEnvido = false
+                Regresar = false
+                BotonEnvido = false
+                Cant_Envido++
 
-            truco.textContent = "TRUCO"
-            truco.classList.remove("PalabrasLargas")
-            truco.classList.remove("PalabrasLargas-NH")
-            truco.classList.add("BarraInferiorBTN")
+                truco.textContent = "TRUCO"
+                truco.classList.remove("PalabrasLargas")
+                truco.classList.remove("PalabrasLargas-NH")
+                truco.classList.add("BarraInferiorBTN")
+                 
+                envido.classList.remove("BarraInferiorBTN-NH")
+            }
         }
     }, 500)
 })
@@ -690,14 +708,10 @@ flor.addEventListener("click", function(){
         truco.classList.add("BarraInferiorBTN")
     }
     else if (BotonEnvido === false){
-        if (BotonFlor === 0){
-            alert ("Flor")
-            GuardarPuntos("NOS", 5)
-            BotonFlor = 1
-        }
-        else{
-            flor.classList.add("BarraInferiorBTN-NH")
-        }
+        alert ("Flor")
+        GuardarPuntos("NOS", 5)
+        flor.classList.add("BarraInferiorBTN-NH")
+        envido.classList.add("BarraInferiorBTN-NH")
     }
 })
 
@@ -768,7 +782,7 @@ function actualizarBoton(){
 
     
     // Flor habilitada solo si todas las cartas son del mismo palo y aún no tiraste
-if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo === carta4.palo && carta1.palo === carta5.palo && cartastiradas === 0){
+if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo === carta4.palo && carta1.palo === carta5.palo && cartastiradas === 0 && turno === "Jugador"){
     flor.classList.remove("BarraInferiorBTN-NH")
     flor.classList.add("BarraInferiorBTN")
 } else {
