@@ -5,6 +5,7 @@
 body{
     overflow: hidden;
     background-image: url(IMAGENES/Fondo\ Mesa\ Poker.png);
+    font-family: "Pixelify Sans", sans-serif;
     background-size: 100%;
 }
 /*A partir de aca empieza el diseño, lo de arriba no importa*/
@@ -19,7 +20,7 @@ body{
     color: white;
     padding: 0.5rem;
     font-size: 1.25rem;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Pixelify Sans", sans-serif;
     display: flex;
     border-radius: 0 0 0 15px;
 }
@@ -119,7 +120,7 @@ body{
     position: absolute;
     margin-left: 0.625rem;
     font-size: 1.5rem; 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Pixelify Sans", sans-serif;
     font-weight: bold;
     color: white;
     margin:-0.9375rem;
@@ -163,8 +164,9 @@ body{
 
 /*Botones de la Barra Inferior*/
 .BarraInferiorBTN{
-    padding-left: 5.75rem;
-    padding-right: 5.75rem;
+    font-family: "Pixelify Sans", sans-serif;
+    padding-left: 6.3rem;
+    padding-right: 6.3rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: rgb(85, 48, 6);
@@ -179,8 +181,8 @@ body{
     transform: scale(1.1);
     font-size: 3.5rem;
     border: solid 0.3125rem rgb(163, 163, 9);
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     margin-top: -2rem;
@@ -190,8 +192,9 @@ body{
 
 /*Botones desabilitados */
 .BarraInferiorBTN-NH{
-    padding-left: 5.75rem;
-    padding-right: 5.75rem;
+    font-family: "Pixelify Sans", sans-serif;
+    padding-left: 6.3rem;
+    padding-right: 6.3rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: rgb(56, 56, 56);
@@ -207,8 +210,9 @@ body{
 
 /*Lo mismo que lo de arriba pero con palabras largas*/
 .PalabrasLargas{
-    padding-left: 4rem;
-    padding-right: 4rem;
+    font-family: "Pixelify Sans", sans-serif;
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: rgb(85, 48, 6);
@@ -223,16 +227,17 @@ body{
     transform: scale(1.1);
     font-size: 3.5rem;
     border: solid 0.3125rem rgb(163, 163, 9);
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     margin-top: -2rem;
 }
 /*No habilitados*/
 .PalabrasLargas-NH{
-    padding-left: 4rem;
-    padding-right: 4rem;
+    font-family: "Pixelify Sans", sans-serif;
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: rgb(56, 56, 56);
@@ -245,6 +250,50 @@ body{
     opacity: 0.8;
     transition: all 0.5s;
 }
+
+
+.MenuContainer {
+    position: fixed;
+    top: 5rem;
+    left: 1rem;
+    display: inline-block;
+  }
+  .Menu {
+    color: white;
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.5s;
+  }
+  
+  .BarraMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -1rem;
+    width: 250px;
+    color: white;
+    padding: 10px;
+    font-size: 15px;
+    font-family: "Pixelify Sans", sans-serif;
+  }
+  .BotonesMenu{
+    transition: all 0.5s;
+    font-family: "Pixelify Sans", sans-serif;
+    padding: 10px 30px 10px 30px;
+    font-size: 30px;
+  }
+  .BotonesMenu:hover{
+    transform: scale(1.1);
+    margin-left: 1rem
+  }
+  
+  .MenuContainer:hover .BarraMenu {
+    display: block;
+  }
+  .Menu:hover{
+      transform: scale(1.2);
+  }
 
 
 /*Decoraciones:*/
@@ -267,7 +316,7 @@ body{
     z-index: 1;
     color: white;
     font-size: 0.625rem;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Pixelify Sans", sans-serif;
 }
 #Mazo-Texto:hover #TEXTO{
     display: block;
@@ -301,17 +350,18 @@ body{
     position: absolute;
     width: 7.5rem;
     margin-left: 20rem;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
+    image-rendering: pixelated;
 }
 /*Don Satur*/
-#Don-Satur{
+#Medialuna{
     position: absolute;
     width: 10.625rem; 
     margin-left: 4.375rem;
     margin-top: 21.875rem;
     transition: transform 1s;
 }
-#Don-Satur:hover{
+#Medialuna:hover{
     transform: scale(1.5) rotate(-30deg);
 }
 

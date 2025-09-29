@@ -2,6 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
     <title>Trucado</title>
     <link rel="stylesheet" href="papaleo.css">
     <link rel="icon" type="image/png" href="IMAGENES/Logo Trucado.png">
@@ -32,12 +36,21 @@
         Turno: Jugador
     </div>
 
+    <div class="MenuContainer">
+        <h1 class="Menu">☰</h1>
+        <div class="BarraMenu">
+            <button class="Volver BotonesMenu"> Volver </button>
+            <button class="Volver BotonesMenu"> Estadisticas </button>
+        </div>
+    </div>
+
+
     <div id="Mazo-Texto">
         <img id="Mazo" src="IMAGENES/Mazo Reposo.png" alt="Mazo">
         <h1 id="TEXTO">  <br> EL MAZO <br> NO SE TOCA <br> >:( </h1>
     </div>
     <img id="Mate" src="IMAGENES/Mate.png" alt="Mate de Yerba">
-    <img id="Don-Satur" src="IMAGENES/Don-Satur.png" alt="Don Satur">
+    <img id="Medialuna" src="IMAGENES/Medialuna.png" alt="Imagen de Medialuna Insana">
     
     <button id="carta6" class="cartaoponente"></button>
     <button id="carta7" class="cartaoponente"></button>
@@ -65,7 +78,7 @@
         <button id="envido" class="BarraInferiorBTN"> ENVIDO </button>
         <button id="flor" class="BarraInferiorBTN"> FLOR </button>
         <button id="irmazo" class="BarraInferiorBTN"> MAZO </button>
-    
+        
     <script src="papaleo.js" ></script>
 </body>
 </html>
