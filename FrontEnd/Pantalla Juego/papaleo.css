@@ -15,44 +15,39 @@ body{
     position: fixed;
     right: 0;
     top: 0;
-    height: 80%;
+    height: 77%;
     background: rgb(99, 5, 5);
     color: white;
-    padding: 0.5rem;
-    font-size: 1.25rem;
+    padding: 1rem;
+    font-size: 2rem;
     font-family: "Pixelify Sans", sans-serif;
     display: flex;
+    justify-content: center;
     border-radius: 0 0 0 15px;
 }
 /*Imagenes del puntaje*/
 .puntaje{
     height: 3.5rem;
-    position: absolute;
-    margin-left: 0.3125rem; 
 }
 /*Linea separadora*/
 .linea{
     height: 100%;
-    width: 0.2rem;
+    width: 0.5rem;
     margin-top: 0;
     background-color: rgb(255, 255, 255);
     margin-right: 1rem;
     margin-left: 1rem;
 }
-/*Conjunto de Imagenes del puntaje*/
-#ellos{
-    margin-right: 0.5rem;
-    font-size: 1.5rem;
-    padding-bottom: 6.25rem;
+.puntajeDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
 }
+
 #nos{
-    margin-right: 0.5rem;
-    font-size: 1.5rem;
-    margin-left: 0.5rem;
+    padding: 0 1.17rem 0 1.17rem;
 }
-
-
-
 /*Carta del Bot*/
 .cartaoponente{
     width: 5rem;
@@ -332,11 +327,11 @@ body{
     margin-top: 8rem;
 }
 .M_P2{
-    margin-left: 65rem;
+    margin-left: 60rem;
     margin-top: 20rem;
 }
 .T_P2{
-    margin-left: 66rem;
+    margin-left: 61 rem;
     margin-top: 22rem;
 }
 
