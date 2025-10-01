@@ -38,16 +38,78 @@ body{
     margin-right: 1rem;
     margin-left: 1rem;
 }
+/*Div para tener la imagenes simetricas*/
 .puntajeDiv{
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
 }
-
+/*El marcador es simétrico*/
 #nos{
     padding: 0 1.17rem 0 1.17rem;
 }
+
+/*Texto Turno*/
+#Turno{
+    position: fixed;
+    font-size: 1.5rem; 
+    font-family: "Pixelify Sans", sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(99, 5, 5);
+    padding: 1rem;
+    border: solid 0.3125rem;
+    border-color: black;
+    border-radius: 0 0 20px 0;
+}
+/*Todo el div del menu*/
+.MenuContainer {
+    position: fixed;
+    top: 4rem;
+    left: 1rem;
+  }
+/*Logo del menu*/
+  .Menu {
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+/*div donde estan botones*/
+  .BarraMenu {
+    display: flex;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    padding: 10px;
+    font-size: 15px;
+    width: 10rem;
+    margin-left: -1rem;
+  }
+  /*Clase de los botones*/
+  .BotonesMenu{
+    transition: all 0.5s;
+    font-family: "Pixelify Sans", sans-serif;
+    padding: 5px 15px 5px 15px;
+    font-size: 20px;
+    border: solid 2px;
+    border-radius: 5px;
+  }
+  .BotonesMenu:hover{
+    transform: scale(1.1);
+  }
+/*Mostrar menu al hover el logo menu*/
+  .MenuContainer:hover .BarraMenu {
+    display: block;
+  }
+/*Agrandar menu*/
+  .Menu:hover{
+      transform: scale(1.1);
+  }
+
+
 /*Carta del Bot*/
 .cartaoponente{
     width: 5rem;
@@ -110,21 +172,6 @@ body{
 
 
 
-/*Texto Turno*/
-#Turno{
-    position: absolute;
-    margin-left: 0.625rem;
-    font-size: 1.5rem; 
-    font-family: "Pixelify Sans", sans-serif;
-    font-weight: bold;
-    color: white;
-    margin:-0.9375rem;
-    background-color: rgb(99, 5, 5);
-    padding: 1.875rem;
-    border: solid 0.3125rem;
-    border-color: black;
-    border-radius: 20px;
-}
 
 .Aceptar{
     display: none;
@@ -247,48 +294,6 @@ body{
 }
 
 
-.MenuContainer {
-    position: fixed;
-    top: 5rem;
-    left: 1rem;
-    display: inline-block;
-  }
-  .Menu {
-    color: white;
-    font-size: 50px;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.5s;
-  }
-  
-  .BarraMenu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: -1rem;
-    width: 250px;
-    color: white;
-    padding: 10px;
-    font-size: 15px;
-    font-family: "Pixelify Sans", sans-serif;
-  }
-  .BotonesMenu{
-    transition: all 0.5s;
-    font-family: "Pixelify Sans", sans-serif;
-    padding: 10px 30px 10px 30px;
-    font-size: 30px;
-  }
-  .BotonesMenu:hover{
-    transform: scale(1.1);
-    margin-left: 1rem
-  }
-  
-  .MenuContainer:hover .BarraMenu {
-    display: block;
-  }
-  .Menu:hover{
-      transform: scale(1.2);
-  }
 
 
 /*Decoraciones:*/
@@ -335,18 +340,13 @@ body{
     margin-top: 22rem;
 }
 
-
-
-
-
-
+/*Imagenes decorativas*/
 /*Mate*/
 #Mate{
     position: absolute;
     width: 7.5rem;
     margin-left: 20rem;
     margin-top: 1.5rem;
-    image-rendering: pixelated;
 }
 /*Don Satur*/
 #Medialuna{

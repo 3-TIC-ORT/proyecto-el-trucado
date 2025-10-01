@@ -1,3 +1,10 @@
+//Funcionalidad de los botones
+let Volver = document.getElementById("Volver")
+Volver.addEventListener("click", function(){
+    window.location.href = "../Pantalla Principal/Inicio.html"
+})
+
+
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
 
