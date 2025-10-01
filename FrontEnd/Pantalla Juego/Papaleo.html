@@ -51,33 +51,40 @@
     <img id="Mate" src="IMAGENES/Mate.png" alt="Mate de Yerba">
     <img id="Medialuna" src="IMAGENES/Medialuna.png" alt="Imagen de Medialuna Insana">
     
-    <button id="carta6" class="cartaoponente"></button>
-    <button id="carta7" class="cartaoponente"></button>
-    <button id="carta8" class="cartaoponente"></button>
-    <button id="carta9" class="cartaoponente"></button>
-    <button id="carta10" class="cartaoponente"></button>
-    <br>
-    <button id="CCE1" class="CartasCentro"></button>
-    <button id="CCE2" class="CartasCentro"></button>
-    <button id="CCE3" class="CartasCentro"></button>
-    <br>
-    <button id="CCN1" class="CartasCentro"></button>
-    <button id="CCN2" class="CartasCentro"></button>
-    <button id="CCN3" class="CartasCentro"></button>
-    <br>
-    <button id="carta1" class="carta2"></button>
-    <button id="carta2" class="carta2"></button>
-    <button id="carta3" class="carta2"></button>
-    <button id="carta4" class="carta2"></button>
-    <button id="carta5" class="carta2"></button> 
-    <br>
+    <div class="ContenedorCartas">
+        <button id="carta6" class="CartaOponente"></button>
+        <button id="carta7" class="CartaOponente"></button>
+        <button id="carta8" class="CartaOponente"></button>
+        <button id="carta9" class="CartaOponente"></button>
+        <button id="carta10" class="CartaOponente"></button>
+    </div>
+
+    <div class="ContenedorCartas Centro">
+        <button id="CCE1" class="CartasCentro"></button>
+        <button id="CCE2" class="CartasCentro"></button>
+        <button id="CCE3" class="CartasCentro"></button>
+    </div>
+    <div class="ContenedorCartas Centro">
+        <button id="CCN1" class="CartasCentro"></button>
+        <button id="CCN2" class="CartasCentro"></button>
+        <button id="CCN3" class="CartasCentro"></button>
+    </div>
+
+    <div class="ContenedorCartas Jugador">
+        <button id="carta1" class="CartaJugador"></button>
+        <button id="carta2" class="CartaJugador"></button>
+        <button id="carta3" class="CartaJugador"></button>
+        <button id="carta4" class="CartaJugador"></button>
+        <button id="carta5" class="CartaJugador"></button> 
+    </div>
         <button id="QUIERO" class="Aceptar">QUIERO</button>
         <button id="NOQUIERO" class="Aceptar">NO <br> QUIERO</button>
+    <div class="BotonesInferiores">
         <button id="truco" class="BarraInferiorBTN"> TRUCO </button>
         <button id="envido" class="BarraInferiorBTN"> ENVIDO </button>
         <button id="flor" class="BarraInferiorBTN"> FLOR </button>
         <button id="irmazo" class="BarraInferiorBTN"> MAZO </button>
-        
+    </div>
     <script src="papaleo.js" ></script>
 </body>
 </html>
