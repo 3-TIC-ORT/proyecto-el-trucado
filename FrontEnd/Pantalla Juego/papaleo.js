@@ -643,6 +643,7 @@ truco.addEventListener("click", function(){
             truco.classList.add("BarraInferiorBTN")
 
             envido.classList.remove("BarraInferiorBTN-NH")
+            mazo.style.display = 'block'
         }
     }, 500)
 })
@@ -661,7 +662,9 @@ envido.addEventListener("click", function(){
             flor.classList.add("PalabrasLargas")
             flor.classList.remove("BarraInferiorBTN")
             flor.classList.remove("BarraInferiorBTN-NH")
-
+            
+            //Ocultar boton mazo
+            mazo.style.display = 'none'
             Regresar = true
             BotonEnvido = true
 
