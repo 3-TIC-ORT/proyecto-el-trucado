@@ -3,6 +3,15 @@ let Volver = document.getElementById("Volver")
 Volver.addEventListener("click", function(){
     window.location.href = "../Pantalla Principal/Inicio.html"
 })
+let MenuPrincipal = document.getElementById("MenuPrincipal")
+MenuPrincipal.addEventListener("click", function(){
+    window.location.href = "../Pantalla Principal/Inicio.html"
+})
+let PlayAgain = document.getElementById("PlayAgain")
+PlayAgain.addEventListener("click", function(){
+    location.reload()
+})
+
 
 
 //Variable que sirve para la función de agregar puntos
@@ -406,16 +415,13 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     //Revisa si ya se gano la mano y se suman los puntos
     setTimeout(function() {
         if (empatadas === 3){
-            alert ("Empate")
             resetearRonda()
         }
         else if (N_ganadas >= 2){
-            alert("Gana Nosotros")
             GuardarPuntos("NOS", 1)
             resetearRonda()
         }
         else if (E_ganadas >= 2){
-            alert("Gana Bot")
             GuardarPuntos("ELLOS", 1)
             resetearRonda()
         }
@@ -633,6 +639,7 @@ truco.addEventListener("click", function(){
             flor.textContent = "FLOR"
             flor.classList.remove("PalabrasLargas")
             flor.classList.add("BarraInferiorBTN")
+            actualizarBoton()
 
             Regresar = false
             BotonEnvido = false
@@ -692,6 +699,10 @@ envido.addEventListener("click", function(){
                 truco.classList.add("BarraInferiorBTN")
                  
                 envido.classList.remove("BarraInferiorBTN-NH")
+                envido.classList.remove("PalabrasLargas")
+
+                //Mostrar boton mazo
+                mazo.style.display = 'block'
             }
         }
     }, 500)
@@ -716,6 +727,9 @@ flor.addEventListener("click", function(){
         truco.classList.remove("PalabrasLargas")
         truco.classList.remove("PalabrasLargas-NH")
         truco.classList.add("BarraInferiorBTN")
+
+        //Mostrar boton mazo
+        mazo.style.display = 'block'
     }
     else if (BotonEnvido === false){
         alert ("Flor")
@@ -802,7 +816,7 @@ if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo ==
 }
 
 
-
+let DERROTA = document.getElementById("DERROTA")
 
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
@@ -812,11 +826,17 @@ function GuardarPuntos(id, sumar) { //
     }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 30){
-        setTimeout(function() {
-            location.reload()
-        }, 1000)
-        
+    if (puntosAcumulados[id] >= 1){
+        setTimeout(function(){
+            if (id === "NOS"){
+                alert("Has ganado")
+                location.reload()
+            }
+            else if (id === "ELLOS"){
+                DERROTA.style.display = "flex"
+            }
+        }, 500)
+       
     }
 }
 //Función que se encarga de sumar puntos, pero no debe llamarsela directamente

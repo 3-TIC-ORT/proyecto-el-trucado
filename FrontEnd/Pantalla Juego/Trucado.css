@@ -348,7 +348,6 @@ body{
 /*Pantalla de Perdida*/
 .PantallaPerdida{
     position: fixed;
-    display: flex;
     display: none;
     justify-content: center;
     align-items: center;
@@ -407,9 +406,6 @@ body{
     font-size: 2rem;
     font-family: "Pixelify Sans", sans-serif;
     transition: all 0.5s;
-}
-.BotonesEstadisticas:hover{
-    font-size: 2.5rem;
 }
 
 .CaritaTriste{
