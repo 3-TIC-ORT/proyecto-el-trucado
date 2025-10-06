@@ -348,6 +348,10 @@ body{
 /*Pantalla de Perdida*/
 .PantallaPerdida{
     position: fixed;
+    display: flex;
+    display: none;
+    justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     z-index: 2;
@@ -363,7 +367,72 @@ body{
 }
 .CuadradoPerdida{
     position: absolute;
-    background-color: gray;
-    height: 10rem;
+    background-color: rgb(172, 172, 172);
+    height: 30rem;
+    width: 60rem;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.GameOver{
+    color: red;
+    font-size: 6rem;
+    transition: all 0.5s;
+}
+.GameOver:hover{
+    color: rgb(200, 0, 0);
+}
+
+.BarraMedia{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+}
+.Estadisticas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.BotonesEstadisticas{
+    width: 25rem;
+    padding: 0.5rem;
+    border-radius: 30px;
+    border: solid 5px;
+    font-size: 2rem;
+    font-family: "Pixelify Sans", sans-serif;
+    transition: all 0.5s;
+}
+.BotonesEstadisticas:hover{
+    font-size: 2.5rem;
+}
+
+.CaritaTriste{
+    width: 10rem;
+}
+
+.BotonesPerdidosDIV{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+.BotonesPerdidos{
     width: 20rem;
+    padding: 0.5rem;
+    border-radius: 30px;
+    border: solid black 6px;
+    font-size: 2rem;
+    background-color: red;
+    color: white;
+    font-family: "Pixelify Sans", sans-serif;
+    transition: all 0.5s;
+}
+.BotonesPerdidos:hover{
+    transform: scale(1.1);
 }
