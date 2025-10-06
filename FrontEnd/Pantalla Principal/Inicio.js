@@ -11,8 +11,8 @@ cuadrado.addEventListener("click", function(){
         Fondo = true
     }
 })
-8
+
 let Jugar = document.getElementById("Jugar")
 Jugar.addEventListener("click", function(){
-    window.location.href = "../Pantalla Juego/Papaleo.html"
+    window.location.href = "../Pantalla Juego/Trucado.html"
 })

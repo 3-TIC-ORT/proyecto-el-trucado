@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 
     <title>Trucado</title>
-    <link rel="stylesheet" href="papaleo.css">
+    <link rel="stylesheet" href="Trucado.css">
     <link rel="icon" type="image/png" href="IMAGENES/Logo Trucado.png">
 </head>
 <body>
@@ -21,7 +21,9 @@
             <img id="NOS5" class="puntaje">   
             <img id="NOS6" class="puntaje"> 
         </div>
+
         <div class="linea"></div>
+
         <div class="puntajeDiv" id="ellos">
             <div class="CuadradoNombres"> ELLOS </div>
             <img id="ELLOS1" class="puntaje">   
@@ -32,9 +34,11 @@
             <img id="ELLOS6" class="puntaje"> 
         </div>
     </div>
+
     <div id="Turno">
         Turno: Jugador
     </div>
+
     <div class="MenuContainer">
         <h1 class="Menu">☰</h1>
         <div class="BarraMenu">
@@ -43,14 +47,19 @@
         </div>
     </div>
 
-
     <div id="Mazo-Texto">
         <img id="Mazo" src="IMAGENES/Mazo Reposo.png" alt="Mazo">
         <h1 id="TEXTO">  <br> EL MAZO <br> NO SE TOCA <br> >:( </h1>
     </div>
+
     <img id="Mate" src="IMAGENES/Mate.png" alt="Mate de Yerba">
     <img id="Medialuna" src="IMAGENES/Medialuna.png" alt="Imagen de Medialuna Insana">
     
+    <div class="BotonesVoluntad">
+        <button id="QUIERO" class="Voluntad">QUIERO</button>
+        <button id="NOQUIERO" class="Voluntad">NO QUIERO</button>
+    </div>
+
     <div class="ContenedorCartas">
         <button id="carta6" class="CartaOponente"></button>
         <button id="carta7" class="CartaOponente"></button>
@@ -64,6 +73,7 @@
         <button id="CCE2" class="CartasCentro"></button>
         <button id="CCE3" class="CartasCentro"></button>
     </div>
+
     <div class="ContenedorCartas Centro">
         <button id="CCN1" class="CartasCentro"></button>
         <button id="CCN2" class="CartasCentro"></button>
@@ -77,14 +87,17 @@
         <button id="carta4" class="CartaJugador"></button>
         <button id="carta5" class="CartaJugador"></button> 
     </div>
-        <button id="QUIERO" class="Aceptar">QUIERO</button>
-        <button id="NOQUIERO" class="Aceptar">NO <br> QUIERO</button>
+
     <div class="BotonesInferiores">
         <button id="truco" class="BarraInferiorBTN"> TRUCO </button>
         <button id="envido" class="BarraInferiorBTN"> ENVIDO </button>
         <button id="flor" class="BarraInferiorBTN"> FLOR </button>
         <button id="irmazo" class="BarraInferiorBTN"> MAZO </button>
     </div>
-    <script src="papaleo.js" ></script>
+
+    <main class="PantallaPerdida">
+        <div class="CuadradoOpaco"></div>
+    </main>
+    <script src="Trucado.js" ></script>
 </body>
 </html>
