@@ -15,39 +15,42 @@ body {
 /*TRUCADO*/
 .Titulo {
     text-align: center;
-    font-size: 120px;
+    font-size: 10rem;
     color: white;
     border: solid 10px;
-    margin: auto;
-    margin-top: 8rem;
-    width: 45%;
+    margin-left: 5rem;
+    margin-top: 6rem;
+    width: 60%;
 }
 
 /*El flex que contiene a los botones*/
 .Botones {
     margin-top: 5rem;
+    margin-left: 10.5rem;
     display: flex;
-    justify-content: center;
-    gap: 30px;
+    gap: 3rem;
 }
 
 /*Clases individuales de los botones*/
 .btn {
-    font-family: "Pixelify Sans", sans-serif;
-    background-color: rgb(0, 88, 10);
-    color: white;
-    padding: 10px 40px 10px 40px;
-    font-size: 40px;
+    background-size: cover;       /* ajusta para cubrir todo el botón */
+    background-position: center;  /* centra la imagen */
+    background-repeat: no-repeat; /* evita repeticiones */
+    height: 8rem;
+    border: none;
     cursor: pointer;
-    border-radius: 10px;
     transition: all 0.5s;
-    border: solid 2px;
 }
 #Colección {
-    background-color: rgb(105, 40, 0); 
+    background-image: url(img/Boton\ de\ Colección.png);
+    width: 20rem;
+}
+#Jugar{
+    background-image: url(img/Boton\ de\ Jugar.png);
+    width: 17.3rem;
 }
 .btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 .MenuContainer {
@@ -88,9 +91,8 @@ body {
 #cuadrado{
     position: absolute;
     opacity: 0;
-    background-color: black;
-    height: 2rem;
-    width: 2rem;
-    margin-left: 69.5rem;
-    margin-top: 3rem;
+    height: 3rem;
+    width: 3rem;
+    margin-left: 67.7rem;
+    margin-top: 1rem;
 }
