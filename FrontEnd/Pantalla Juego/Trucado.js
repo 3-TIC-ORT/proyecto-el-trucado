@@ -189,7 +189,7 @@ function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
   
 
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
-function CartasCentro(quien, numero, palo, cartax) { 
+function CartasCentro(quien, numero, palo) { 
 //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
     let CartasCentro2 = document.getElementById("CC" + quien + "2")
@@ -448,7 +448,7 @@ click1.addEventListener("click", function(){
         cartastiradas++ 
         if (cartastiradas <= 3){ 
             click1.classList.add("oculto") 
-            CartasCentro("N", carta1.numero, carta1.palo, carta1) 
+            CartasCentro("N", carta1.numero, carta1.palo) 
             guardarCartaCentro(carta1, "N") 
             verificarCartas() 
         } 
@@ -459,7 +459,7 @@ click2.addEventListener("click", function(){
     if (turno === "Jugador"){ cartastiradas++ 
         if (cartastiradas <= 3){ 
             click2.classList.add("oculto") 
-            CartasCentro("N", carta2.numero, carta2.palo, carta2) 
+            CartasCentro("N", carta2.numero, carta2.palo) 
             guardarCartaCentro(carta2, "N") 
             verificarCartas() 
         } 
@@ -471,7 +471,7 @@ click3.addEventListener("click", function(){
         cartastiradas++ 
         if (cartastiradas <= 3){ 
             click3.classList.add("oculto") 
-            CartasCentro("N", carta3.numero, carta3.palo, carta3) 
+            CartasCentro("N", carta3.numero, carta3.palo) 
             guardarCartaCentro(carta3, "N") 
             verificarCartas() 
         } 
@@ -483,7 +483,7 @@ click4.addEventListener("click", function(){
         cartastiradas++ 
         if (cartastiradas <= 3){ 
             click4.classList.add("oculto") 
-            CartasCentro("N", carta4.numero, carta4.palo, carta4) 
+            CartasCentro("N", carta4.numero, carta4.palo) 
             guardarCartaCentro(carta4, "N") 
             verificarCartas() 
         } 
@@ -495,7 +495,7 @@ click5.addEventListener("click", function(){
         cartastiradas++ 
         if (cartastiradas <= 3){ 
             click5.classList.add("oculto") 
-            CartasCentro("N", carta5.numero, carta5.palo, carta5) 
+            CartasCentro("N", carta5.numero, carta5.palo) 
             guardarCartaCentro(carta5, "N") 
             verificarCartas() 
         } 
@@ -513,7 +513,7 @@ let cartastiro = 0
             cartastiro++
             if (cartastiro <= 3){
                 click6.classList.add("oculto")
-                CartasCentro("E", carta6.numero, carta6.palo, carta6)
+                CartasCentro("E", carta6.numero, carta6.palo)
                 guardarCartaCentro(carta6, "E")
                 verificarCartas()
             }
@@ -525,7 +525,7 @@ let cartastiro = 0
             cartastiro++
             if (cartastiro <= 3){
                 click7.classList.add("oculto")
-                CartasCentro("E", carta7.numero, carta7.palo, carta7)
+                CartasCentro("E", carta7.numero, carta7.palo)
                 guardarCartaCentro(carta7, "E")
                 verificarCartas()
             }
@@ -537,7 +537,7 @@ let cartastiro = 0
             cartastiro++
             if (cartastiro <= 3){
                 click8.classList.add("oculto")
-                CartasCentro("E", carta8.numero, carta8.palo, carta8)
+                CartasCentro("E", carta8.numero, carta8.palo)
                 guardarCartaCentro(carta8, "E")
                 verificarCartas()
             }
@@ -549,7 +549,7 @@ let cartastiro = 0
             cartastiro++
             if (cartastiro <= 3){
                 click9.classList.add("oculto")
-                CartasCentro("E", carta9.numero, carta9.palo, carta9)
+                CartasCentro("E", carta9.numero, carta9.palo)
                 guardarCartaCentro(carta9, "E")
                 verificarCartas()
             }
@@ -561,7 +561,7 @@ let cartastiro = 0
             cartastiro++
             if (cartastiro <= 3){
                 click10.classList.add("oculto")
-                CartasCentro("E", carta10.numero, carta10.palo, carta10)
+                CartasCentro("E", carta10.numero, carta10.palo)
                 guardarCartaCentro(carta10, "E" )
                 verificarCartas()
             }
@@ -596,7 +596,7 @@ function TirarCartasBot (numerocarta){ //Del 6 y al 10 orden de izquierda a dere
         }
         let BotID = numerocarta - 1
         let cartaX = cartas[BotID]
-        CartasCentro("E", cartaX.numero, cartaX.palo, cartaX)
+        CartasCentro("E", cartaX.numero, cartaX.palo)
         guardarCartaCentro(cartaX, "E")
         verificarCartas()
     }, 1000)  

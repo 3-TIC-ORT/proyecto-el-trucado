@@ -113,9 +113,11 @@ body{
     height: 11rem;
     width: 7rem;
     transition: all 0.5s;
+    border-radius: 15px;
 }
 .Tarot:hover{
     transform: scale(1.1);
+    border: solid 5px;
 }
 
 
@@ -139,7 +141,6 @@ body{
     font-family: "Pixelify Sans", sans-serif;
     font-size: 1.5rem;
 }
-
 .Titulo{
     color: white;
     font-weight: bold;
@@ -149,7 +150,6 @@ body{
     top: -2rem;
     left: 0;
 }
-
 .Valor{
     color: white;
     font-weight: bold;
@@ -159,7 +159,6 @@ body{
     bottom: 0;
     right: 0;
 }
-
 .Separador{
     position: absolute;
     top: -2.5rem;
@@ -168,3 +167,34 @@ body{
     background-color: white;
 }
 
+
+.Oculto{
+    display: none;
+}
+.Propiedad{
+    background-color: white;
+    height: 11rem;
+    width: 7rem;
+    transition: all 0.5s;
+    border-radius: 20px;
+}
+.Propiedad:hover{
+    transform: scale(1.2);
+    border: solid 3px;
+}
+
+
+.SaldoInsuficiente{
+    position: absolute;
+    height: 16rem;
+    width: 30rem;
+    background-image: url(Imagenes/SaldoInsuficiente.png);
+    background-size: cover;
+    transition: all 0.5s;
+    margin-top: 10rem;
+    margin-left: 20rem;
+    display: none;
+}
+.SaldoInsuficiente:hover{
+    transform: scale(1.3);
+}
