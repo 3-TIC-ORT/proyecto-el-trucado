@@ -14,7 +14,7 @@ body{
     right: 0;
     top: 0;
     height: 95%;
-    background: rgb(99, 5, 5);
+    background: #4B2C17;
     color: white;
     padding: 1rem;
     font-size: 2rem;
@@ -134,6 +134,7 @@ body{
     font-weight: bold;
     font-family: "Pixelify Sans", sans-serif;
     font-size: 1.5rem;
+    margin-top: -1rem;
 }
 .Titulo{
     color: white;
@@ -213,6 +214,8 @@ body{
       0px 20px
     );
   }
+
+
 
   .BordeNegro,
   .BordeNegro--wrapper {
@@ -310,6 +313,8 @@ body{
   .BordeNegro::after {
     margin: -10px;
   }
+
+
 
   .BordeRojo,
   .BordeRojo--wrapper {
@@ -410,6 +415,8 @@ body{
   }
 
 
+
+  
   .PixelTarot,
   .PixelTarot--wrapper {
     clip-path: polygon(0px calc(100% - 12px),

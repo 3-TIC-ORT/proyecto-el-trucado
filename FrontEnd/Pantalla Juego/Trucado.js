@@ -807,6 +807,7 @@ if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo ==
 
 
 let DERROTA = document.getElementById("DERROTA")
+let VICTORIA = document.getElementById("VICTORIA")
 
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
@@ -819,8 +820,7 @@ function GuardarPuntos(id, sumar) { //
     if (puntosAcumulados[id] >= 1){
         setTimeout(function(){
             if (id === "NOS"){
-                alert("Has ganado")
-                location.reload()
+                VICTORIA.style.display = "flex"
             }
             else if (id === "ELLOS"){
                 DERROTA.style.display = "flex"
