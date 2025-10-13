@@ -571,22 +571,12 @@ let cartastiro = 0
 
 
 
-//Funcion que selecciona numero random para que el BOT tire cartas aleatorias, PROTOTIPO
+//Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
-    // Repetir hasta encontrar una carta que no haya usado
-    let NumeroBot
-    do {
-        NumeroBot = Math.floor(Math.random() * 5) + 6   // valores 6 a 10
-    }
-    while (cartasUsadasBot.includes(NumeroBot))
-    
-    // Guardar la carta como usada
-    cartasUsadasBot.push(NumeroBot)
-    
-    //Tirar la carta con la función
-    TirarCartasBot(NumeroBot)
 }
-//Tirar cartas del Bot
+
+
+//Tirar cartas del Bot (funcion parcial para probar y que se pueda jugar)
 function TirarCartasBot (numerocarta){ //Del 6 y al 10 orden de izquierda a derecha
     setTimeout(function() {
         click = document.getElementById("carta" + numerocarta)
