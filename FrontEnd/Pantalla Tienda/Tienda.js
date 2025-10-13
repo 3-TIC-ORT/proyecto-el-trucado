@@ -1,6 +1,6 @@
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
-GuardarPuntos("NOS", 2)
+GuardarPuntos("NOS", 5)
 
 
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite
@@ -97,10 +97,8 @@ Venta1.addEventListener("click", function(){
     }
     else{
         SaldoInsuficiente.style.display =  'block'
-        Venta1.style.border = "5px solid rgba(176, 34, 34, 1)"
         setTimeout(function() {
             SaldoInsuficiente.style.display =  'none'
-            Venta1.style.border = "none"
         }, 1000)
     }
 })
@@ -111,10 +109,8 @@ Venta2.addEventListener("click", function(){
     }
     else{
         SaldoInsuficiente.style.display =  'block'
-        Venta2.style.border = "5px solid rgba(176, 34, 34, 1)"
         setTimeout(function() {
             SaldoInsuficiente.style.display =  'none'
-            Venta2.style.border = "none"
         }, 1000)
     }
 })
@@ -125,10 +121,8 @@ Venta3.addEventListener("click", function(){
     }
     else{
         SaldoInsuficiente.style.display =  'block'
-        Venta3.style.border = "5px solid rgba(176, 34, 34, 1)"
         setTimeout(function() {
             SaldoInsuficiente.style.display =  'none'
-            Venta3.style.border = "none"
         }, 1000)
     }
 })
