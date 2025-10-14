@@ -3,13 +3,19 @@ let Volver = document.getElementById("Volver")
 Volver.addEventListener("click", function(){
     window.location.href = "../Pantalla Principal/Inicio.html"
 })
-let MenuPrincipal = document.getElementById("MenuPrincipal")
-MenuPrincipal.addEventListener("click", function(){
-    window.location.href = "../Pantalla Principal/Inicio.html"
+
+let MenuPrincipal = document.querySelectorAll(".MenuPrincipal")
+MenuPrincipal.forEach(boton => {
+    boton.addEventListener("click", function(){
+        window.location.href = "../Pantalla Principal/Inicio.html"
+    })
 })
-let PlayAgain = document.getElementById("PlayAgain")
-PlayAgain.addEventListener("click", function(){
-    location.reload()
+
+let PlayAgain = document.querySelectorAll(".PlayAgain")
+PlayAgain.forEach(boton => {
+    boton.addEventListener("click", function(){
+        location.reload()    
+    })
 })
 
 
