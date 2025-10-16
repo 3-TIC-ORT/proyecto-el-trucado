@@ -1,6 +1,9 @@
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
+
+//Parte donde se encarga de guardar los puntos del juego
 GuardarPuntos("NOS", 5)
+GuardarPuntos("ELLOS", 7)
 
 
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite

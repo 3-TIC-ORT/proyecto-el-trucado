@@ -110,6 +110,9 @@ function resetearRonda() {
     crearmazo()
     TXTurno.textContent = "Turno: " + turno
     actualizarBoton()
+
+    //Se verifica si es momento de la tienda
+    VerificarTienda()
 }
 
 //Función que crea las 10 cartas y les pone imagenes solo a las nuestras
@@ -825,6 +828,26 @@ if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo ==
 }
 }
 
+//Cantidad de tiendas en la partida
+let CantidadTienda = 0
+//Funcion que se encarga de llevar a la pantalla tienda
+function VerificarTienda(){
+
+    if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
+        window.location.href = "../Pantalla Tienda/Tienda.html"
+        CantidadTienda++
+    }
+    else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15)){
+        window.location.href = "../Pantalla Tienda/Tienda.html"
+        CantidadTienda++
+    }
+    else if (CantidadTienda === 2 && (puntosAcumulados["NOS"] >= 25 || puntosAcumulados["ELLOS"] >= 25)){
+        window.location.href = "../Pantalla Tienda/Tienda.html"
+        CantidadTienda++
+    }
+}
+
+
 
 let DERROTA = document.getElementById("DERROTA")
 let VICTORIA = document.getElementById("VICTORIA")
@@ -837,7 +860,7 @@ function GuardarPuntos(id, sumar) { //
     }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 1){
+    if (puntosAcumulados[id] >= 30){
         setTimeout(function(){
             if (id === "NOS"){
                 VICTORIA.style.display = "flex"
