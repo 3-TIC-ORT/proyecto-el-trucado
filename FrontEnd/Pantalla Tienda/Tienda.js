@@ -174,6 +174,11 @@ function TarotCompradas(Tarot, Valor) {
 }
 
 
+let FinalizarCompra = document.getElementById("FinalizarCompra")
+FinalizarCompra.addEventListener("click", function(){
+    window.location.href = "../Pantalla Juego/Trucado.html"
+})
+
 
 
 //Llamar a esta función para agregar puntos y sumarlos
