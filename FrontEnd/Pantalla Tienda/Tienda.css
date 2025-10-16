@@ -188,6 +188,27 @@ body{
     display: none;
 }
 
+.VolveraJuego{
+  position: fixed;
+  top: 0,.5rem;
+  left: 0.6rem;
+  height: 9rem;
+  width: 18rem;
+  background-image: url(Imagenes/Finalizar\ Compra\ Div.png);
+  background-size: cover;
+}
+#FinalizarCompra{
+  height: 6rem;
+  width: 12rem;
+  background-image: url(Imagenes/FinalizarCompra.png);
+  background-size: cover;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  transition: all 0.5s;
+}
+#FinalizarCompra:hover{
+  transform: scale(1.2);
+}
 
 /*Clases de Bordes Curvos*/
 .Base10 {
