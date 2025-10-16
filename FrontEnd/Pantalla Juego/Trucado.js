@@ -579,6 +579,20 @@ let cartastiro = 0
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
+
+if (turno === "Bot"){
+    let CartasBot = [carta6, carta7, carta8, carta9, carta10];
+    let CartaElegidaBot = null
+    let CartasDisponiblesBot = CartasBot.filter((_,i) => !cartasUsadasBot.includes(i))
+
+    if (CartasDisponiblesBot > 0){
+
+        guardarCartaCentro.filter
+
+
+    }
+}
+
 }
 
 
