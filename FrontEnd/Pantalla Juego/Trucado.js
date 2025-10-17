@@ -21,7 +21,10 @@ PlayAgain.forEach(boton => {
 
 
 //Variable que sirve para la función de agregar puntos
-let puntosAcumulados = {}; // Guarda puntos acumulados por id
+let puntosAcumulados = {
+    NOS: 0,
+    ELLOS: 0
+}; // Guarda puntos acumulados por id
 
 // Array global para guardar las cartas que el bot ya tiró en esta mano
 let cartasUsadasBot = []
@@ -848,9 +851,11 @@ function VerificarTienda(){
 }
 
 
-
 let DERROTA = document.getElementById("DERROTA")
 let VICTORIA = document.getElementById("VICTORIA")
+
+let PuntosHechos = document.getElementById("PuntosHechos")
+let PuntosBot = document.getElementById("PuntosBot")
 
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
@@ -860,12 +865,14 @@ function GuardarPuntos(id, sumar) { //
     }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 30){
+    if (puntosAcumulados[id] >= 2){
         setTimeout(function(){
             if (id === "NOS"){
+                PuntosBot.textContent = "Puntos del Bot: " + puntosAcumulados["ELLOS"]
                 VICTORIA.style.display = "flex"
             }
             else if (id === "ELLOS"){
+                PuntosHechos.textContent = "Puntos Hechos: " + puntosAcumulados["NOS"]
                 DERROTA.style.display = "flex"
             }
         }, 500)
