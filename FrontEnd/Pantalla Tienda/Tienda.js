@@ -73,7 +73,6 @@ Venta3.addEventListener("mouseover", function(){
     Valor.textContent = "Valor: " + Modificadores[Modificador3].valor
 })
 
-
 //Cuando se saca el mouse se saca la descripción
 Venta1.addEventListener("mouseout", function(){
     Descripcion.textContent = ""
@@ -130,14 +129,20 @@ Venta3.addEventListener("click", function(){
     }
 })
 
-let TarotObtenidas = document.getElementById("TarotObtenidas")
 
+
+
+let TarotObtenidas = document.getElementById("TarotObtenidas")
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
 function TarotCompradas(Tarot, Valor) {
     //Las tarot que tenes
-    let Tarot1 = document.getElementById("Tarot1") 
-    let Tarot2 = document.getElementById("Tarot2") 
-    let Tarot3 = document.getElementById("Tarot3") 
+    Tarot1 = document.getElementById("Tarot1") 
+    Tarot2 = document.getElementById("Tarot2") 
+    Tarot3 = document.getElementById("Tarot3") 
+
+    Vender1 = document.getElementById("Vender1") 
+    Vender2 = document.getElementById("Vender2") 
+    Vender3 = document.getElementById("Vender3") 
 
     // Obtenemos los estilos computados de cada carta
     let estilo1 = window.getComputedStyle(Tarot1)
@@ -155,6 +160,7 @@ function TarotCompradas(Tarot, Valor) {
                 Tarot3.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
                 Tarot3.style.backgroundSize = "cover"
                 Tarot3.classList.remove("Oculto")
+                Vender3.classList.remove("Oculto")
                 TarotObtenidas.textContent = " 3 / 3 "
                 GuardarPuntos("NOS", -Valor)
             }
@@ -163,6 +169,7 @@ function TarotCompradas(Tarot, Valor) {
             Tarot2.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
             Tarot2.style.backgroundSize = "cover"
             Tarot2.classList.remove("Oculto")
+            Vender2.classList.remove("Oculto")
             TarotObtenidas.textContent = " 2 / 3 "
             GuardarPuntos("NOS", -Valor)
         }
@@ -171,10 +178,54 @@ function TarotCompradas(Tarot, Valor) {
         Tarot1.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
         Tarot1.style.backgroundSize = "cover"
         Tarot1.classList.remove("Oculto")
+        Vender1.classList.remove("Oculto")
         TarotObtenidas.textContent = " 1 / 3 "
         GuardarPuntos("NOS", -Valor)
     }
 }
+
+let Tarot1Selected = false
+Tarot1.addEventListener("click", function(){
+    if (Tarot1Selected === false){
+    Tarot1.classList.remove("Propiedad")
+    Tarot1.classList.add("PropiedadSeleccionada")
+    Tarot1Selected = true
+    }
+    else if (Tarot1Selected === true){
+        Tarot1.classList.add("Propiedad")
+        Tarot1.classList.remove("PropiedadSeleccionada")
+        Tarot1Selected = false
+        }
+})
+
+let Tarot2Selected = false
+Tarot2.addEventListener("click", function(){
+    if (Tarot2Selected === false){
+    Tarot2.classList.remove("Propiedad")
+    Tarot2.classList.add("PropiedadSeleccionada")
+    Tarot2Selected = true
+    }
+    else if (Tarot2Selected === true){
+        Tarot2.classList.add("Propiedad")
+        Tarot2.classList.remove("PropiedadSeleccionada")
+        Tarot2Selected = false
+        }
+})
+
+let Tarot3Selected = false
+Tarot3.addEventListener("click", function(){
+    if (Tarot3Selected === false){
+    Tarot3.classList.remove("Propiedad")
+    Tarot3.classList.add("PropiedadSeleccionada")
+    Tarot3Selected = true
+    }
+    else if (Tarot3Selected === true){
+        Tarot3.classList.add("Propiedad")
+        Tarot3.classList.remove("PropiedadSeleccionada")
+        Tarot3Selected = false
+        }
+})
+
 
 
 let FinalizarCompra = document.getElementById("FinalizarCompra")

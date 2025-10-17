@@ -170,9 +170,32 @@ body{
     height: 11rem;
     width: 7rem;
     transition: all 0.5s;
+    z-index: 2;
 }
 .Propiedad:hover{
-    transform: scale(1.1);
+  transform: translate(0, -10px) scale(1.1);
+}
+.PropiedadSeleccionada{
+    height: 15rem;
+    width: 9rem;
+    z-index: 0;
+    transition: all 0.5s;
+}
+
+.ClaseVender{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  gap: 4rem;
+}
+.Vender{
+  z-index: 1;
+  width: 6.5rem;
+  height: 2rem;
+  font-size: 1.5rem;
+  background-color: red;
+  font-family: "Pixelify Sans", sans-serif;
 }
 
 
