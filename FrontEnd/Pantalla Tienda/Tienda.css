@@ -178,25 +178,27 @@ body{
 .PropiedadSeleccionada{
     height: 15rem;
     width: 9rem;
-    z-index: 0;
+    z-index: 2;
     transition: all 0.5s;
 }
 
-.ClaseVender{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  gap: 4rem;
-}
 .Vender{
-  z-index: 1;
-  width: 6.5rem;
-  height: 2rem;
-  font-size: 1.5rem;
+  position: fixed;
+  left: 2rem;
+  bottom: 10rem;
+  z-index: 3;
+  width: 10rem;
+  height: 4rem;
+  font-size: 2.5rem;
   background-color: red;
   font-family: "Pixelify Sans", sans-serif;
+  border: none;
+  transition: all 0.5s;
 }
+.Vender:hover{
+  transform: scale(1.1);
+}
+
 
 
 .SaldoInsuficiente{
@@ -557,4 +559,29 @@ body{
   }
   .PixelTarot::after {
     margin: -6px;
+  }
+
+  .VenderPixel {
+    clip-path: polygon(
+      0px calc(100% - 8px),
+      4px calc(100% - 8px),
+      4px calc(100% - 4px),
+      8px calc(100% - 4px),
+      8px 100%,
+      calc(100% - 8px) 100%,
+      calc(100% - 8px) calc(100% - 4px),
+      calc(100% - 4px) calc(100% - 4px),
+      calc(100% - 4px) calc(100% - 8px),
+      100% calc(100% - 8px),
+      100% 8px,
+      calc(100% - 4px) 8px,
+      calc(100% - 4px) 4px,
+      calc(100% - 8px) 4px,
+      calc(100% - 8px) 0px,
+      8px 0px,
+      8px 4px,
+      4px 4px,
+      4px 8px,
+      0px 8px
+    );
   }

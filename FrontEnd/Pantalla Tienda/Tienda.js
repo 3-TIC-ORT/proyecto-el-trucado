@@ -2,8 +2,8 @@
 let puntosAcumulados = {}; // Guarda puntos acumulados por id
 
 //Parte donde se encarga de guardar los puntos del juego
-GuardarPuntos("NOS", 5)
-GuardarPuntos("ELLOS", 7)
+GuardarPuntos("NOS", 15)
+GuardarPuntos("ELLOS", 12)
 
 
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite
@@ -140,10 +140,6 @@ function TarotCompradas(Tarot, Valor) {
     Tarot2 = document.getElementById("Tarot2") 
     Tarot3 = document.getElementById("Tarot3") 
 
-    Vender1 = document.getElementById("Vender1") 
-    Vender2 = document.getElementById("Vender2") 
-    Vender3 = document.getElementById("Vender3") 
-
     // Obtenemos los estilos computados de cada carta
     let estilo1 = window.getComputedStyle(Tarot1)
     let estilo2 = window.getComputedStyle(Tarot2)
@@ -160,29 +156,32 @@ function TarotCompradas(Tarot, Valor) {
                 Tarot3.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
                 Tarot3.style.backgroundSize = "cover"
                 Tarot3.classList.remove("Oculto")
-                Vender3.classList.remove("Oculto")
                 TarotObtenidas.textContent = " 3 / 3 "
                 GuardarPuntos("NOS", -Valor)
+                ValorTarot3 = Valor - 1
             }
         } 
         else{
             Tarot2.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
             Tarot2.style.backgroundSize = "cover"
             Tarot2.classList.remove("Oculto")
-            Vender2.classList.remove("Oculto")
             TarotObtenidas.textContent = " 2 / 3 "
             GuardarPuntos("NOS", -Valor)
+            ValorTarot2 = Valor - 1
         }
     }
     else{
         Tarot1.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
         Tarot1.style.backgroundSize = "cover"
         Tarot1.classList.remove("Oculto")
-        Vender1.classList.remove("Oculto")
         TarotObtenidas.textContent = " 1 / 3 "
         GuardarPuntos("NOS", -Valor)
+        ValorTarot1 = Valor - 1
     }
 }
+
+
+let Vender = document.getElementById("Vender")
 
 let Tarot1Selected = false
 Tarot1.addEventListener("click", function(){
@@ -190,11 +189,22 @@ Tarot1.addEventListener("click", function(){
     Tarot1.classList.remove("Propiedad")
     Tarot1.classList.add("PropiedadSeleccionada")
     Tarot1Selected = true
+    Vender.classList.remove("Oculto")
+
+
+    Tarot2Selected = false
+    Tarot2.classList.add("Propiedad")
+    Tarot2.classList.remove("PropiedadSeleccionada")
+
+    Tarot3Selected = false
+    Tarot3.classList.add("Propiedad")
+    Tarot3.classList.remove("PropiedadSeleccionada")
     }
     else if (Tarot1Selected === true){
         Tarot1.classList.add("Propiedad")
         Tarot1.classList.remove("PropiedadSeleccionada")
         Tarot1Selected = false
+        Vender.classList.add("Oculto")
         }
 })
 
@@ -204,11 +214,22 @@ Tarot2.addEventListener("click", function(){
     Tarot2.classList.remove("Propiedad")
     Tarot2.classList.add("PropiedadSeleccionada")
     Tarot2Selected = true
+    Vender.classList.remove("Oculto")
+
+
+    Tarot1Selected = false
+    Tarot1.classList.add("Propiedad")
+    Tarot1.classList.remove("PropiedadSeleccionada")
+
+    Tarot3Selected = false
+    Tarot3.classList.add("Propiedad")
+    Tarot3.classList.remove("PropiedadSeleccionada")
     }
     else if (Tarot2Selected === true){
         Tarot2.classList.add("Propiedad")
         Tarot2.classList.remove("PropiedadSeleccionada")
         Tarot2Selected = false
+        Vender.classList.add("Oculto")
         }
 })
 
@@ -218,12 +239,46 @@ Tarot3.addEventListener("click", function(){
     Tarot3.classList.remove("Propiedad")
     Tarot3.classList.add("PropiedadSeleccionada")
     Tarot3Selected = true
+    Vender.classList.remove("Oculto")
+
+
+    Tarot1Selected = false
+    Tarot1.classList.add("Propiedad")
+    Tarot1.classList.remove("PropiedadSeleccionada")
+
+    Tarot2Selected = false
+    Tarot2.classList.add("Propiedad")
+    Tarot2.classList.remove("PropiedadSeleccionada")
     }
     else if (Tarot3Selected === true){
         Tarot3.classList.add("Propiedad")
         Tarot3.classList.remove("PropiedadSeleccionada")
         Tarot3Selected = false
+        Vender.classList.add("Oculto")
         }
+})
+
+//Boton vender
+Vender.addEventListener("click", function(){
+    if (Tarot1Selected === true){
+        Tarot1.classList.add("Oculto")
+        GuardarPuntos("NOS", ValorTarot1)
+        Tarot1Selected = false
+        Vender.classList.add("Oculto")
+    }
+    else if (Tarot2Selected === true){
+        Tarot2.classList.add("Oculto")
+        GuardarPuntos("NOS", ValorTarot2)
+        Tarot2Selected = false
+        ValorTarot1 = Valor - 1
+        Vender.classList.add("Oculto")
+    }
+    else if (Tarot3Selected === true){
+        Tarot3.classList.add("Oculto")
+        GuardarPuntos("NOS", ValorTarot3)
+        Tarot3Selected = false
+        Vender.classList.add("Oculto")
+    }
 })
 
 
