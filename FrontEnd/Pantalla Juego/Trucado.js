@@ -585,25 +585,19 @@ let cartastiro = 0
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot() {
-    if (turno !== "Bot") return; // seguridad
+    if (turno !== "Bot") ;
   
     // Array temporal con las cartas actuales del bot (referencias a los objetos)
-    const CartasBot = [carta6, carta7, carta8, carta9, carta10];
+    let CartasBot = [carta6, carta7, carta8, carta9, carta10];
   
     // Cartas disponibles: las que su índice NO está en cartasUsadasBot
-    const CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i));
-  
-    // Si no hay cartas disponibles, no hace nada (seguridad)
-    if (!CartasDisponiblesBot || CartasDisponiblesBot.length === 0) {
-      console.log("No quedan cartas disponibles para el bot");
-      return;
-    }
+    let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i));
   
     // Elegir carta: aquí la elegimos aleatoria entre las disponibles
-    const cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)];
+    let cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)];
   
     // Conseguir el índice real de la carta elegida dentro de CartasBot para marcarla como usada
-    const indiceReal = CartasBot.indexOf(cartaElegida);
+    let indiceReal = CartasBot.indexOf(cartaElegida);
     if (indiceReal === -1) {
       console.warn("No se pudo encontrar el índice real de la carta elegida");
       return;
@@ -611,26 +605,7 @@ function CartaBot() {
   
     // Marcar como usada (para que no la vuelva a elegir)
     cartasUsadasBot.push(indiceReal);
-  
-    // Opcional: ocultar su elemento DOM correspondiente (las cartas del bot son 6..10)
-    const idDOM = "carta" + (indiceReal + 6); // porque carta6 = index 0 -> 6 = 0 + 6
-    const elemento = document.getElementById(idDOM);
-    if (elemento) elemento.classList.add("oculto");
-  
-    // "Pensar" un tiempo y luego tirar la carta (para ver la animación)
-    setTimeout(function() {
-      cartastiro++;
-      CartasCentro("E", cartaElegida.numero, cartaElegida.palo);
-      guardarCartaCentro(cartaElegida, "E");
-      verificarCartas();
-    }, 800); // 800 ms, ajustá si querés
   }
-  
-
-CartaBot()
-
-
-
 
 //Tirar cartas del Bot (funcion parcial para probar y que se pueda jugar)
 function TirarCartasBot (numerocarta){ //Del 6 y al 10 orden de izquierda a derecha
