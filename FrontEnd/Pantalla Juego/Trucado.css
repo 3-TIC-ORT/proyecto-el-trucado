@@ -291,11 +291,36 @@ body{
 }
 .M_P2{
     margin-left: 60rem;
-    margin-top: 20rem;
+    margin-top: 15rem;
 }
 .T_P2{
     margin-left: 61rem;
-    margin-top: 22rem;
+    margin-top: 17rem;
+}
+
+
+/* Donde se ven tus cartas tarot */
+.BarraTarot{
+    position: absolute;
+    margin-top: 23rem;
+    margin-left: 48rem;
+    height: 9rem;
+    width: 20rem;
+    background-color: #39633e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Cartas indivuduales */
+.Tarot{
+    height: 7rem;
+    width: 4.5rem;
+    transition: all 0.5s;
+}
+.Tarot:hover{
+    transform: scale(1.1);
 }
 
 /*Imagenes decorativas*/
@@ -650,4 +675,54 @@ body{
 }
 .BordesCartas::after {
   margin: -5px;
+}
+
+.BarraTarotPixel {
+    clip-path: polygon(
+      0px calc(100% - 12px),
+      6px calc(100% - 12px),
+      6px calc(100% - 6px),
+      12px calc(100% - 6px),
+      12px 100%,
+      calc(100% - 12px) 100%,
+      calc(100% - 12px) calc(100% - 6px),
+      calc(100% - 6px) calc(100% - 6px),
+      calc(100% - 6px) calc(100% - 12px),
+      100% calc(100% - 12px),
+      100% 12px,
+      calc(100% - 6px) 12px,
+      calc(100% - 6px) 6px,
+      calc(100% - 12px) 6px,
+      calc(100% - 12px) 0px,
+      12px 0px,
+      12px 6px,
+      6px 6px,
+      6px 12px,
+      0px 12px
+    );
+  }
+
+  .BordesTarot,
+.BordesTarot--wrapper {
+  clip-path: polygon(0px calc(100% - 8px),
+    4px calc(100% - 8px),
+    4px calc(100% - 4px),
+    8px calc(100% - 4px),
+    8px 100%,
+    calc(100% - 8px) 100%,
+    calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 8px),
+    100% calc(100% - 8px),
+    100% 8px,
+    calc(100% - 4px) 8px,
+    calc(100% - 4px) 4px,
+    calc(100% - 8px) 4px,
+    calc(100% - 8px) 0px,
+    8px 0px,
+    8px 4px,
+    4px 4px,
+    4px 8px,
+    0px 8px);
+  position: relative;
 }
