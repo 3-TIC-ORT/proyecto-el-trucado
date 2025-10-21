@@ -323,6 +323,11 @@ body{
     transform: scale(1.1);
 }
 
+.TarotSeleccionada{
+    height: 8.4rem;
+    width: 5.4rem;
+}
+
 /*Imagenes decorativas*/
 #Mate{
     position: absolute;

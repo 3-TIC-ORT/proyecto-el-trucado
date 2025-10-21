@@ -1,0 +1,60 @@
+body {
+    background-color: #111;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    height: 100vh;
+  }
+  
+  /* Botón principal */
+  #mostrarPantalla {
+    margin-top: 50px;
+    padding: 10px 20px;
+    background-color: green;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  /* Fondo oscuro detrás */
+  .overlay {
+    display: none; /* Oculta por defecto */
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Cuadro gris (ventana) */
+  .ventana {
+    background-color: #4a4a4a;
+    border: 3px solid #cfcfcf;
+    width: 500px;     /* más ancho */
+    height: 350px;    /* más alto */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+  
+  /* Botón rojo “Volver” */
+  .ventana button {
+    background-color: red;
+    color: black;
+    border: none;
+    padding: 8px 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .ventana button:hover {
+    background-color: darkred;
+    color: white;
+  }
+  
