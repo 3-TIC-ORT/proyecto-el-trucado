@@ -444,6 +444,7 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
 function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     if (turno === "Jugador") {
         turno = "Bot"
+        CartaBot()
     } else {
         turno = "Jugador"
     }
@@ -585,28 +586,46 @@ let cartastiro = 0
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot() {
-    if (turno !== "Bot") ;
+    if (turno === "Bot") {
+      // Array con las 5 cartas del bot
+      let CartasBot = [carta6, carta7, carta8, carta9, carta10];
   
-    // Array temporal con las cartas actuales del bot (referencias a los objetos)
-    let CartasBot = [carta6, carta7, carta8, carta9, carta10];
+      // Filtra las que todavía no usó
+      let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i));
   
-    // Cartas disponibles: las que su índice NO está en cartasUsadasBot
-    let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i));
+      // Elige una carta aleatoria entre las disponibles
+      let cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)];
   
-    // Elegir carta: aquí la elegimos aleatoria entre las disponibles
-    let cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)];
+      // Guarda el índice real de esa carta
+      let indiceReal = CartasBot.indexOf(cartaElegida);
+      cartasUsadasBot.push(indiceReal); // la marca como usada
   
-    // Conseguir el índice real de la carta elegida dentro de CartasBot para marcarla como usada
-    let indiceReal = CartasBot.indexOf(cartaElegida);
-    if (indiceReal === -1) {
-      console.warn("No se pudo encontrar el índice real de la carta elegida");
-      return;
+      // Simula que el bot “piensa” 800ms
+      setTimeout(() => {
+        // Oculta la carta jugada del bot
+        let indiceCartaReal = indiceReal + 6; // carta6 → índice 0
+        document.getElementById("carta" + indiceCartaReal).classList.add("oculto");
+  
+        // La pone en el centro visualmente
+        CartasCentro("E", cartaElegida.numero, cartaElegida.palo);
+  
+        // La guarda como carta jugada
+        guardarCartaCentro(cartaElegida, "E");
+  
+        // Verifica si hay que comparar
+        verificarCartas();
+  
+        // Luego pasa el turno al jugador
+        turno = "Jugador";
+        TXTurno.textContent = "Turno: " + turno;
+        actualizarBoton();
+      }, 800);
     }
-  
-    // Marcar como usada (para que no la vuelva a elegir)
-    cartasUsadasBot.push(indiceReal);
+  }  
+  if(turno === "Bot"){
+  CartaBot()
   }
-
+  
 //Tirar cartas del Bot (funcion parcial para probar y que se pueda jugar)
 function TirarCartasBot (numerocarta){ //Del 6 y al 10 orden de izquierda a derecha
     setTimeout(function() {
