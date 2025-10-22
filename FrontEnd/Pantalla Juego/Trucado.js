@@ -460,16 +460,17 @@ click1.addEventListener("click", function(){
     if (turno === "Jugador"){ 
         cartastiradas++ 
         if (cartastiradas <= 3){ 
-            click1.classList.add("oculto") 
-            CartasCentro("N", carta1.numero, carta1.palo) 
-            guardarCartaCentro(carta1, "N") 
-            verificarCartas() 
-        } 
+        click1.classList.add("oculto") 
+        CartasCentro("N", carta1.numero, carta1.palo) 
+        guardarCartaCentro(carta1, "N") 
+        verificarCartas() 
+        }      
     } 
 }) 
 click2 = document.getElementById("carta2") 
 click2.addEventListener("click", function(){ 
-    if (turno === "Jugador"){ cartastiradas++ 
+    if (turno === "Jugador"){ 
+        cartastiradas++ 
         if (cartastiradas <= 3){ 
             click2.classList.add("oculto") 
             CartasCentro("N", carta2.numero, carta2.palo) 
@@ -893,6 +894,95 @@ function PonerTarot(Tarot, idCarta){
     document.getElementById(idCarta).style.backgroundImage = "url('../Pantalla Tienda/Imagenes/" + Tarot + ".png')";
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
+PonerTarot(Modificadores[3].nombre, "Tarot1")
+PonerTarot(Modificadores[4].nombre, "Tarot2")
+PonerTarot(Modificadores[5].nombre, "Tarot3")
+
+
+let Tarot1 = document.getElementById("Tarot1")
+let Tarot2 = document.getElementById("Tarot2")
+let Tarot3 = document.getElementById("Tarot3")
+
+let TarotSeleccionada = false
+
+let Tarot1Selected = false
+Tarot1.addEventListener("click", function(){
+    if (Tarot1Selected === false){
+    Tarot1.classList.remove("Tarot")
+    Tarot1.classList.add("TarotSeleccionada")
+    Tarot1Selected = true
+
+    TarotSeleccionada = true
+
+    Tarot2Selected = false
+    Tarot2.classList.add("Tarot")
+    Tarot2.classList.remove("TarotSeleccionada")
+
+    Tarot3Selected = false
+    Tarot3.classList.add("Tarot")
+    Tarot3.classList.remove("TarotSeleccionada")
+    }
+    else if (Tarot1Selected === true){
+        Tarot1.classList.add("Tarot")
+        Tarot1.classList.remove("TarotSeleccionada")
+        Tarot1Selected = false
+
+        TarotSeleccionada = true
+        }
+})
+
+let Tarot2Selected = false
+Tarot2.addEventListener("click", function(){
+    if (Tarot2Selected === false){
+    Tarot2.classList.remove("Tarot")
+    Tarot2.classList.add("TarotSeleccionada")
+    Tarot2Selected = true
+
+    TarotSeleccionada = true
+
+    Tarot1Selected = false
+    Tarot1.classList.add("Tarot")
+    Tarot1.classList.remove("TarotSeleccionada")
+
+    Tarot3Selected = false
+    Tarot3.classList.add("Tarot")
+    Tarot3.classList.remove("TarotSeleccionada")
+    }
+    else if (Tarot2Selected === true){
+        Tarot2.classList.add("Tarot")
+        Tarot2.classList.remove("TarotSeleccionada")
+        Tarot2Selected = false
+
+        TarotSeleccionada = true
+        }
+})
+
+let Tarot3Selected = false
+Tarot3.addEventListener("click", function(){
+    if (Tarot3Selected === false){
+    Tarot3.classList.remove("Tarot")
+    Tarot3.classList.add("TarotSeleccionada")
+    Tarot3Selected = true
+
+    TarotSeleccionada = true
+
+    Tarot1Selected = false
+    Tarot1.classList.add("Tarot")
+    Tarot1.classList.remove("TarotSeleccionada")
+
+    Tarot2Selected = false
+    Tarot2.classList.add("Tarot")
+    Tarot2.classList.remove("TarotSeleccionada")
+    }
+    else if (Tarot3Selected === true){
+        Tarot3.classList.add("Tarot")
+        Tarot3.classList.remove("TarotSeleccionada")
+        Tarot3Selected = false
+
+        TarotSeleccionada = true
+        }
+})
+
 
 
 
@@ -910,7 +1000,7 @@ function GuardarPuntos(id, sumar) { //
     }
     puntosAcumulados[id] += sumar
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 2){
+    if (puntosAcumulados[id] >= 30){
         setTimeout(function(){
             if (id === "NOS"){
                 PuntosBot.textContent = "Puntos del Bot: " + puntosAcumulados["ELLOS"]
