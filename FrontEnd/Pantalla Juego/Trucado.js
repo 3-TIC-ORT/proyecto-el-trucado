@@ -24,7 +24,7 @@ PlayAgain.forEach(boton => {
 let puntosAcumulados = {
     NOS: 0,
     ELLOS: 0
-}; // Guarda puntos acumulados por id
+} // Guarda puntos acumulados por id
 
 // Array global para guardar las cartas que el bot ya tiró en esta mano
 let cartasUsadasBot = []
@@ -299,7 +299,7 @@ function EVNR(numero, palo){
         jerarquia = 1
     }
 
-    return { valorenvido: valorenvido, jerarquia: jerarquia };
+    return { valorenvido: valorenvido, jerarquia: jerarquia }
 }
 
 //Crea el mazo para crear la primer mano, no preguntes porque esta aca
@@ -376,7 +376,7 @@ TXTurno.textContent = "Turno: " + turno
 let rondaCentro = 1  // 1 = revisa N1/E1, 2 = revisa N2/E2, 3 = revisa N3/E3
 function verificarCartas() {
     //Si las dos cartas del centro tienen imagenes se llama para que las comparen
-    if (rondaCentro === 1 && CartaCentroN1 && CartaCentroE1) {
+    if (rondaCentro === 1 && CartaCentroN1 && CartaCentroE1) {  
         CompararCartas(CartaCentroN1, CartaCentroE1)
         CartaCentroN1 = null
         CartaCentroE1 = null
@@ -404,11 +404,20 @@ let N_ganadas = 0
 let E_ganadas = 0
 let empatadas = 0
 function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
+    
+    //Capa de seguridad para encontrar errores con el bot
+    if (!carta1.jerarquia || !carta2.jerarquia) {
+        console.error("ERROR: alguna carta no tiene jerarquía:", carta1, carta2)
+        return
+      }
+      
+    
     //Compara las 2 cartas que recibe para determinar la ganadora
     if (carta1.jerarquia > carta2.jerarquia){ //Gana jugador
         turno = "Jugador"
         TXTurno.textContent = "Turno: Jugador"
         N_ganadas = N_ganadas + 1.5
+        
     }
     else if (carta2.jerarquia > carta1.jerarquia){ //Gana bot
         turno = "Bot"
@@ -588,38 +597,39 @@ let cartastiro = 0
 function CartaBot() {
     if (turno === "Bot") {
       // Array con las 5 cartas del bot
-      let CartasBot = [carta6, carta7, carta8, carta9, carta10];
+      let CartasBot = [carta6, carta7, carta8, carta9, carta10]
   
       // Filtra las que todavía no usó
-      let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i));
+      let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
   
       // Elige una carta aleatoria entre las disponibles
-      let cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)];
-  
+      let cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)]
+        
       // Guarda el índice real de esa carta
-      let indiceReal = CartasBot.indexOf(cartaElegida);
-      cartasUsadasBot.push(indiceReal); // la marca como usada
+      let indiceReal = CartasBot.indexOf(cartaElegida)
+      cartasUsadasBot.push(indiceReal) // la marca como usada
   
       // Simula que el bot “piensa” 800ms
       setTimeout(() => {
         // Oculta la carta jugada del bot
-        let indiceCartaReal = indiceReal + 6; // carta6 → índice 0
-        document.getElementById("carta" + indiceCartaReal).classList.add("oculto");
+        let indiceCartaReal = indiceReal + 6 // carta6 → índice 0
+        document.getElementById("carta" + indiceCartaReal).classList.add("oculto")
   
         // La pone en el centro visualmente
-        CartasCentro("E", cartaElegida.numero, cartaElegida.palo);
+        CartasCentro("E", cartaElegida.numero, cartaElegida.palo)
   
         // La guarda como carta jugada
-        guardarCartaCentro(cartaElegida, "E");
-  
+        guardarCartaCentro(cartaElegida, "E")
+
+
+        console.log("La carta elegida es:", cartaElegida)
+        console.log("Jugador:", CartaCentroN1, CartaCentroN2, CartaCentroN3)
+        console.log("Bot:", CartaCentroE1, CartaCentroE2, CartaCentroE3)
         // Verifica si hay que comparar
-        verificarCartas();
-  
-        // Luego pasa el turno al jugador
-        turno = "Jugador";
-        TXTurno.textContent = "Turno: " + turno;
-        actualizarBoton();
-      }, 800);
+        verificarCartas()
+        actualizarBoton()
+        cartastiro++
+      }, 800)
     }
   }  
   if(turno === "Bot"){
@@ -890,7 +900,7 @@ let Modificadores = [
 ]
 
 function PonerTarot(Tarot, idCarta){
-    document.getElementById(idCarta).style.backgroundImage = "url('../Pantalla Tienda/Imagenes/" + Tarot + ".png')";
+    document.getElementById(idCarta).style.backgroundImage = "url('../Pantalla Tienda/Imagenes/" + Tarot + ".png')"
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
 
@@ -935,7 +945,7 @@ function sumarPuntos(idcarta, puntos) {
         document.getElementById(idcarta + "5"),
         document.getElementById(idcarta + "6"),
     ]
-    let resto = puntos;
+    let resto = puntos
 
     for (let i = 0; i < 6; i++) {
         if (resto >= 5){
