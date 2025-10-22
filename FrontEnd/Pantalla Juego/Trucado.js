@@ -105,9 +105,17 @@ function resetearRonda() {
     Cant_Envido = 0
 
 
-    //El turno se intercala entre rondas
-    turno = turnoF
-    turnoF = (turnoF === "Jugador") ? "Bot" : "Jugador"
+// El que ganó la última mano empieza la siguiente
+if (ganadorUltimaMano) {
+    turno = ganadorUltimaMano
+} else {
+    // Si fue empate o aún no hay ganador (inicio del juego)
+    turno = TurnoAzar()
+}
+
+// Preparar el turno del siguiente por si se necesita después
+turnoF = (turno === "Jugador") ? "Bot" : "Jugador"
+
 
     //Crea el mazo nuevo, cambia el texto del turno y actualiza los botones
     crearmazo()
@@ -116,6 +124,14 @@ function resetearRonda() {
 
     //Se verifica si es momento de la tienda
     VerificarTienda()
+
+    // Si toca al bot empezar la nueva mano, que juegue la primer carta
+if (turno === "Bot") {
+  // un pequeño delay para que se vea la UI del nuevo mazo antes de jugar
+  setTimeout(() => {
+    CartaBot();
+  }, 600);
+}
 }
 
 //Función que crea las 10 cartas y les pone imagenes solo a las nuestras
@@ -371,7 +387,6 @@ else if (turno === "Bot"){
 let TXTurno = document.getElementById("Turno")
 TXTurno.textContent = "Turno: " + turno
 
-
 //Función que revisa y prepara la comparación de cartas
 let rondaCentro = 1  // 1 = revisa N1/E1, 2 = revisa N2/E2, 3 = revisa N3/E3
 function verificarCartas() {
@@ -400,6 +415,7 @@ function verificarCartas() {
 }
 
 //Función que dice que carta ganó
+let ganadorUltimaMano = null
 let N_ganadas = 0
 let E_ganadas = 0
 let empatadas = 0
@@ -414,12 +430,14 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     
     //Compara las 2 cartas que recibe para determinar la ganadora
     if (carta1.jerarquia > carta2.jerarquia){ //Gana jugador
+        ganadorUltimaMano = "Jugador"
         turno = "Jugador"
         TXTurno.textContent = "Turno: Jugador"
         N_ganadas = N_ganadas + 1.5
         
     }
     else if (carta2.jerarquia > carta1.jerarquia){ //Gana bot
+        ganadorUltimaMano = "Bot"
         turno = "Bot"
         TXTurno.textContent = "Turno: Bot"
         E_ganadas = E_ganadas + 1.5 
@@ -433,6 +451,15 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     //Actualiza el boton para activarlo si es el caso
     actualizarBoton()
     
+    if ( (N_ganadas < 2) && (E_ganadas < 2) && (empatadas < 3) ) {
+  if (turno === "Bot") {
+    // Le damos un pequeño delay para ver la animación antes de que juegue
+    setTimeout(() => {
+      CartaBot();
+    }, 450);
+  }
+}
+
     //Revisa si ya se gano la mano y se suman los puntos
     setTimeout(function() {
         if (empatadas === 3){
@@ -542,74 +569,12 @@ click5.addEventListener("click", function(){
 //Tirar solo 3 cartas bot
 let cartastiro = 0
 
-    click6 = document.getElementById("carta6")
-    click6.addEventListener("click", function(){
-        if (turno === "Bot"){
-            cartastiro++
-            if (cartastiro <= 3){
-                click6.classList.add("oculto")
-                CartasCentro("E", carta6.numero, carta6.palo)
-                guardarCartaCentro(carta6, "E")
-                verificarCartas()
-            }
-        }
-    })
-    click7 = document.getElementById("carta7")
-    click7.addEventListener("click", function(){
-        if (turno === "Bot"){
-            cartastiro++
-            if (cartastiro <= 3){
-                click7.classList.add("oculto")
-                CartasCentro("E", carta7.numero, carta7.palo)
-                guardarCartaCentro(carta7, "E")
-                verificarCartas()
-            }
-        }
-    })
-    click8 = document.getElementById("carta8")
-    click8.addEventListener("click", function(){
-        if (turno === "Bot"){
-            cartastiro++
-            if (cartastiro <= 3){
-                click8.classList.add("oculto")
-                CartasCentro("E", carta8.numero, carta8.palo)
-                guardarCartaCentro(carta8, "E")
-                verificarCartas()
-            }
-        }
-    })
-    click9 = document.getElementById("carta9")
-    click9.addEventListener("click", function(){
-        if (turno === "Bot"){
-            cartastiro++
-            if (cartastiro <= 3){
-                click9.classList.add("oculto")
-                CartasCentro("E", carta9.numero, carta9.palo)
-                guardarCartaCentro(carta9, "E")
-                verificarCartas()
-            }
-        }
-    })
-    click10 = document.getElementById("carta10")
-    click10.addEventListener("click", function(){
-        if (turno === "Bot"){
-            cartastiro++
-            if (cartastiro <= 3){
-                click10.classList.add("oculto")
-                CartasCentro("E", carta10.numero, carta10.palo)
-                guardarCartaCentro(carta10, "E" )
-                verificarCartas()
-            }
-        }
-    })
-
-
-
-
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot() {
     if (turno === "Bot") {
-      // Array con las 5 cartas del bot
+
+        if (cartastiro <= 3){
+        // Array con las 5 cartas del bot
       let CartasBot = [carta6, carta7, carta8, carta9, carta10]
   
       // Filtra las que todavía no usó
@@ -624,6 +589,7 @@ function CartaBot() {
   
       // Simula que el bot “piensa” 800ms
       setTimeout(() => {
+        cartastiro++
         // Oculta la carta jugada del bot
         let indiceCartaReal = indiceReal + 6 // carta6 → índice 0
         document.getElementById("carta" + indiceCartaReal).classList.add("oculto")
@@ -634,17 +600,12 @@ function CartaBot() {
         // La guarda como carta jugada
         guardarCartaCentro(cartaElegida, "E")
 
-
-        console.log("La carta elegida es:", cartaElegida)
-        console.log("Jugador:", CartaCentroN1, CartaCentroN2, CartaCentroN3)
-        console.log("Bot:", CartaCentroE1, CartaCentroE2, CartaCentroE3)
         // Verifica si hay que comparar
         verificarCartas()
-        actualizarBoton()
-        cartastiro++
       }, 800)
     }
   }  
+}
   if(turno === "Bot"){
   CartaBot()
   }
