@@ -467,13 +467,25 @@ let cartastiradas = 0
 click1 = document.getElementById("carta1") 
 click1.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
-        cartastiradas++ 
-        if (cartastiradas <= 3){ 
-        click1.classList.add("oculto") 
-        CartasCentro("N", carta1.numero, carta1.palo) 
-        guardarCartaCentro(carta1, "N") 
-        verificarCartas() 
-        }      
+        if (TarotSeleccionada === false){
+            cartastiradas++ 
+            if (cartastiradas <= 3){ 
+            click1.classList.add("oculto") 
+            CartasCentro("N", carta1.numero, carta1.palo) 
+            guardarCartaCentro(carta1, "N") 
+            verificarCartas() 
+            }      
+        }
+        else if (TarotSeleccionada === true){
+            carta1.palo = Modificadores[ModificadorSeleccionada].categoria
+            identificar_cartas("carta1", carta1.numero, carta1.palo)
+            EVNR(carta1.numero, carta1.palo)
+            estatscartas = EVNR(carta1.numero, carta1.palo)
+            carta1.valorenvido = estatscartas.valorenvido
+            carta1.jerarquia = estatscartas.jerarquia
+
+            TarotSeleccionada = false
+        }
     } 
 }) 
 click2 = document.getElementById("carta2") 
@@ -891,10 +903,10 @@ let Modificadores = [
     { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
     { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras (no en envido)", valor: 1 },
     { nombre: "Gemelo", descripcion: "Cambia un carta por otra a elección.", valor: 2 },
-    { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2 },
-    { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1 },
-    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 2 },
-    { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1 },
+    { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2, categoria: "oro"},
+    { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1, categoria: "basto" },
+    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 2, categoria: "espada" },
+    { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1, categoria: "copa" },
     { nombre: "TNT", descripcion: "Saca 2 cartas del mazo", valor: 1 },
     { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 4 },
     { nombre: "Ebullición", descripcion: "2% de que la carta que tire el bot tenga jerarquia 0", valor: 2}
@@ -904,9 +916,14 @@ function PonerTarot(Tarot, idCarta){
     document.getElementById(idCarta).style.backgroundImage = "url('../Pantalla Tienda/Imagenes/" + Tarot + ".png')"
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
-PonerTarot(Modificadores[3].nombre, "Tarot1")
-PonerTarot(Modificadores[4].nombre, "Tarot2")
-PonerTarot(Modificadores[5].nombre, "Tarot3")
+
+let Modificador1 = "3"
+let Modificador2 = "5"
+let Modificador3 = "6"
+
+PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
+PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
+PonerTarot(Modificadores[Modificador3].nombre, "Tarot3")
 
 
 let Tarot1 = document.getElementById("Tarot1")
@@ -914,6 +931,7 @@ let Tarot2 = document.getElementById("Tarot2")
 let Tarot3 = document.getElementById("Tarot3")
 
 let TarotSeleccionada = false
+let ModificadorTocado
 
 let Tarot1Selected = false
 Tarot1.addEventListener("click", function(){
@@ -923,6 +941,7 @@ Tarot1.addEventListener("click", function(){
     Tarot1Selected = true
 
     TarotSeleccionada = true
+    ModificadorSeleccionada = Modificador1
 
     Tarot2Selected = false
     Tarot2.classList.add("Tarot")
@@ -949,6 +968,7 @@ Tarot2.addEventListener("click", function(){
     Tarot2Selected = true
 
     TarotSeleccionada = true
+    ModificadorSeleccionada = Modificador2
 
     Tarot1Selected = false
     Tarot1.classList.add("Tarot")
@@ -975,6 +995,7 @@ Tarot3.addEventListener("click", function(){
     Tarot3Selected = true
 
     TarotSeleccionada = true
+    ModificadorSeleccionada = Modificador3
 
     Tarot1Selected = false
     Tarot1.classList.add("Tarot")

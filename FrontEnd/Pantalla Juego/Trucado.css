@@ -318,6 +318,8 @@ body{
 .Tarot{
     height: 7rem;
     width: 4.5rem;
+    border: none;
+    background-color: #39633e;
     transition: all 0.5s;
 }
 .Tarot:hover{
