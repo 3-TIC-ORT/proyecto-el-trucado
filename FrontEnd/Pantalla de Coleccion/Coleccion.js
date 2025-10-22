@@ -19,4 +19,3 @@ let Modificadores = [
     { nombre: "Ebullición", descripcion: "2% de que la carta que tire el bot tenga jerarquia 0", valor: 2}
 ]
 
-alert(Modificadores[3].descripcion)
