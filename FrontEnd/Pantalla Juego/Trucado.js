@@ -73,6 +73,11 @@ function resetearRonda() {
     //La ronda vuelve a 1
     rondaCentro = 1
 
+    //si se canto el truco/retruco/vale cuatro se resetean
+    PuntosTruco = false
+    PuntosRetruco = false
+    PuntosValeCuatro = false
+
     //Se resetea las cartas que tiro el bot
     cartasUsadasBot = []
 
@@ -419,6 +424,7 @@ let ganadorUltimaMano = null
 let N_ganadas = 0
 let E_ganadas = 0
 let empatadas = 0
+let multiplicador = 1
 function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
     
     //Capa de seguridad para encontrar errores con el bot
@@ -459,6 +465,9 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     }, 450);
   }
 }
+  if (PuntosValeCuatro) multiplicador = 4
+    else if (PuntosRetruco) multiplicador = 3
+    else if (PuntosTruco) multiplicador = 2
 
     //Revisa si ya se gano la mano y se suman los puntos
     setTimeout(function() {
@@ -466,14 +475,15 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
             resetearRonda()
         }
         else if (N_ganadas >= 2){
-            GuardarPuntos("NOS", 1)
+            GuardarPuntos("NOS", 1 * multiplicador)
             resetearRonda()
         }
         else if (E_ganadas >= 2){
-            GuardarPuntos("ELLOS", 1)
+            GuardarPuntos("ELLOS", 1 * multiplicador)
             resetearRonda()
         }
-      }, 500) //Delay para verlo mejor 
+    }
+      , 500) //Delay para verlo mejor 
 }
 
 //Cambia el turno al contrario
@@ -573,10 +583,23 @@ let cartastiro = 0
 function CartaBot() {
     if (turno === "Bot") {
 
-        if (cartastiro <= 3){
         // Array con las 5 cartas del bot
-      let CartasBot = [carta6, carta7, carta8, carta9, carta10]
-  
+    let CartasBot = [carta6, carta7, carta8, carta9, carta10]
+            
+        // Crea variable para fijarse si canta truco/retruco/valecuatro
+    let ValorJerarquia 
+
+    //bucle para fijarse el valor de jerarquia de la mano del bot
+    for (let i=0; i < CartaBot.length; i++){
+        ValorJerarquia = ValorJerarquia + CartaBot[i].jerarquia
+    }
+
+    //Jerarquia total: 394
+    //Jerarquia promedio: 8,2
+    if (ValorJerarquia < 41 ){ //mano promedio
+        
+    }
+
       // Filtra las que todavía no usó
       let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
   
@@ -605,7 +628,7 @@ function CartaBot() {
       }, 800)
     }
   }  
-}
+
   if(turno === "Bot"){
   CartaBot()
   }
@@ -647,6 +670,9 @@ let EnvidoEnvido = 0
 let Regresar = false
 let Cant_Envido = 0
 let PuntosEnvidos 
+let PuntosTruco = false
+let PuntosRetruco = false
+let PuntosValeCuatro = false
 
 //Boton truco
 truco.addEventListener("click", function(){
@@ -657,6 +683,9 @@ truco.addEventListener("click", function(){
             truco.classList.add("PalabrasLargas")
             truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
+            PuntosTruco = true
+            PuntosRetruco = false
+            PuntosValeCuatro = false
         }
         //Cuando se toca el boton REGRESAR
         else if (Regresar === true){
