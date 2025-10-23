@@ -160,7 +160,7 @@ function crearmazo(){
         nuevaCarta.jerarquia = estatscartas.jerarquia
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
-        if (i <= 5){
+        if (i <= 10){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -591,14 +591,16 @@ function CartaBot() {
     let ValorAleatorio = Math.random()
 
     //bucle para fijarse el valor de jerarquia de la mano del bot
-    for (let i=0; i < CartaBot.length; i++){
-        ValorJerarquia = ValorJerarquia + CartaBot[i].jerarquia
+    for (let i=0; i < CartasBot.length; i++){
+        ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
 
+    console.log("Valor jerarquia carta: ",CartasBot[0].jerarquia)
     console.log("Valor aleatorio: ",ValorAleatorio)
     console.log("Valor Jerarquia: ",ValorJerarquia)
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
+    setTimeout(() => {
     if (PuntosTruco && PuntosRetruco === false){
         if (ValorJerarquia < 41 && ValorAleatorio < 1){ //mano promedio
             console.log("truco")
@@ -610,7 +612,19 @@ function CartaBot() {
             truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
         }
+        else if (ValorJerarquia > 41 && ValorAleatorio < 1){
+            console.log("truco")
+            PuntosTruco = true
+            PuntosRetruco = false
+            PuntosValeCuatro = false
+            truco.textContent = "RETRUCO"
+            truco.classList.add("PalabrasLargas")  
+            truco.classList.add("PalabrasLargas-NH")
+            envido.classList.add("BarraInferiorBTN-NH")
         }
+        }
+    }, 500)
+    
       // Filtra las que todavía no usó
       let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
   
