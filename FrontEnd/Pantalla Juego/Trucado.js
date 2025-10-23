@@ -29,6 +29,19 @@ let puntosAcumulados = {
 // Array global para guardar las cartas que el bot ya tiró en esta mano
 let cartasUsadasBot = []
 
+
+//Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
+let Modificador1 = "8"
+let Modificador2 = "5"
+let Modificador3 = "6"
+
+//Revisa si esta el modificador de reyes
+let ReyesEnvido
+if (Modificador1 === "8" || Modificador2 === "8" || Modificador3 === "8"){
+    ReyesEnvido = true
+}
+
+
 //Función crear carta Aleatoria, numero del 1 - 12 y un palo random
 function crearcarta() {
     let numero = Math.floor(Math.random() * 12) + 1
@@ -252,7 +265,12 @@ function CartasCentro(quien, numero, palo) {
 function EVNR(numero, palo){
     let valorenvido = 0
     if (numero >= 10) {
-        valorenvido = 0 // Los 10 11 y 12 valen 0, por ahora :)
+        if (ReyesEnvido === true){  //Si se tiene modificador valen mas
+            valorenvido = 5
+        }
+        else if (ReyesEnvido === false){
+            valorenvido = 0 // Los 10 11 y 12 valen 0
+        }
     } else {
         valorenvido = numero // del 1 al 9 valen su número
     }
@@ -549,7 +567,6 @@ click2.addEventListener("click", function(){
         }
     } 
 })
-
 click3 = document.getElementById("carta3") 
 click3.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
@@ -574,7 +591,6 @@ click3.addEventListener("click", function(){
         }
     } 
 })
-
 click4 = document.getElementById("carta4") 
 click4.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
@@ -599,7 +615,6 @@ click4.addEventListener("click", function(){
         }
     } 
 })
-
 click5 = document.getElementById("carta5") 
 click5.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
@@ -984,9 +999,7 @@ function PonerTarot(Tarot, idCarta){
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
 
-let Modificador1 = "4"
-let Modificador2 = "5"
-let Modificador3 = "6"
+
 
 PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
 PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
@@ -1002,83 +1015,89 @@ let ModificadorTocado
 
 let Tarot1Selected = false
 Tarot1.addEventListener("click", function(){
-    if (Tarot1Selected === false){
-    Tarot1.classList.remove("Tarot")
-    Tarot1.classList.add("TarotSeleccionada")
-    Tarot1Selected = true
+    if (Modificador1 !== "8"){
+        if (Tarot1Selected === false){
+            Tarot1.classList.remove("Tarot")
+            Tarot1.classList.add("TarotSeleccionada")
+            Tarot1Selected = true
 
-    TarotSeleccionada = "Tarot1"
-    ModificadorTocado = Modificador1
+            TarotSeleccionada = "Tarot1"
+            ModificadorTocado = Modificador1
 
-    Tarot2Selected = false
-    Tarot2.classList.add("Tarot")
-    Tarot2.classList.remove("TarotSeleccionada")
+            Tarot2Selected = false
+            Tarot2.classList.add("Tarot")
+            Tarot2.classList.remove("TarotSeleccionada")
 
-    Tarot3Selected = false
-    Tarot3.classList.add("Tarot")
-    Tarot3.classList.remove("TarotSeleccionada")
-    }
-    else if (Tarot1Selected === true){
-        Tarot1.classList.add("Tarot")
-        Tarot1.classList.remove("TarotSeleccionada")
-        Tarot1Selected = false
-
-        TarotSeleccionada = ""
+            Tarot3Selected = false
+            Tarot3.classList.add("Tarot")
+            Tarot3.classList.remove("TarotSeleccionada")
         }
+        else if (Tarot1Selected === true){
+            Tarot1.classList.add("Tarot")
+            Tarot1.classList.remove("TarotSeleccionada")
+            Tarot1Selected = false
+
+            TarotSeleccionada = ""
+        }
+    }
 })
 
 let Tarot2Selected = false
 Tarot2.addEventListener("click", function(){
-    if (Tarot2Selected === false){
-    Tarot2.classList.remove("Tarot")
-    Tarot2.classList.add("TarotSeleccionada")
-    Tarot2Selected = true
+    if (Modificador2 !== "8"){
+        if (Tarot2Selected === false){
+            Tarot2.classList.remove("Tarot")
+            Tarot2.classList.add("TarotSeleccionada")
+            Tarot2Selected = true
 
-    TarotSeleccionada = "Tarot2"
-    ModificadorTocado = Modificador2
+            TarotSeleccionada = "Tarot2"
+            ModificadorTocado = Modificador2
 
-    Tarot1Selected = false
-    Tarot1.classList.add("Tarot")
-    Tarot1.classList.remove("TarotSeleccionada")
+            Tarot1Selected = false
+            Tarot1.classList.add("Tarot")
+            Tarot1.classList.remove("TarotSeleccionada")
 
-    Tarot3Selected = false
-    Tarot3.classList.add("Tarot")
-    Tarot3.classList.remove("TarotSeleccionada")
-    }
-    else if (Tarot2Selected === true){
-        Tarot2.classList.add("Tarot")
-        Tarot2.classList.remove("TarotSeleccionada")
-        Tarot2Selected = false
-
-        TarotSeleccionada = ""
+            Tarot3Selected = false
+            Tarot3.classList.add("Tarot")
+            Tarot3.classList.remove("TarotSeleccionada")
         }
+        else if (Tarot2Selected === true){
+            Tarot2.classList.add("Tarot")
+            Tarot2.classList.remove("TarotSeleccionada")
+            Tarot2Selected = false
+
+            TarotSeleccionada = ""
+        }
+    }
 })
 
 let Tarot3Selected = false
 Tarot3.addEventListener("click", function(){
-    if (Tarot3Selected === false){
-    Tarot3.classList.remove("Tarot")
-    Tarot3.classList.add("TarotSeleccionada")
-    Tarot3Selected = true
+    if (Modificador3 !== "8"){
+        if (Tarot3Selected === false){
+            Tarot3.classList.remove("Tarot")
+            Tarot3.classList.add("TarotSeleccionada")
+            Tarot3Selected = true
 
-    TarotSeleccionada = "Tarot3"
-    ModificadorTocado = Modificador3
+            TarotSeleccionada = "Tarot3"
+            ModificadorTocado = Modificador3
 
-    Tarot1Selected = false
-    Tarot1.classList.add("Tarot")
-    Tarot1.classList.remove("TarotSeleccionada")
+            Tarot1Selected = false
+            Tarot1.classList.add("Tarot")
+            Tarot1.classList.remove("TarotSeleccionada")
 
-    Tarot2Selected = false
-    Tarot2.classList.add("Tarot")
-    Tarot2.classList.remove("TarotSeleccionada")
-    }
-    else if (Tarot3Selected === true){
-        Tarot3.classList.add("Tarot")
-        Tarot3.classList.remove("TarotSeleccionada")
-        Tarot3Selected = false
-
-        TarotSeleccionada = ""
+            Tarot2Selected = false
+            Tarot2.classList.add("Tarot")
+            Tarot2.classList.remove("TarotSeleccionada")
         }
+        else if (Tarot3Selected === true){
+            Tarot3.classList.add("Tarot")
+            Tarot3.classList.remove("TarotSeleccionada")
+            Tarot3Selected = false
+
+            TarotSeleccionada = ""
+        }
+    }
 })
 
 
