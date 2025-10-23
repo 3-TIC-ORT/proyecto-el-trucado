@@ -19,7 +19,6 @@ PlayAgain.forEach(boton => {
 })
 
 
-
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {
     NOS: 0,
@@ -33,10 +32,10 @@ let cartasUsadasBot = []
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
 let Modificador1 = "8"
 let Modificador2 = "5"
-let Modificador3 = "6"
+let Modificador3 = "9"
 
 //Revisa si esta el modificador de reyes
-let ReyesEnvido
+let ReyesEnvido  = false
 if (Modificador1 === "8" || Modificador2 === "8" || Modificador3 === "8"){
     ReyesEnvido = true
 }
@@ -442,6 +441,8 @@ let ganadorUltimaMano = null
 let N_ganadas = 0
 let E_ganadas = 0
 let empatadas = 0
+
+//Mulltiplicador si se canta truco
 let multiplicador = 1
 function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y carta 2 es la carta de ellos
     
@@ -480,7 +481,7 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
     // Le damos un pequeño delay para ver la animación antes de que juegue
     setTimeout(() => {
       CartaBot();
-    }, 450);
+    }, 500);
   }
 }
   if (PuntosValeCuatro) multiplicador = 4
@@ -640,6 +641,7 @@ click5.addEventListener("click", function(){
     } 
 })
 
+let BotonesVoluntad = document.getElementById("BotonesVoluntad")
 //funcion para que el bot cante truco
 function BotCantaTruco(){
             
@@ -648,22 +650,24 @@ function BotCantaTruco(){
     let ValorAleatorio = Math.random()
     
     //bucle para fijarse el valor de jerarquia de la mano del bot
-    for (let i=0; i < CartasBot.length; i++){
+    for (let i = 0; i < CartasBot.length; i++){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
     
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
     if (PuntosTruco === false && PuntosRetruco === false){
-        if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
+        if (ValorJerarquia < 41 && ValorAleatorio < 1){ //mano promedio
             console.log("TRUCO")
             PuntosTruco = true
             PuntosRetruco = false
             PuntosValeCuatro = false
             truco.textContent = "RETRUCO"
             truco.classList.add("PalabrasLargas")
-            truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
+            flor.classList.add("BarraInferiorBTN-NH")
+            mazo.classList.add("BarraInferiorBTN-NH")
+            BotonesVoluntad.style.display = "flex"
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
             console.log("TRUCO")
@@ -696,7 +700,7 @@ function CartaBot() {
     //se fija si puede cantar truco
     setTimeout(() => {
         BotCantaTruco()
-     }, 500)
+     }, 1000)
     
       // Filtra las que todavía no usó
       let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
@@ -777,13 +781,31 @@ truco.addEventListener("click", function(){
     setTimeout(function() {
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
-            truco.textContent = "RETRUCO"
-            truco.classList.add("PalabrasLargas")
-            truco.classList.add("PalabrasLargas-NH")
-            envido.classList.add("BarraInferiorBTN-NH")
-            PuntosTruco = true
-            PuntosRetruco = false
-            PuntosValeCuatro = false
+            if (PuntosTruco === false && PuntosRetruco === false){
+                truco.textContent = "RETRUCO"
+                truco.classList.remove("BarraInferiorBTN")
+                truco.classList.add("PalabrasLargas")
+                truco.classList.add("PalabrasLargas-NH")
+                envido.classList.add("BarraInferiorBTN-NH")
+                PuntosTruco = true
+                PuntosRetruco = false
+                PuntosValeCuatro = false
+            }
+            else if (PuntosTruco === true){
+                truco.textContent = "VALE CUATRO"
+                truco.classList.add("PalabrasExtraLargas")
+                truco.classList.add("PalabrasExtraLargas-NH")
+                truco.classList.remove("PalabrasLargas")
+                PuntosTruco = false
+                PuntosRetruco = true
+                PuntosValeCuatro = false
+            }
+            else if (PuntosRetruco === true){
+                truco.classList.add("PalabrasExtraLargas-NH")
+                PuntosTruco = false
+                PuntosRetruco = false
+                PuntosValeCuatro = true
+            }
         }
         //Cuando se toca el boton REGRESAR
         else if (Regresar === true){
@@ -993,10 +1015,10 @@ let Modificadores = [
     { nombre: "Gemelo", descripcion: "Cambia un carta por otra a elección.", valor: 2 },
     { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2, categoria: "oro"},
     { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1, categoria: "basto" },
-    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 2, categoria: "espada" },
+    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 3, categoria: "espada" },
     { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1, categoria: "copa" },
     { nombre: "TNT", descripcion: "Saca 2 cartas del mazo", valor: 1 },
-    { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 4 },
+    { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 5 },
     { nombre: "Ebullición", descripcion: "2% de que la carta que tire el bot tenga jerarquia 0", valor: 2}
 ]
 
