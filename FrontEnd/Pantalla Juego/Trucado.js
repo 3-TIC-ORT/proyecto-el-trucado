@@ -160,7 +160,7 @@ function crearmazo(){
         nuevaCarta.jerarquia = estatscartas.jerarquia
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
-        if (i <= 10){
+        if (i <= 5){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -504,7 +504,7 @@ let cartastiradas = 0
 click1 = document.getElementById("carta1") 
 click1.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
-        if (TarotSeleccionada === false){
+        if (!TarotSeleccionada){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
             click1.classList.add("oculto") 
@@ -513,15 +513,15 @@ click1.addEventListener("click", function(){
             verificarCartas() 
             }      
         }
-        else if (TarotSeleccionada === true){
-            carta1.palo = Modificadores[ModificadorSeleccionada].categoria
+        else{
+            carta1.palo = Modificadores[ModificadorTocado].categoria
             identificar_cartas("carta1", carta1.numero, carta1.palo)
-            EVNR(carta1.numero, carta1.palo)
             estatscartas = EVNR(carta1.numero, carta1.palo)
             carta1.valorenvido = estatscartas.valorenvido
             carta1.jerarquia = estatscartas.jerarquia
 
-            TarotSeleccionada = false
+            document.getElementById(TarotSeleccionada).classList.add("oculto")
+            TarotSeleccionada = ""
         }
     } 
 }) 
@@ -907,7 +907,7 @@ function PonerTarot(Tarot, idCarta){
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
 
-let Modificador1 = "3"
+let Modificador1 = "4"
 let Modificador2 = "5"
 let Modificador3 = "6"
 
@@ -920,7 +920,7 @@ let Tarot1 = document.getElementById("Tarot1")
 let Tarot2 = document.getElementById("Tarot2")
 let Tarot3 = document.getElementById("Tarot3")
 
-let TarotSeleccionada = false
+let TarotSeleccionada = ""
 let ModificadorTocado
 
 let Tarot1Selected = false
@@ -930,8 +930,8 @@ Tarot1.addEventListener("click", function(){
     Tarot1.classList.add("TarotSeleccionada")
     Tarot1Selected = true
 
-    TarotSeleccionada = true
-    ModificadorSeleccionada = Modificador1
+    TarotSeleccionada = "Tarot1"
+    ModificadorTocado = Modificador1
 
     Tarot2Selected = false
     Tarot2.classList.add("Tarot")
@@ -946,7 +946,7 @@ Tarot1.addEventListener("click", function(){
         Tarot1.classList.remove("TarotSeleccionada")
         Tarot1Selected = false
 
-        TarotSeleccionada = true
+        TarotSeleccionada = ""
         }
 })
 
@@ -957,8 +957,8 @@ Tarot2.addEventListener("click", function(){
     Tarot2.classList.add("TarotSeleccionada")
     Tarot2Selected = true
 
-    TarotSeleccionada = true
-    ModificadorSeleccionada = Modificador2
+    TarotSeleccionada = "Tarot2"
+    ModificadorTocado = Modificador2
 
     Tarot1Selected = false
     Tarot1.classList.add("Tarot")
@@ -973,7 +973,7 @@ Tarot2.addEventListener("click", function(){
         Tarot2.classList.remove("TarotSeleccionada")
         Tarot2Selected = false
 
-        TarotSeleccionada = true
+        TarotSeleccionada = ""
         }
 })
 
@@ -984,8 +984,8 @@ Tarot3.addEventListener("click", function(){
     Tarot3.classList.add("TarotSeleccionada")
     Tarot3Selected = true
 
-    TarotSeleccionada = true
-    ModificadorSeleccionada = Modificador3
+    TarotSeleccionada = "Tarot3"
+    ModificadorTocado = Modificador3
 
     Tarot1Selected = false
     Tarot1.classList.add("Tarot")
@@ -1000,7 +1000,7 @@ Tarot3.addEventListener("click", function(){
         Tarot3.classList.remove("TarotSeleccionada")
         Tarot3Selected = false
 
-        TarotSeleccionada = true
+        TarotSeleccionada = ""
         }
 })
 
