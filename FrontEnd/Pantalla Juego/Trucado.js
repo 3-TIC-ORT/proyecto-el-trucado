@@ -587,19 +587,30 @@ function CartaBot() {
     let CartasBot = [carta6, carta7, carta8, carta9, carta10]
             
         // Crea variable para fijarse si canta truco/retruco/valecuatro
-    let ValorJerarquia 
+    let ValorJerarquia = 0
+    let ValorAleatorio = Math.random()
 
     //bucle para fijarse el valor de jerarquia de la mano del bot
     for (let i=0; i < CartaBot.length; i++){
         ValorJerarquia = ValorJerarquia + CartaBot[i].jerarquia
     }
 
+    console.log("Valor aleatorio: ",ValorAleatorio)
+    console.log("Valor Jerarquia: ",ValorJerarquia)
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
-    if (ValorJerarquia < 41 ){ //mano promedio
-        
-    }
-
+    if (PuntosTruco && PuntosRetruco === false){
+        if (ValorJerarquia < 41 && ValorAleatorio < 1){ //mano promedio
+            console.log("truco")
+            PuntosTruco = true
+            PuntosRetruco = false
+            PuntosValeCuatro = false
+            truco.textContent = "RETRUCO"
+            truco.classList.add("PalabrasLargas")
+            truco.classList.add("PalabrasLargas-NH")
+            envido.classList.add("BarraInferiorBTN-NH")
+        }
+        }
       // Filtra las que todavía no usó
       let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
   
