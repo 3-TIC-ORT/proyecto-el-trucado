@@ -528,53 +528,102 @@ click1.addEventListener("click", function(){
 click2 = document.getElementById("carta2") 
 click2.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
-        cartastiradas++ 
-        if (cartastiradas <= 3){ 
+        if (!TarotSeleccionada){
+            cartastiradas++ 
+            if (cartastiradas <= 3){ 
             click2.classList.add("oculto") 
             CartasCentro("N", carta2.numero, carta2.palo) 
             guardarCartaCentro(carta2, "N") 
             verificarCartas() 
-        } 
+            }      
+        }
+        else{
+            carta2.palo = Modificadores[ModificadorTocado].categoria
+            identificar_cartas("carta2", carta2.numero, carta2.palo)
+            estatscartas = EVNR(carta2.numero, carta2.palo)
+            carta2.valorenvido = estatscartas.valorenvido
+            carta2.jerarquia = estatscartas.jerarquia
+
+            document.getElementById(TarotSeleccionada).classList.add("oculto")
+            TarotSeleccionada = ""
+        }
     } 
-}) 
+})
+
 click3 = document.getElementById("carta3") 
 click3.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
-        cartastiradas++ 
-        if (cartastiradas <= 3){ 
+        if (!TarotSeleccionada){
+            cartastiradas++ 
+            if (cartastiradas <= 3){ 
             click3.classList.add("oculto") 
             CartasCentro("N", carta3.numero, carta3.palo) 
             guardarCartaCentro(carta3, "N") 
             verificarCartas() 
-        } 
+            }      
+        }
+        else{
+            carta3.palo = Modificadores[ModificadorTocado].categoria
+            identificar_cartas("carta3", carta3.numero, carta3.palo)
+            estatscartas = EVNR(carta3.numero, carta3.palo)
+            carta3.valorenvido = estatscartas.valorenvido
+            carta3.jerarquia = estatscartas.jerarquia
+
+            document.getElementById(TarotSeleccionada).classList.add("oculto")
+            TarotSeleccionada = ""
+        }
     } 
-}) 
+})
+
 click4 = document.getElementById("carta4") 
 click4.addEventListener("click", function(){ 
-    if (turno === "Jugador"){
-        cartastiradas++ 
-        if (cartastiradas <= 3){ 
+    if (turno === "Jugador"){ 
+        if (!TarotSeleccionada){
+            cartastiradas++ 
+            if (cartastiradas <= 3){ 
             click4.classList.add("oculto") 
             CartasCentro("N", carta4.numero, carta4.palo) 
             guardarCartaCentro(carta4, "N") 
             verificarCartas() 
-        } 
+            }      
+        }
+        else{
+            carta4.palo = Modificadores[ModificadorTocado].categoria
+            identificar_cartas("carta4", carta4.numero, carta4.palo)
+            estatscartas = EVNR(carta4.numero, carta4.palo)
+            carta4.valorenvido = estatscartas.valorenvido
+            carta4.jerarquia = estatscartas.jerarquia
+
+            document.getElementById(TarotSeleccionada).classList.add("oculto")
+            TarotSeleccionada = ""
+        }
     } 
-}) 
+})
+
 click5 = document.getElementById("carta5") 
 click5.addEventListener("click", function(){ 
     if (turno === "Jugador"){ 
-        cartastiradas++ 
-        if (cartastiradas <= 3){ 
+        if (!TarotSeleccionada){
+            cartastiradas++ 
+            if (cartastiradas <= 3){ 
             click5.classList.add("oculto") 
             CartasCentro("N", carta5.numero, carta5.palo) 
             guardarCartaCentro(carta5, "N") 
             verificarCartas() 
-        } 
+            }      
+        }
+        else{
+            carta5.palo = Modificadores[ModificadorTocado].categoria
+            identificar_cartas("carta5", carta5.numero, carta5.palo)
+            estatscartas = EVNR(carta5.numero, carta5.palo)
+            carta5.valorenvido = estatscartas.valorenvido
+            carta5.jerarquia = estatscartas.jerarquia
+
+            document.getElementById(TarotSeleccionada).classList.add("oculto")
+            TarotSeleccionada = ""
+        }
     } 
 })
-
-let CartasBot = []
 
 //funcion para que el bot cante truco
 function BotCantaTruco(){
@@ -618,6 +667,9 @@ function BotCantaTruco(){
 //Cartas del BOT
 //Tirar solo 3 cartas bot
 let cartastiro = 0
+
+
+let CartasBot = []
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot() {
