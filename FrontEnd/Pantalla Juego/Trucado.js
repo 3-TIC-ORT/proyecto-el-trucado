@@ -574,36 +574,25 @@ click5.addEventListener("click", function(){
     } 
 })
 
-//Cartas del BOT
+let CartasBot = []
 
-//Tirar solo 3 cartas bot
-let cartastiro = 0
-
-//Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
-function CartaBot() {
-    if (turno === "Bot") {
-
-        // Array con las 5 cartas del bot
-    let CartasBot = [carta6, carta7, carta8, carta9, carta10]
+//funcion para que el bot cante truco
+function BotCantaTruco(){
             
-        // Crea variable para fijarse si canta truco/retruco/valecuatro
+    // Crea variable para fijarse si canta truco/retruco/valecuatro
     let ValorJerarquia = 0
     let ValorAleatorio = Math.random()
-
+    
     //bucle para fijarse el valor de jerarquia de la mano del bot
     for (let i=0; i < CartasBot.length; i++){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
-
-    console.log("Valor jerarquia carta: ",CartasBot[0].jerarquia)
-    console.log("Valor aleatorio: ",ValorAleatorio)
-    console.log("Valor Jerarquia: ",ValorJerarquia)
+    
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
-    setTimeout(() => {
-    if (PuntosTruco && PuntosRetruco === false){
-        if (ValorJerarquia < 41 && ValorAleatorio < 1){ //mano promedio
-            console.log("truco")
+    if (PuntosTruco === false && PuntosRetruco === false){
+        if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
+            console.log("TRUCO")
             PuntosTruco = true
             PuntosRetruco = false
             PuntosValeCuatro = false
@@ -612,8 +601,8 @@ function CartaBot() {
             truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
         }
-        else if (ValorJerarquia > 41 && ValorAleatorio < 1){
-            console.log("truco")
+        else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
+            console.log("TRUCO")
             PuntosTruco = true
             PuntosRetruco = false
             PuntosValeCuatro = false
@@ -622,8 +611,25 @@ function CartaBot() {
             truco.classList.add("PalabrasLargas-NH")
             envido.classList.add("BarraInferiorBTN-NH")
         }
-        }
-    }, 500)
+    }
+}
+
+
+//Cartas del BOT
+//Tirar solo 3 cartas bot
+let cartastiro = 0
+
+//Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
+function CartaBot() {
+    if (turno === "Bot") {
+
+        // Array con las 5 cartas del bot
+    CartasBot = [carta6, carta7, carta8, carta9, carta10]
+    
+    //se fija si puede cantar truco
+    setTimeout(() => {
+        BotCantaTruco()
+     }, 500)
     
       // Filtra las que todavía no usó
       let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
