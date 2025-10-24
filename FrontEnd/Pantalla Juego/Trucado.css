@@ -277,6 +277,7 @@ body{
     font-weight: bold;
     font-size: 2.7rem;
     border: solid 0.4rem rgb(150, 150, 150);
+    pointer-events: none;
     transition: all 0.5s;
 }
 
@@ -314,15 +315,15 @@ body{
 }
 .T_P1{
     margin-left: 13rem;
-    margin-top: 8rem;
+    margin-top: 9rem;
 }
 .M_P2{
     margin-left: 60rem;
-    margin-top: 15rem;
+    margin-top: 12rem;
 }
 .T_P2{
     margin-left: 61rem;
-    margin-top: 17rem;
+    margin-top: 15rem;
 }
 
 

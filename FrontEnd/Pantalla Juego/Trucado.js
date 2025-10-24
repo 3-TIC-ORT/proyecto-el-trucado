@@ -127,13 +127,8 @@ function resetearRonda() {
     Cant_Envido = 0
 
 
-// El que ganó la última mano empieza la siguiente
-if (ganadorUltimaMano) {
-    turno = ganadorUltimaMano
-} else {
-    // Si fue empate o aún no hay ganador (inicio del juego)
-    turno = TurnoAzar()
-}
+// Turno entre partidas intermitente
+turno = turnoF 
 
 // Preparar el turno del siguiente por si se necesita después
 turnoF = (turno === "Jugador") ? "Bot" : "Jugador"
@@ -177,7 +172,7 @@ function crearmazo(){
         nuevaCarta.jerarquia = estatscartas.jerarquia
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
-        if (i <= 10){
+        if (i <= 5){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -527,7 +522,7 @@ let cartastiradas = 0
 
 click1 = document.getElementById("carta1") 
 click1.addEventListener("click", function(){ 
-    if (turno === "Jugador"){ 
+    if (turno === "Jugador" && !BotonesVoluntadBlock){ 
         if (!TarotSeleccionada){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
@@ -551,7 +546,7 @@ click1.addEventListener("click", function(){
 }) 
 click2 = document.getElementById("carta2") 
 click2.addEventListener("click", function(){ 
-    if (turno === "Jugador"){ 
+    if (turno === "Jugador" && !BotonesVoluntadBlock){ 
         if (!TarotSeleccionada){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
@@ -575,7 +570,7 @@ click2.addEventListener("click", function(){
 })
 click3 = document.getElementById("carta3") 
 click3.addEventListener("click", function(){ 
-    if (turno === "Jugador"){ 
+    if (turno === "Jugador" && !BotonesVoluntadBlock){ 
         if (!TarotSeleccionada){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
@@ -599,7 +594,7 @@ click3.addEventListener("click", function(){
 })
 click4 = document.getElementById("carta4") 
 click4.addEventListener("click", function(){ 
-    if (turno === "Jugador"){ 
+    if (turno === "Jugador" && !BotonesVoluntadBlock){ 
         if (!TarotSeleccionada){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
@@ -623,7 +618,7 @@ click4.addEventListener("click", function(){
 })
 click5 = document.getElementById("carta5") 
 click5.addEventListener("click", function(){ 
-    if (turno === "Jugador"){ 
+    if (turno === "Jugador" && !BotonesVoluntadBlock){ 
         if (!TarotSeleccionada){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
@@ -647,6 +642,7 @@ click5.addEventListener("click", function(){
 })
 
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
+let BotonesVoluntadBlock = false
 //funcion para que el bot cante truco
 function BotCantaTruco(){
             
@@ -662,7 +658,7 @@ function BotCantaTruco(){
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
     if (PuntosTruco === false && PuntosRetruco === false){
-        if (ValorJerarquia < 41 && ValorAleatorio < 1){ //mano promedio
+        if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
             console.log("TRUCO")
             PuntosTruco = true
             PuntosRetruco = false
@@ -673,6 +669,7 @@ function BotCantaTruco(){
             flor.classList.add("BarraInferiorBTN-NH")
             mazo.classList.add("BarraInferiorBTN-NH")
             BotonesVoluntad.style.display = "flex"
+            BotonesVoluntadBlock = true
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
             console.log("TRUCO")
@@ -685,6 +682,7 @@ function BotCantaTruco(){
             flor.classList.add("BarraInferiorBTN-NH")
             mazo.classList.add("BarraInferiorBTN-NH")
             BotonesVoluntad.style.display = "flex"
+            BotonesVoluntadBlock = true
         }
     }
 }
@@ -702,12 +700,14 @@ noquiero.addEventListener("click", function(){
     setTimeout(function() {
         resetearRonda()
         GuardarPuntos("ELLOS", 1 * multiplicador)
-    }, 500)
+    }, 750)
+    BotonesVoluntadBlock = false
 })
 
 quiero.addEventListener("click", function(){
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
+    BotonesVoluntadBlock = false
 })
 
 
@@ -728,8 +728,10 @@ function CartaBot() {
     
     //se fija si puede cantar truco
     setTimeout(() => {
-        BotCantaTruco()
-     }, 1000)
+        if (cartastiro >= 1 && cartastiradas >= 1){
+            BotCantaTruco()
+        }
+     }, 1500)
     
       // Filtra las que todavía no usó
       let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
@@ -764,23 +766,6 @@ function CartaBot() {
   CartaBot()
   }
   
-//Tirar cartas del Bot (funcion parcial para probar y que se pueda jugar)
-function TirarCartasBot (numerocarta){ //Del 6 y al 10 orden de izquierda a derecha
-    setTimeout(function() {
-        click = document.getElementById("carta" + numerocarta)
-        cartastiro++
-        if (click){
-            click.classList.add("oculto")
-        }
-        let BotID = numerocarta - 1
-        let cartaX = cartas[BotID]
-        CartasCentro("E", cartaX.numero, cartaX.palo)
-        guardarCartaCentro(cartaX, "E")
-        verificarCartas()
-    }, 1000)  
-}
-    
-
 
 
 
@@ -1058,8 +1043,6 @@ function PonerTarot(Tarot, idCarta){
     document.getElementById(idCarta).style.backgroundImage = "url('../Pantalla Tienda/Imagenes/" + Tarot + ".png')"
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
-
-
 
 PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
 PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
