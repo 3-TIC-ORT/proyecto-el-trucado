@@ -30,9 +30,9 @@ let cartasUsadasBot = []
 
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
-let Modificador1 = "8"
+let Modificador1 = "4"
 let Modificador2 = "5"
-let Modificador3 = "9"
+let Modificador3 = "6"
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
@@ -90,6 +90,9 @@ function resetearRonda() {
     PuntosRetruco = false
     PuntosValeCuatro = false
 
+    BotonesVoluntad.style.display = "none"
+
+
     //Se resetea las cartas que tiro el bot
     cartasUsadasBot = []
 
@@ -113,6 +116,8 @@ function resetearRonda() {
     truco.textContent = "TRUCO"
     truco.classList.remove("PalabrasLargas")
     truco.classList.remove("PalabrasLargas-NH")
+    truco.classList.remove("PalabrasExtraLargas")
+    truco.classList.remove("PalabrasExtraLargas-NH")
     truco.classList.add("BarraInferiorBTN")
 
     //Varialbe necesarias para el funcionamiento de la barra inferior
@@ -675,12 +680,36 @@ function BotCantaTruco(){
             PuntosRetruco = false
             PuntosValeCuatro = false
             truco.textContent = "RETRUCO"
-            truco.classList.add("PalabrasLargas")  
-            truco.classList.add("PalabrasLargas-NH")
+            truco.classList.add("PalabrasLargas")
             envido.classList.add("BarraInferiorBTN-NH")
+            flor.classList.add("BarraInferiorBTN-NH")
+            mazo.classList.add("BarraInferiorBTN-NH")
+            BotonesVoluntad.style.display = "flex"
         }
     }
 }
+
+
+let quiero = document.getElementById("QUIERO")
+let noquiero = document.getElementById("NOQUIERO")
+
+noquiero.addEventListener("click", function(){
+    console.log("Jugador: No Quiero")
+    multiplicador = 1
+    if (PuntosValeCuatro) multiplicador = 3
+    else if (PuntosRetruco) multiplicador = 2
+    else if (PuntosTruco) multiplicador = 1
+    setTimeout(function() {
+        resetearRonda()
+        GuardarPuntos("ELLOS", 1 * multiplicador)
+    }, 500)
+})
+
+quiero.addEventListener("click", function(){
+    BotonesVoluntad.style.display = "none"
+    console.log("Jugador: Quiero")
+})
+
 
 
 //Cartas del BOT
@@ -772,6 +801,7 @@ let EnvidoEnvido = 0
 let Regresar = false
 let Cant_Envido = 0
 let PuntosEnvidos 
+
 let PuntosTruco = false
 let PuntosRetruco = false
 let PuntosValeCuatro = false
@@ -799,12 +829,14 @@ truco.addEventListener("click", function(){
                 PuntosTruco = false
                 PuntosRetruco = true
                 PuntosValeCuatro = false
+                BotonesVoluntad.style.display = "none"
             }
             else if (PuntosRetruco === true){
                 truco.classList.add("PalabrasExtraLargas-NH")
                 PuntosTruco = false
                 PuntosRetruco = false
                 PuntosValeCuatro = true
+                BotonesVoluntad.style.display = "none"
             }
         }
         //Cuando se toca el boton REGRESAR
