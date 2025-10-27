@@ -31,8 +31,8 @@ let cartasUsadasBot = []
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
 let Modificador1 = "4"
-let Modificador2 = "5"
-let Modificador3 = "6"
+let Modificador2 = "4"
+let Modificador3 = "4"
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
@@ -541,6 +541,9 @@ click1.addEventListener("click", function(){
 
             document.getElementById(TarotSeleccionada).classList.add("oculto")
             TarotSeleccionada = ""
+
+            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            actualizarBoton()
         }
     } 
 }) 
@@ -565,6 +568,9 @@ click2.addEventListener("click", function(){
 
             document.getElementById(TarotSeleccionada).classList.add("oculto")
             TarotSeleccionada = ""
+
+            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            actualizarBoton()
         }
     } 
 })
@@ -589,6 +595,9 @@ click3.addEventListener("click", function(){
 
             document.getElementById(TarotSeleccionada).classList.add("oculto")
             TarotSeleccionada = ""
+
+            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            actualizarBoton()
         }
     } 
 })
@@ -613,6 +622,9 @@ click4.addEventListener("click", function(){
 
             document.getElementById(TarotSeleccionada).classList.add("oculto")
             TarotSeleccionada = ""
+
+            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            actualizarBoton()
         }
     } 
 })
@@ -637,6 +649,9 @@ click5.addEventListener("click", function(){
 
             document.getElementById(TarotSeleccionada).classList.add("oculto")
             TarotSeleccionada = ""
+
+            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            actualizarBoton()
         }
     } 
 })
@@ -670,6 +685,7 @@ function BotCantaTruco(){
             mazo.classList.add("BarraInferiorBTN-NH")
             BotonesVoluntad.style.display = "flex"
             BotonesVoluntadBlock = true
+            MostrarMensajeBot(true, "Truco")
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
             console.log("TRUCO")
@@ -683,6 +699,7 @@ function BotCantaTruco(){
             mazo.classList.add("BarraInferiorBTN-NH")
             BotonesVoluntad.style.display = "flex"
             BotonesVoluntadBlock = true
+            MostrarMensajeBot(true, "Truco")
         }
     }
 }
@@ -702,12 +719,14 @@ noquiero.addEventListener("click", function(){
         GuardarPuntos("ELLOS", 1 * multiplicador)
     }, 750)
     BotonesVoluntadBlock = false
+    MostrarMensajeBot(false, "")
 })
 
 quiero.addEventListener("click", function(){
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
     BotonesVoluntadBlock = false
+    MostrarMensajeBot(false, "")
 })
 
 
@@ -1003,6 +1022,21 @@ if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo ==
     flor.classList.remove("BarraInferiorBTN")
     flor.classList.add("BarraInferiorBTN-NH")
 }
+}
+
+function MostrarMensajeBot(Mostrar, Mensaje){
+    let GloboTexto = document.getElementById("GloboTexto")
+    let MensajeTexto = document.getElementById("TextoCantado")
+
+    
+    if (Mostrar === true){
+        GloboTexto.style.display = "flex"
+        MensajeTexto.textContent = Mensaje
+    }
+    else if(Mostrar === false){
+        GloboTexto.style.display = "none"
+        MensajeTexto.textContent = ""
+    }
 }
 
 //Cantidad de tiendas en la partida

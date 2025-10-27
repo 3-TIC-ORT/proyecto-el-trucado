@@ -548,6 +548,29 @@ body{
 }
 
 
+#GloboTexto{
+    z-index: 2;
+    background-image: url(IMAGENES/Globo\ de\ Texto.png);
+    background-size: cover;
+    height: 3rem;
+    width: 15rem;
+    font-size: 1rem;
+    position: absolute;
+    text-align: center;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    margin-left: 52rem;
+    transition: all 0.5s;
+}
+
+#TextoCantado{
+    padding: 0 0 0 20px;
+    transition: all 0.5s;
+}
+
+
 /*Botones Curvos*/
 .BordesPixelArt,
 .BordesPixelArt--wrapper {
