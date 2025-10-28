@@ -817,6 +817,7 @@ let PuntosValeCuatro = false
 truco.addEventListener("click", function(){
     GloboTexto.style.display = "none"
     BotonesVoluntadBlock = false
+    
     setTimeout(function() {
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
@@ -1052,6 +1053,9 @@ function VerificarTienda(){
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
         window.location.href = "../Pantalla Tienda/Tienda.html"
         CantidadTienda++
+        postEvent("enviarPuntosBack", (data) => {
+            let puntos = puntosAcumulados["ELLOS"]
+        })
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15)){
         window.location.href = "../Pantalla Tienda/Tienda.html"
