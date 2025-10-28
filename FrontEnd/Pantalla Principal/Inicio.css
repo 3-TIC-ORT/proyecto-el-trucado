@@ -233,7 +233,6 @@ body {
   color: white;
   font-size: 18px;
   cursor: pointer;
-  border-radius: 5px;
   transition: all 0.3s;
 }
 #mostrarPantalla:hover {
@@ -252,7 +251,7 @@ body {
   align-items: center;
 }
 
-/* --- Cuadro gris (ventana emergente) --- */
+/* ---  dro gris (ventana emergente) --- */
 .ventana {
   background-color: #4a4a4a;
   width: 80%;
@@ -347,61 +346,30 @@ body {
 .MenuColecciónBordes--wrapper::after {
   content: "";
   position: absolute;
-  clip-path: polygon(0px calc(100% - 12px),
-    4px calc(100% - 12px),
-    4px calc(100% - 8px),
-    8px calc(100% - 4px),
-    12px calc(100% - 4px),
-    12px 100%,
-    calc(100% - 12px) 100%,
-    calc(100% - 12px) calc(100% - 4px),
-    calc(100% - 8px) calc(100% - 4px),
-    calc(100% - 4px) calc(100% - 8px),
-    calc(100% - 4px) calc(100% - 12px),
-    100% calc(100% - 12px),
-    100% 12px,
-    calc(100% - 4px) 12px,
-    calc(100% - 4px) 8px,
-    calc(100% - 8px) 4px,
-    calc(100% - 12px) 4px,
-    calc(100% - 12px) 0px,
-    12px 0px,
-    12px 4px,
-    8px 4px,
-    4px 8px,
-    4px 12px,
-    0px 12px,
-    0px 50%,
-    4px 50%,
-    4px 12px,
-    8px 12px,
-    8px 8px,
-    12px 8px,
-    12px 4px,
-    calc(100% - 12px) 4px,
-    calc(100% - 12px) 8px,
-    calc(100% - 8px) 8px,
-    calc(100% - 8px) 12px,
-    calc(100% - 4px) 12px,
-    calc(100% - 4px) calc(100% - 12px),
-    calc(100% - 8px) calc(100% - 12px),
-    calc(100% - 8px) calc(100% - 8px),
-    calc(100% - 12px) calc(100% - 8px),
-    calc(100% - 12px) calc(100% - 4px),
-    12px calc(100% - 4px),
-    12px calc(100% - 8px),
-    8px calc(100% - 8px),
-    8px calc(100% - 12px),
-    4px calc(100% - 12px),
-    4px 50%,
-    0px 50%);
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  display: block;
-  pointer-events: none;
+  .pixel-corners {
+    clip-path: polygon(
+      0px calc(100% - 10px),
+      5px calc(100% - 10px),
+      5px calc(100% - 5px),
+      10px calc(100% - 5px),
+      10px 100%,
+      calc(100% - 10px) 100%,
+      calc(100% - 10px) calc(100% - 5px),
+      calc(100% - 5px) calc(100% - 5px),
+      calc(100% - 5px) calc(100% - 10px),
+      100% calc(100% - 10px),
+      100% 10px,
+      calc(100% - 5px) 10px,
+      calc(100% - 5px) 5px,
+      calc(100% - 10px) 5px,
+      calc(100% - 10px) 0px,
+      10px 0px,
+      10px 5px,
+      5px 5px,
+      5px 10px,
+      0px 10px
+    );
+  }
 }
 .MenuColecciónBordes::after {
   margin: -4px;
@@ -490,7 +458,6 @@ body {
 .galeria > div {
   background-color: #222;
   border: 3px solid #555;
-  border-radius: 10px;
   width: 90%;
   max-width: 220px;
   padding: 10px;
@@ -506,7 +473,6 @@ body {
 .galeria img {
   width: 100%;
   height: auto;
-  border-radius: 8px;
 }
 
 /* Descripción */
@@ -519,4 +485,18 @@ body {
 /* Ajuste para galería dentro de la ventana */
 .ventana .galeria {
   max-height: 85%;
+}
+
+
+.overlay {
+  display: none; /* inicia oculta */
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
