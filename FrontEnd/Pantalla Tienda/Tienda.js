@@ -1,5 +1,5 @@
 //Variable que sirve para la función de agregar puntos
-let puntosAcumulados = {}; // Guarda puntos acumulados por id
+let puntosAcumulados = {} // Guarda puntos acumulados por id
 
 //Parte donde se encarga de guardar los puntos del juego
 GuardarPuntos("NOS", 15)
@@ -270,7 +270,6 @@ Vender.addEventListener("click", function(){
         Tarot2.classList.add("Oculto")
         GuardarPuntos("NOS", ValorTarot2)
         Tarot2Selected = false
-        ValorTarot1 = Valor - 1
         Vender.classList.add("Oculto")
     }
     else if (Tarot3Selected === true){
@@ -309,7 +308,7 @@ function sumarPuntos(idcarta, puntos) {
         document.getElementById(idcarta + "5"),
         document.getElementById(idcarta + "6"),
     ]
-    let resto = puntos;
+    let resto = puntos
 
     for (let i = 0; i < 6; i++) {
         if (resto >= 5){

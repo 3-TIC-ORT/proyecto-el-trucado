@@ -160,9 +160,12 @@ function crearmazo(){
         //Crea las cartas para cada carta
         let nuevaCarta = crearcarta()
         
-        // Evitar cartas Repetidas
-        while (cartas.some(c => c.numero == nuevaCarta.numero && c.palo == nuevaCarta.palo)) {
-            nuevaCarta = crearcarta()
+        for (let j = 0; j < cartas.length; j++){
+            while ( nuevaCarta.numero === cartas[j].numero && nuevaCarta.palo === cartas[j].palo){
+                nuevaCarta = crearcarta()
+                j = 0
+            }
+                
         }
         cartas.push(nuevaCarta)
 
@@ -812,6 +815,8 @@ let PuntosValeCuatro = false
 
 //Boton truco
 truco.addEventListener("click", function(){
+    GloboTexto.style.display = "none"
+    BotonesVoluntadBlock = false
     setTimeout(function() {
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
