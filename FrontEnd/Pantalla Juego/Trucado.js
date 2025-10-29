@@ -30,8 +30,8 @@ let cartasUsadasBot = []
 
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
-let Modificador1 = "4"
-let Modificador2 = "4"
+let Modificador1 = "1"
+let Modificador2 = "5"
 let Modificador3 = "4"
 
 //Revisa si esta el modificador de reyes
@@ -536,17 +536,22 @@ click1.addEventListener("click", function(){
             }      
         }
         else{
-            carta1.palo = Modificadores[ModificadorTocado].categoria
-            identificar_cartas("carta1", carta1.numero, carta1.palo)
-            estatscartas = EVNR(carta1.numero, carta1.palo)
-            carta1.valorenvido = estatscartas.valorenvido
-            carta1.jerarquia = estatscartas.jerarquia
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+                carta1.palo = Modificadores[ModificadorTocado].categoria
+                identificar_cartas("carta1", carta1.numero, carta1.palo)
+                estatscartas = EVNR(carta1.numero, carta1.palo)
+                carta1.valorenvido = estatscartas.valorenvido
+                carta1.jerarquia = estatscartas.jerarquia
 
-            document.getElementById(TarotSeleccionada).classList.add("oculto")
-            TarotSeleccionada = ""
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
 
-            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-            actualizarBoton()
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
+            }
+            else if (ModificadorTocado === "1"){
+                carta1.jerarquia++
+            }
         }
     } 
 }) 
@@ -707,7 +712,7 @@ function BotCantaTruco(){
     }
 }
 
-
+//Botones de v0luntad
 let quiero = document.getElementById("QUIERO")
 let noquiero = document.getElementById("NOQUIERO")
 
@@ -1071,7 +1076,7 @@ function VerificarTienda(){
 //Todos los modificadores, puede cambiar
 let Modificadores = [
     { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
-    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras (no en envido)", valor: 1 },
+    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras", valor: 1 },
     { nombre: "Gemelo", descripcion: "Cambia un carta por otra a elección.", valor: 2 },
     { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2, categoria: "oro"},
     { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1, categoria: "basto" },
@@ -1198,10 +1203,8 @@ let PuntosBot = document.getElementById("PuntosBot")
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
 function GuardarPuntos(id, sumar) { //
-    if (!puntosAcumulados[id]) {
-        puntosAcumulados[id] = 0
-    }
-    puntosAcumulados[id] += sumar
+    
+    puntosAcumulados[id] = sumar + puntosAcumulados[id]
     sumarPuntos(id, puntosAcumulados[id])
     if (puntosAcumulados[id] >= 30){
         setTimeout(function(){
@@ -1213,14 +1216,14 @@ function GuardarPuntos(id, sumar) { //
                 PuntosHechos.textContent = "Puntos Hechos: " + puntosAcumulados["NOS"]
                 DERROTA.style.display = "flex"
             }
-        }, 500)
+        }, 1500)
        
     }
 }
 //Función que se encarga de sumar puntos, pero no debe llamarsela directamente
 function sumarPuntos(idcarta, puntos) {
     let imagenTransparente = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAuMBgfsCyBYAAAAASUVORK5CYII="
-    let imgs = [
+    let img = [
         document.getElementById(idcarta + "1"),
         document.getElementById(idcarta + "2"),
         document.getElementById(idcarta + "3"),
@@ -1232,15 +1235,15 @@ function sumarPuntos(idcarta, puntos) {
 
     for (let i = 0; i < 6; i++) {
         if (resto >= 5){
-            imgs[i].src = "IMAGENES/Fosforo5.png"
-            resto -= 5
+            img[i].src = "IMAGENES/Fosforo5.png"
+            resto = resto - 5
         }
         else if (resto > 0){
-            imgs[i].src = "IMAGENES/Fosforo" + resto + ".png"
+            img[i].src = "IMAGENES/Fosforo" + resto + ".png"
             resto = 0
         }
         else{
-            imgs[i].src = imagenTransparente
+            img[i].src = imagenTransparente
         }
     }
 }

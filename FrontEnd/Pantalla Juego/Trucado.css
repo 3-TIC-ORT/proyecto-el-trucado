@@ -141,6 +141,8 @@ body{
 }
 
 
+
+
 /*Centro*/
 .Centro{
     margin-left: -10rem;
@@ -208,7 +210,7 @@ body{
 .BarraInferiorBTN:hover{
     font-size: 4.5rem;
     border: solid 0.4rem rgb(163, 163, 9);
-    padding: 0.7rem 3rem;
+    padding: 0.7rem 3.5rem;
 }
 
 /*Botones deshabilitados*/

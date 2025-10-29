@@ -22,7 +22,7 @@ function GeneradorModificadores(){
 //Todos los modificadores, puede cambiar
 let Modificadores = [
     { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
-    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras (no en envido)", valor: 1 },
+    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras", valor: 1 },
     { nombre: "Gemelo", descripcion: "Cambia un carta por otra a elección.", valor: 2 },
     { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2 },
     { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1 },
