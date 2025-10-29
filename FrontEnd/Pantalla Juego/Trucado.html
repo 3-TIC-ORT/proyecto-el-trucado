@@ -45,18 +45,7 @@
     <div id="Turno">
         Turno: Jugador
     </div>
-    <audio id="Sonido aldeano 1" src="../FrontEnd/Pantalla Juego/Sonidos/Villager_accept1.ogg"></audio>
-    <audio id="Sonido aldeano 2" src="../FrontEnd/Pantalla Juego/Sonidos/Villager_accept2.ogg"></audio>
-    <audio id="Sonido aldeano 3" src="../FrontEnd/Pantalla Juego/Sonidos/Villager_deny1.ogg"></audio>
-    <audio id="Sonido aldeano 4" src="../FrontEnd/Pantalla Juego/Sonidos/Villager_deny2.ogg"></audio>
-    <button onclick="probarSonido()">Probar sonido</button>
-
-<script>
-  function probarSonido() {
-    const sonido = document.getElementById("Sonido aldeano 1");
-    sonido.play();
-  }
-</script>
+    
     <!-- Container del menu -->
     <div class="MenuContainer">
         <h1 class="Menu">☰</h1>
@@ -119,12 +108,12 @@
         </div>
 
     <!-- Contenedor de las cartas del jugador -->
-    <div class="ContenedorCartas">
-        <h1 class="EfectoAscensión BordesCartas"> +1 Jerarquia</h1>
-        <h1 class="EfectoAscensión BordesCartas"> +1 Jerarquia</h1>
-        <h1 class="EfectoAscensión BordesCartas"> +1 Jerarquia</h1>
-        <h1 class="EfectoAscensión BordesCartas"> +1 Jerarquia</h1>
-        <h1 class="EfectoAscensión BordesCartas"> +1 Jerarquia</h1>
+    <div class="ContenedorModificadores">
+        <h1 class="EfectoAscensión Oculto"> +1 Jerarquia</h1>
+        <h1 class="EfectoAscensión Oculto"> +1 Jerarquia</h1>
+        <h1 class="EfectoAscensión Oculto"> +1 Jerarquia</h1>
+        <h1 class="EfectoAscensión Oculto"> +1 Jerarquia</h1>
+        <h1 class="EfectoAscensión Oculto"> +1 Jerarquia</h1>
     </div>
     <div class="ContenedorCartas Jugador">
         <button id="carta1" class="CartaJugador BordesCartas"></button>
