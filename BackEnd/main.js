@@ -7,5 +7,3 @@ subscribePOSTEvent("enviarPuntosBack", (data) => {
     console.log("Tenes ${puntos} puntos")
 
 })
-
-console.log(data)

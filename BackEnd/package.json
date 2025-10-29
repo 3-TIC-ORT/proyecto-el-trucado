@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
     "url": "https://github.com/3-TIC-ORT/proyecto-el-trucado/issues"
   },
   "homepage": "https://github.com/3-TIC-ORT/proyecto-el-trucado#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "soquetic": "^1.4.2"
+  }
 }
