@@ -1,3 +1,5 @@
+connect2Server()
+
 //Funcionalidad de los botones
 let Volver = document.getElementById("Volver")
 Volver.addEventListener("click", function(){
@@ -1056,11 +1058,9 @@ let CantidadTienda = 0
 function VerificarTienda(){
 
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
+        postEvent("enviarPuntosBack", {puntos: puntosAcumulados["ELLOS"]})
         window.location.href = "../Pantalla Tienda/Tienda.html"
         CantidadTienda++
-        postEvent("enviarPuntosBack", (data) => {
-            let puntos = puntosAcumulados["ELLOS"]
-        })
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15)){
         window.location.href = "../Pantalla Tienda/Tienda.html"
