@@ -1,3 +1,5 @@
+connect2Server()
+
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {} // Guarda puntos acumulados por id
 
