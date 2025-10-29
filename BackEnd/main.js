@@ -4,8 +4,6 @@ startServer(3000)
 
 subscribePOSTEvent("enviarPuntosBack", (data) => {
 
-    console.log("Tenes ${puntos} puntos")
+    console.log(`Tenes ${data.puntos} puntos`)
 
 })
-
-console.log(data)
