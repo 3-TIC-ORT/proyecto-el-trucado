@@ -178,5 +178,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/JZylber/SoqueTIC-Client@v1.4.2/soquetic-client.js"></script>
     <script src="Trucado.js" ></script>
+
+    <audio id="Aldeano1" src="Sonidos/Villager_accept1.ogg" autoplay></audio>
+
+<button id="Botton">Truco</button>
+<script>
+    let Boton = document.getElementById("Botton")
+    let sonido = document.getElementById("Aldeano1");
+    
+      Boton.addEventListener("click", () => {
+        sonido.play();
+      });
+    </script>
 </body>
 </html>
+
