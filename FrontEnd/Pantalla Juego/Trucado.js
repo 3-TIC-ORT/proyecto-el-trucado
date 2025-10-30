@@ -1058,7 +1058,7 @@ let CantidadTienda = 0
 function VerificarTienda(){
 
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
-        postEvent("enviarPuntosBack", {puntos: puntosAcumulados["ELLOS"]})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"]})
         window.location.href = "../Pantalla Tienda/Tienda.html"
         CantidadTienda++
     }

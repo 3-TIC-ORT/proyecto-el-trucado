@@ -3,7 +3,13 @@ import { subscribeGETEvent, subscribePOSTEvent, realTimeEvent, startServer } fro
 startServer(3000)
 
 subscribePOSTEvent("enviarPuntosBack", (data) => {
-
-    console.log(`Tenes ${data.puntos} puntos`)
-
+    guardarPuntos(data.puntosNos, data.puntosEllos)
 })
+
+function guardarPuntos(puntosGuardadosNos,puntosGuardadosEllos){
+if (puntosGuardadosEllos >= 1){
+    fs.writeFileSync("puntos.json",JSON.stringify({ ellos: puntosGuardadosEllos, nosotros: puntosGuardadosNos }, null, 2))      
+console.log(`El console log funciona y tiene ${puntosGuardadosEllos} puntos`)}
+
+console.log(`No hace falta if, nosotros tenemos ${puntosGuardadosNos} puntos`)
+}
