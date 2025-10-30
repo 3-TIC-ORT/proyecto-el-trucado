@@ -33,8 +33,8 @@ let cartasUsadasBot = []
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
 let Modificador1 = "1"
-let Modificador2 = "5"
-let Modificador3 = "4"
+let Modificador2 = "1"
+let Modificador3 = "1"
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
@@ -128,6 +128,12 @@ function resetearRonda() {
     Regresar = false
     Cant_Envido = 0
 
+    //Se reinician las jeraquias
+    CantidadJeraquia1 = 0
+    CantidadJeraquia2 = 0
+    CantidadJeraquia3 = 0
+    CantidadJeraquia4 = 0
+    CantidadJeraquia5 = 0
 
 // Turno entre partidas intermitente
 turno = turnoF 
@@ -241,10 +247,11 @@ function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
 function CartasCentro(quien, numero, palo) { 
 //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
+
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
     let CartasCentro2 = document.getElementById("CC" + quien + "2")
     let CartasCentro3 = document.getElementById("CC" + quien + "3")
-    let estatscartas
+
     //Revisa si ya tienen imagenes y si tiene le pone a las que no tienen imagenes
     if (CartasCentro1.style.backgroundImage != "" && CartasCentro1.style.backgroundImage != "none") {
         if (CartasCentro2.style.backgroundImage != "" && CartasCentro2.style.backgroundImage != "none") {
@@ -525,6 +532,21 @@ function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
 //Tirar solo 3 Cartas Nosotros
 let cartastiradas = 0
 
+let CantidadJeraquia1 = 0
+let CantidadJeraquia2 = 0
+let CantidadJeraquia3 = 0
+let CantidadJeraquia4 = 0
+let CantidadJeraquia5 = 0
+
+
+//Display de ascensos
+let ascenso1 = document.getElementById("ascenso1")
+let ascenso2 = document.getElementById("ascenso2")
+let ascenso3 = document.getElementById("ascenso3")
+let ascenso4 = document.getElementById("ascenso4")
+let ascenso5 = document.getElementById("ascenso5")
+
+
 click1 = document.getElementById("carta1") 
 click1.addEventListener("click", function(){ 
     if (turno === "Jugador" && !BotonesVoluntadBlock){ 
@@ -553,6 +575,11 @@ click1.addEventListener("click", function(){
             }
             else if (ModificadorTocado === "1"){
                 carta1.jerarquia++
+                CantidadJeraquia1++
+                ascenso1.classList.remove("Oculto")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                ascenso1.textContent = "+ " + CantidadJeraquia1 + " Jerarquía"
             }
         }
     } 
@@ -570,17 +597,27 @@ click2.addEventListener("click", function(){
             }      
         }
         else{
-            carta2.palo = Modificadores[ModificadorTocado].categoria
-            identificar_cartas("carta2", carta2.numero, carta2.palo)
-            estatscartas = EVNR(carta2.numero, carta2.palo)
-            carta2.valorenvido = estatscartas.valorenvido
-            carta2.jerarquia = estatscartas.jerarquia
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+                carta2.palo = Modificadores[ModificadorTocado].categoria
+                identificar_cartas("carta2", carta2.numero, carta2.palo)
+                estatscartas = EVNR(carta2.numero, carta2.palo)
+                carta2.valorenvido = estatscartas.valorenvido
+                carta2.jerarquia = estatscartas.jerarquia
 
-            document.getElementById(TarotSeleccionada).classList.add("oculto")
-            TarotSeleccionada = ""
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
 
-            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-            actualizarBoton()
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
+            }
+            else if (ModificadorTocado === "1"){
+                carta2.jerarquia++
+                CantidadJeraquia2++
+                ascenso2.classList.remove("Oculto")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                ascenso2.textContent = "+ " + CantidadJeraquia2 + " Jerarquía"
+            }
         }
     } 
 })
@@ -597,17 +634,27 @@ click3.addEventListener("click", function(){
             }      
         }
         else{
-            carta3.palo = Modificadores[ModificadorTocado].categoria
-            identificar_cartas("carta3", carta3.numero, carta3.palo)
-            estatscartas = EVNR(carta3.numero, carta3.palo)
-            carta3.valorenvido = estatscartas.valorenvido
-            carta3.jerarquia = estatscartas.jerarquia
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+                carta3.palo = Modificadores[ModificadorTocado].categoria
+                identificar_cartas("carta3", carta3.numero, carta3.palo)
+                estatscartas = EVNR(carta3.numero, carta3.palo)
+                carta3.valorenvido = estatscartas.valorenvido
+                carta3.jerarquia = estatscartas.jerarquia
 
-            document.getElementById(TarotSeleccionada).classList.add("oculto")
-            TarotSeleccionada = ""
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
 
-            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-            actualizarBoton()
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
+            }
+            else if (ModificadorTocado === "1"){
+                carta3.jerarquia++
+                CantidadJeraquia3++
+                ascenso3.classList.remove("Oculto")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                ascenso3.textContent = "+ " + CantidadJeraquia3 + " Jerarquía"
+            }
         }
     } 
 })
@@ -624,17 +671,27 @@ click4.addEventListener("click", function(){
             }      
         }
         else{
-            carta4.palo = Modificadores[ModificadorTocado].categoria
-            identificar_cartas("carta4", carta4.numero, carta4.palo)
-            estatscartas = EVNR(carta4.numero, carta4.palo)
-            carta4.valorenvido = estatscartas.valorenvido
-            carta4.jerarquia = estatscartas.jerarquia
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+                carta4.palo = Modificadores[ModificadorTocado].categoria
+                identificar_cartas("carta4", carta4.numero, carta4.palo)
+                estatscartas = EVNR(carta4.numero, carta4.palo)
+                carta4.valorenvido = estatscartas.valorenvido
+                carta4.jerarquia = estatscartas.jerarquia
 
-            document.getElementById(TarotSeleccionada).classList.add("oculto")
-            TarotSeleccionada = ""
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
 
-            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-            actualizarBoton()
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
+            }
+            else if (ModificadorTocado === "1"){
+                carta4.jerarquia++
+                CantidadJeraquia4++
+                ascenso4.classList.remove("Oculto")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                ascenso4.textContent = "+ " + CantidadJeraquia4 + " Jerarquía"
+            }
         }
     } 
 })
@@ -651,17 +708,27 @@ click5.addEventListener("click", function(){
             }      
         }
         else{
-            carta5.palo = Modificadores[ModificadorTocado].categoria
-            identificar_cartas("carta5", carta5.numero, carta5.palo)
-            estatscartas = EVNR(carta5.numero, carta5.palo)
-            carta5.valorenvido = estatscartas.valorenvido
-            carta5.jerarquia = estatscartas.jerarquia
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+                carta5.palo = Modificadores[ModificadorTocado].categoria
+                identificar_cartas("carta5", carta5.numero, carta5.palo)
+                estatscartas = EVNR(carta5.numero, carta5.palo)
+                carta5.valorenvido = estatscartas.valorenvido
+                carta5.jerarquia = estatscartas.jerarquia
 
-            document.getElementById(TarotSeleccionada).classList.add("oculto")
-            TarotSeleccionada = ""
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
 
-            EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-            actualizarBoton()
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
+            }
+            else if (ModificadorTocado === "1"){
+                carta5.jerarquia++
+                CantidadJeraquia5++
+                ascenso5.classList.remove("Oculto")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                ascenso5.textContent = "+ " + CantidadJeraquia5 + " Jerarquía"
+            }
         }
     } 
 })
@@ -680,36 +747,43 @@ function BotCantaTruco(){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
     
+    let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
     if (PuntosTruco === false && PuntosRetruco === false){
         if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
-            console.log("TRUCO")
-            PuntosTruco = true
-            PuntosRetruco = false
-            PuntosValeCuatro = false
-            truco.textContent = "RETRUCO"
-            truco.classList.add("PalabrasLargas")
-            envido.classList.add("BarraInferiorBTN-NH")
-            flor.classList.add("BarraInferiorBTN-NH")
-            mazo.classList.add("BarraInferiorBTN-NH")
-            BotonesVoluntad.style.display = "flex"
-            BotonesVoluntadBlock = true
-            MostrarMensajeBot(true, "Truco")
+            sonido.play();  // Reproduce el sonido
+            setTimeout(() => {
+                console.log("TRUCO")
+                PuntosTruco = true
+                PuntosRetruco = false
+                PuntosValeCuatro = false
+                truco.textContent = "RETRUCO"
+                truco.classList.add("PalabrasLargas")
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                BotonesVoluntadBlock = true
+                MostrarMensajeBot(true, "Truco")
+              }, 1200)           
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
-            console.log("TRUCO")
-            PuntosTruco = true
-            PuntosRetruco = false
-            PuntosValeCuatro = false
-            truco.textContent = "RETRUCO"
-            truco.classList.add("PalabrasLargas")
-            envido.classList.add("BarraInferiorBTN-NH")
-            flor.classList.add("BarraInferiorBTN-NH")
-            mazo.classList.add("BarraInferiorBTN-NH")
-            BotonesVoluntad.style.display = "flex"
-            BotonesVoluntadBlock = true
-            MostrarMensajeBot(true, "Truco")
+            sonido.play();  // Reproduce el sonido
+            setTimeout(() => {
+                console.log("TRUCO")
+                PuntosTruco = true
+                PuntosRetruco = false
+                PuntosValeCuatro = false
+                truco.textContent = "RETRUCO"
+                truco.classList.add("PalabrasLargas")
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                BotonesVoluntadBlock = true
+                MostrarMensajeBot(true, "Truco")
+              }, 1200)
         }
     }
 }
@@ -824,7 +898,8 @@ let PuntosValeCuatro = false
 truco.addEventListener("click", function(){
     GloboTexto.style.display = "none"
     BotonesVoluntadBlock = false
-    
+
+
     setTimeout(function() {
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
