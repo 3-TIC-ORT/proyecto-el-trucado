@@ -747,36 +747,43 @@ function BotCantaTruco(){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
     
+    let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
     if (PuntosTruco === false && PuntosRetruco === false){
         if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
-            console.log("TRUCO")
-            PuntosTruco = true
-            PuntosRetruco = false
-            PuntosValeCuatro = false
-            truco.textContent = "RETRUCO"
-            truco.classList.add("PalabrasLargas")
-            envido.classList.add("BarraInferiorBTN-NH")
-            flor.classList.add("BarraInferiorBTN-NH")
-            mazo.classList.add("BarraInferiorBTN-NH")
-            BotonesVoluntad.style.display = "flex"
-            BotonesVoluntadBlock = true
-            MostrarMensajeBot(true, "Truco")
+            sonido.play();  // Reproduce el sonido
+            setTimeout(() => {
+                console.log("TRUCO")
+                PuntosTruco = true
+                PuntosRetruco = false
+                PuntosValeCuatro = false
+                truco.textContent = "RETRUCO"
+                truco.classList.add("PalabrasLargas")
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                BotonesVoluntadBlock = true
+                MostrarMensajeBot(true, "Truco")
+              }, 1200)           
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
-            console.log("TRUCO")
-            PuntosTruco = true
-            PuntosRetruco = false
-            PuntosValeCuatro = false
-            truco.textContent = "RETRUCO"
-            truco.classList.add("PalabrasLargas")
-            envido.classList.add("BarraInferiorBTN-NH")
-            flor.classList.add("BarraInferiorBTN-NH")
-            mazo.classList.add("BarraInferiorBTN-NH")
-            BotonesVoluntad.style.display = "flex"
-            BotonesVoluntadBlock = true
-            MostrarMensajeBot(true, "Truco")
+            sonido.play();  // Reproduce el sonido
+            setTimeout(() => {
+                console.log("TRUCO")
+                PuntosTruco = true
+                PuntosRetruco = false
+                PuntosValeCuatro = false
+                truco.textContent = "RETRUCO"
+                truco.classList.add("PalabrasLargas")
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                BotonesVoluntadBlock = true
+                MostrarMensajeBot(true, "Truco")
+              }, 1200)
         }
     }
 }
@@ -891,7 +898,8 @@ let PuntosValeCuatro = false
 truco.addEventListener("click", function(){
     GloboTexto.style.display = "none"
     BotonesVoluntadBlock = false
-    
+
+
     setTimeout(function() {
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
