@@ -1058,17 +1058,19 @@ let CantidadTienda = 0
 function VerificarTienda(){
 
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"]})
-        window.location.href = "../Pantalla Tienda/Tienda.html"
         CantidadTienda++
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        window.location.href = "../Pantalla Tienda/Tienda.html"
     }
-    else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15)){
-        window.location.href = "../Pantalla Tienda/Tienda.html"
+    else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15)){
         CantidadTienda++
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        window.location.href = "../Pantalla Tienda/Tienda.html"
     }
-    else if (CantidadTienda === 2 && (puntosAcumulados["NOS"] >= 25 || puntosAcumulados["ELLOS"] >= 25)){
-        window.location.href = "../Pantalla Tienda/Tienda.html"
+    else if (CantidadTienda === 2 && (puntosAcumulados["NOS"] >= 25)){
         CantidadTienda++
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        window.location.href = "../Pantalla Tienda/Tienda.html"
     }
 }
 
