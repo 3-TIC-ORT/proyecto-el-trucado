@@ -38,7 +38,7 @@ let Modificador3 = "1"
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
-if (Modificador1 === "8" || Modificador2 === "8" || Modificador3 === "8"){
+if (Modificador1 === "6" || Modificador2 === "6" || Modificador3 === "6"){
     ReyesEnvido = true
 }
 
@@ -561,7 +561,7 @@ click1.addEventListener("click", function(){
             }      
         }
         else{
-            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "2"){
                 carta1.palo = Modificadores[ModificadorTocado].categoria
                 identificar_cartas("carta1", carta1.numero, carta1.palo)
                 estatscartas = EVNR(carta1.numero, carta1.palo)
@@ -599,7 +599,7 @@ click2.addEventListener("click", function(){
             }      
         }
         else{
-            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "2"){
                 carta2.palo = Modificadores[ModificadorTocado].categoria
                 identificar_cartas("carta2", carta2.numero, carta2.palo)
                 estatscartas = EVNR(carta2.numero, carta2.palo)
@@ -637,7 +637,7 @@ click3.addEventListener("click", function(){
             }      
         }
         else{
-            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "2"){
                 carta3.palo = Modificadores[ModificadorTocado].categoria
                 identificar_cartas("carta3", carta3.numero, carta3.palo)
                 estatscartas = EVNR(carta3.numero, carta3.palo)
@@ -675,7 +675,7 @@ click4.addEventListener("click", function(){
             }      
         }
         else{
-            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "2"){
                 carta4.palo = Modificadores[ModificadorTocado].categoria
                 identificar_cartas("carta4", carta4.numero, carta4.palo)
                 estatscartas = EVNR(carta4.numero, carta4.palo)
@@ -713,7 +713,7 @@ click5.addEventListener("click", function(){
             }      
         }
         else{
-            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "6"){
+            if (ModificadorTocado === "3" || ModificadorTocado === "4" || ModificadorTocado === "5" || ModificadorTocado === "2"){
                 carta5.palo = Modificadores[ModificadorTocado].categoria
                 identificar_cartas("carta5", carta5.numero, carta5.palo)
                 estatscartas = EVNR(carta5.numero, carta5.palo)
@@ -1167,12 +1167,10 @@ function VerificarTienda(){
 let Modificadores = [
     { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
     { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras", valor: 1 },
-    { nombre: "Gemelo", descripcion: "Cambia un carta por otra a elección.", valor: 2 },
     { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2, categoria: "oro"},
     { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1, categoria: "basto" },
     { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 3, categoria: "espada" },
     { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1, categoria: "copa" },
-    { nombre: "TNT", descripcion: "Saca 2 cartas del mazo", valor: 1 },
     { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 5 },
     { nombre: "Ebullición", descripcion: "2% de que la carta que tire el bot tenga jerarquia 0", valor: 2}
 ]
@@ -1196,7 +1194,7 @@ let ModificadorTocado
 
 let Tarot1Selected = false
 Tarot1.addEventListener("click", function(){
-    if (Modificador1 !== "8"){
+    if (Modificador1 !== "6"){
         if (Tarot1Selected === false){
             Tarot1.classList.remove("Tarot")
             Tarot1.classList.add("TarotSeleccionada")
@@ -1225,7 +1223,7 @@ Tarot1.addEventListener("click", function(){
 
 let Tarot2Selected = false
 Tarot2.addEventListener("click", function(){
-    if (Modificador2 !== "8"){
+    if (Modificador2 !== "6"){
         if (Tarot2Selected === false){
             Tarot2.classList.remove("Tarot")
             Tarot2.classList.add("TarotSeleccionada")
@@ -1254,7 +1252,7 @@ Tarot2.addEventListener("click", function(){
 
 let Tarot3Selected = false
 Tarot3.addEventListener("click", function(){
-    if (Modificador3 !== "8"){
+    if (Modificador3 !== "6"){
         if (Tarot3Selected === false){
             Tarot3.classList.remove("Tarot")
             Tarot3.classList.add("TarotSeleccionada")
