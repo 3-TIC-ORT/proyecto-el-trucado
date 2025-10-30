@@ -556,7 +556,8 @@ click1.addEventListener("click", function(){
             click1.classList.add("oculto") 
             CartasCentro("N", carta1.numero, carta1.palo) 
             guardarCartaCentro(carta1, "N") 
-            verificarCartas() 
+            verificarCartas()
+            ascenso1.classList.add("Oculto") 
             }      
         }
         else{
@@ -594,6 +595,7 @@ click2.addEventListener("click", function(){
             CartasCentro("N", carta2.numero, carta2.palo) 
             guardarCartaCentro(carta2, "N") 
             verificarCartas() 
+            ascenso2.classList.add("Oculto") 
             }      
         }
         else{
@@ -631,6 +633,7 @@ click3.addEventListener("click", function(){
             CartasCentro("N", carta3.numero, carta3.palo) 
             guardarCartaCentro(carta3, "N") 
             verificarCartas() 
+            ascenso3.classList.add("Oculto") 
             }      
         }
         else{
@@ -667,7 +670,8 @@ click4.addEventListener("click", function(){
             click4.classList.add("oculto") 
             CartasCentro("N", carta4.numero, carta4.palo) 
             guardarCartaCentro(carta4, "N") 
-            verificarCartas() 
+            verificarCartas()
+            ascenso4.classList.add("Oculto")  
             }      
         }
         else{
@@ -705,6 +709,7 @@ click5.addEventListener("click", function(){
             CartasCentro("N", carta5.numero, carta5.palo) 
             guardarCartaCentro(carta5, "N") 
             verificarCartas() 
+            ascenso5.classList.add("Oculto") 
             }      
         }
         else{
