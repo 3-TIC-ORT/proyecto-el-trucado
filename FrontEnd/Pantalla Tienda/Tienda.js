@@ -5,10 +5,15 @@ let puntosAcumulados = {} // Guarda puntos acumulados por id
 
 //Parte donde se encarga de guardar los puntos del juego
 getEvent("pedirPuntos", (ans) => {
-
-    let puntosJSON = ans.infoJSON
-    console.log(`Info recibida ${puntosJSON}`)
-})
+    if (ans?.ok) {
+        GuardarPuntos("ELLOS", ans.infoJSON.ellos)
+        GuardarPuntos("NOS", ans.infoJSON.nosotros)
+      console.log("Info recibida:", ans.infoJSON)
+    } else {
+      console.log("Error al recibir puntos")
+    }
+  })
+  
 
 
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite

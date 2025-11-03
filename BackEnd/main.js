@@ -6,14 +6,15 @@ subscribePOSTEvent("enviarPuntosBack", (data) => {
     guardarPuntos(data.puntosNos, data.puntosEllos, data.CantidadTienda)
 })
 
-
-subscribeGETEvent("pedirPuntos", (data) => {
-
-    let infoJSON = JSON.parse(fs.readFileSync("puntos.json", "utf-8"))
-    return {infoJSON}
-    
-})
-
+subscribeGETEvent("pedirPuntos", () => {
+    try {
+      const infoJSON = JSON.parse(fs.readFileSync("./puntos.json", "utf-8"))
+      return { ok: true, infoJSON }
+    } catch {
+      return { ok: false }
+    }
+  })
+  
 
 function guardarPuntos(puntosGuardadosNos,puntosGuardadosEllos, CantidadTienda){
 if (puntosGuardadosEllos >= 1){
