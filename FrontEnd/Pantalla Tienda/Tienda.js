@@ -4,8 +4,11 @@ connect2Server()
 let puntosAcumulados = {} // Guarda puntos acumulados por id
 
 //Parte donde se encarga de guardar los puntos del juego
-GuardarPuntos("NOS", 15)
-GuardarPuntos("ELLOS", 12)
+getEvent("pedirPuntos", () => {
+
+    let puntosJSON = data.infoJSON
+
+})
 
 
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite

@@ -1149,14 +1149,7 @@ function VerificarTienda(){
 
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
         CantidadTienda++
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda}, (res) => {
-            if  (res && res.ok){
-                puntos = res.infoJson
-            }
-            else{
-                alert('Error')
-            }
-        })
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15)){

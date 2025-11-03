@@ -1,4 +1,4 @@
-import fs, { readFileSync } from "fs"
+import fs from "fs"
 import { subscribeGETEvent, subscribePOSTEvent, realTimeEvent, startServer } from "soquetic"
 startServer(3000)
 
@@ -8,17 +8,10 @@ subscribePOSTEvent("enviarPuntosBack", (data) => {
 
 
 subscribeGETEvent("pedirPuntos", (data) => {
-    try {
-        let infoJson = JSON.parse(fs.readFileSync("puntos.json", "utf-8"))
-        
-        return {
-          ok: true,
-          infoJson
-        }
-    }
-    catch {
-        return { ok: false }
-    }
+
+    let infoJson = JSON.parse(fs.readFileSync("puntos.json", "utf-8"))
+    return
+    
 })
 
 
