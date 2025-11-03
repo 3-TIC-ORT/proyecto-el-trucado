@@ -36,9 +36,9 @@ let cartasUsadasBot = []
 
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
-let Modificador1 = "1"
-let Modificador2 = "1"
-let Modificador3 = "1"
+let Modificador1 = "0"
+let Modificador2 = ""
+let Modificador3 = ""
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
@@ -594,6 +594,14 @@ click1.addEventListener("click", function(){
                 document.getElementById(TarotSeleccionada).classList.add("oculto")
                 TarotSeleccionada = ""
                 ascenso1.textContent = "+ " + CantidadJeraquia1 + " Jerarquía"
+            }
+            else if (ModificadorTocado === "0"){
+                click1.classList.add("CartaReversa")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                carta1.camaleon = true
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                alert (EnvidoJugador)
             }
         }
     } 
@@ -1187,9 +1195,16 @@ function PonerTarot(Tarot, idCarta){
 }
 
 //Las tres tarot que podes usar
-PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
-PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
-PonerTarot(Modificadores[Modificador3].nombre, "Tarot3")
+if (Modificador1){
+    PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
+}
+if (Modificador2){
+    PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
+}
+if (Modificador3){
+    PonerTarot(Modificadores[Modificador3].nombre, "Tarot3")
+}
+
 
 
 let Tarot1 = document.getElementById("Tarot1")
@@ -1202,7 +1217,7 @@ let ModificadorTocado
 
 let Tarot1Selected = false
 Tarot1.addEventListener("click", function(){
-    if (Modificador1 !== "6"){
+    if (Modificador1 !== "6" && Modificador1){
         if (Tarot1Selected === false){
             Tarot1.classList.remove("Tarot")
             Tarot1.classList.add("TarotSeleccionada")
@@ -1231,7 +1246,7 @@ Tarot1.addEventListener("click", function(){
 
 let Tarot2Selected = false
 Tarot2.addEventListener("click", function(){
-    if (Modificador2 !== "6"){
+    if (Modificador2 !== "6" && Modificador2){
         if (Tarot2Selected === false){
             Tarot2.classList.remove("Tarot")
             Tarot2.classList.add("TarotSeleccionada")
@@ -1260,7 +1275,7 @@ Tarot2.addEventListener("click", function(){
 
 let Tarot3Selected = false
 Tarot3.addEventListener("click", function(){
-    if (Modificador3 !== "6"){
+    if (Modificador3 !== "6" && Modificador3){
         if (Tarot3Selected === false){
             Tarot3.classList.remove("Tarot")
             Tarot3.classList.add("TarotSeleccionada")
@@ -1301,7 +1316,7 @@ function GuardarPuntos(id, sumar){ //
     
     puntosAcumulados[id] = sumar + puntosAcumulados[id]
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 1){
+    if (puntosAcumulados[id] >= 30){
         setTimeout(function(){
             if (id === "NOS"){
                 PuntosBot.textContent = "Puntos del Bot: " + puntosAcumulados["ELLOS"]

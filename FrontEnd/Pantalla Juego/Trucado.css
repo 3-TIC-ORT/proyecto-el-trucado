@@ -115,6 +115,10 @@ body{
     transform: scale(1.1);
 }
 
+.CartaReversa{
+    filter: invert(100%);
+}
+
 
 .ContenedorModificadores{
     position: absolute;
@@ -383,7 +387,9 @@ body{
 .TarotSeleccionada{
     height: 8.4rem;
     width: 5.4rem;
+    border: none;
     transition: all 0.5s;
+    background-color: #39633e;
 }
 
 /*Imagenes decorativas*/
