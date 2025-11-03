@@ -17,9 +17,9 @@ subscribeGETEvent("pedirPuntos", () => {
   
 
 function guardarPuntos(puntosGuardadosNos,puntosGuardadosEllos, CantidadTienda){
-if (puntosGuardadosEllos >= 1){
-    fs.writeFileSync("puntos.json",JSON.stringify({ ellos: puntosGuardadosEllos, nosotros: puntosGuardadosNos, PuntosTienda: CantidadTienda}, null, 2))
-    }
+
+fs.writeFileSync("puntos.json",JSON.stringify({ ellos: puntosGuardadosEllos, nosotros: puntosGuardadosNos, PuntosTienda: CantidadTienda}, null, 2))
+
  console.log("se ejecuto guardar puntos")
 }
 
