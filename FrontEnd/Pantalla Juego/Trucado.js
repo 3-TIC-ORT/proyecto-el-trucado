@@ -27,6 +27,9 @@ let puntosAcumulados = {
     ELLOS: 0
 } // Guarda puntos acumulados por id
 
+//Cantidad de tarot compradas en el juego
+let TarotCompradas = 0
+
 
 // Array global para guardar las cartas que el bot ya tiró en esta mano
 let cartasUsadasBot = []
@@ -1291,21 +1294,24 @@ let VICTORIA = document.getElementById("VICTORIA")
 let PuntosHechos = document.getElementById("PuntosHechos")
 let PuntosBot = document.getElementById("PuntosBot")
 
+
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
 function GuardarPuntos(id, sumar){ //
     
     puntosAcumulados[id] = sumar + puntosAcumulados[id]
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 30){
+    if (puntosAcumulados[id] >= 1){
         setTimeout(function(){
             if (id === "NOS"){
                 PuntosBot.textContent = "Puntos del Bot: " + puntosAcumulados["ELLOS"]
                 VICTORIA.style.display = "flex"
+                document.getElementById("Tarot" + id).textContent = "Cartas Tarot Compradas: " + TarotCompradas
             }
             else if (id === "ELLOS"){
                 PuntosHechos.textContent = "Puntos Hechos: " + puntosAcumulados["NOS"]
                 DERROTA.style.display = "flex"
+                document.getElementById("Tarot" + id).textContent = "Cartas Tarot Compradas: " + TarotCompradas
             }
         }, 1500)
        

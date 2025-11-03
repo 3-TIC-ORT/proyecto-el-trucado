@@ -59,50 +59,23 @@ body{
     border-color: black;
 }
 
-/*Todo el div del menu*/
-.MenuContainer {
+#Volver{
     position: fixed;
-    top: 4rem;
-    left: 1rem;
-}
-
-/*Logo del menu*/
-.Menu {
-    color: white;
-    font-size: 2.5rem;
-    cursor: pointer;
-    transition: all 0.5s;
-}
-
-/*div donde estan botones*/
-.BarraMenu {
-    display: flex;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    padding: 0.625rem;
-    font-size: 0.9375rem;
-    width: 10rem;
-    margin-left: -1rem;
-}
-  
-.BotonesMenu{
+    top: 5rem;
+    left: -7.5rem;
     transition: all 0.5s;
     font-family: "Pixelify Sans", sans-serif;
-    padding: 0.3125rem 0.9375rem;
-    font-size: 1.25rem;
-    border: solid 0.125rem;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: #4d2401;
+    color: white;
+    border: none;
 }
-.BotonesMenu:hover{
-    transform: scale(1.1);
+#Volver:hover{
+    transform: scale(1.1) translate(120px);
 }
-.MenuContainer:hover .BarraMenu {
-    display: block;
-}
-.Menu:hover{
-    transform: scale(1.1);
-}
+
 
 /*Contenedor cartas*/ 
 .ContenedorCartas{
