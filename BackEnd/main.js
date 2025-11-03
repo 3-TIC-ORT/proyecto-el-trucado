@@ -9,8 +9,8 @@ subscribePOSTEvent("enviarPuntosBack", (data) => {
 
 subscribeGETEvent("pedirPuntos", (data) => {
 
-    let infoJson = JSON.parse(fs.readFileSync("puntos.json", "utf-8"))
-    return
+    let infoJSON = JSON.parse(fs.readFileSync("puntos.json", "utf-8"))
+    return {infoJSON}
     
 })
 

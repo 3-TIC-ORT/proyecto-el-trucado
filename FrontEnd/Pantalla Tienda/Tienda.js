@@ -4,10 +4,10 @@ connect2Server()
 let puntosAcumulados = {} // Guarda puntos acumulados por id
 
 //Parte donde se encarga de guardar los puntos del juego
-getEvent("pedirPuntos", () => {
+getEvent("pedirPuntos", (ans) => {
 
-    let puntosJSON = data.infoJSON
-
+    let puntosJSON = ans.infoJSON
+    console.log(`Info recibida ${puntosJSON}`)
 })
 
 
