@@ -1,5 +1,6 @@
 connect2Server()
 
+//Cada vez que se entra a la pagina se pide al back los puntos
 window.addEventListener("load", () => {
     getEvent("pedirPuntos", (ans) => {
         if (ans?.ok) {
@@ -24,6 +25,7 @@ Volver.addEventListener("click", function(){
     window.location.href = "../Pantalla Principal/Inicio.html"
 })
 
+//Boton para volver al menu principal
 let MenuPrincipal = document.querySelectorAll(".MenuPrincipal")
 MenuPrincipal.forEach(boton => {
     boton.addEventListener("click", function(){
@@ -31,8 +33,8 @@ MenuPrincipal.forEach(boton => {
     })
 })
 
+//Boton para volver a jugar
 let PlayAgain = document.querySelectorAll(".PlayAgain")
-
 PlayAgain.forEach(boton => {
     boton.addEventListener("click", function(){
     //micro funcion resetear partida, br patapin
@@ -100,94 +102,116 @@ function identificar_cartas (idcarta, numero, palo){
     document.getElementById(idcarta).style.backgroundSize = "cover"
 }
 
-//Función que resetea valores y llama a crearmazo() para empezar la partida de nuevo
+//Función que resetea valores y llama a crearmazo() para empezar la ronda de nuevo
 function resetearRonda(){
-    //Todos los valores vuelven a original, 0
-    N_ganadas = 0
-    E_ganadas = 0
-    empatadas = 0
-    cartastiradas = 0
-    cartastiro = 0
-    //Cartas del centro se vacian
-    CartaCentroN1 = null
-    CartaCentroN2 = null
-    CartaCentroN3 = null
-    CartaCentroE1 = null
-    CartaCentroE2 = null
-    CartaCentroE3 = null
-    //La ronda vuelve a 1
-    rondaCentro = 1
 
-    //si se canto el truco/retruco/vale cuatro se resetean
-    PuntosTruco = false
-    PuntosRetruco = false
-    PuntosValeCuatro = false
+    //no reinicia ronda si ya termino partida
+    if ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30)){
 
-    BotonesVoluntad.style.display = "none"
+        //Se verifica si es momento de la tienda
+        VerificarTienda()
+
+        //Todos los valores vuelven a original, 0
+        N_ganadas = 0
+        E_ganadas = 0
+        empatadas = 0
+        cartastiradas = 0
+        cartastiro = 0
+
+        //Cartas del centro se vacian
+        CartaCentroN1 = null
+        CartaCentroN2 = null
+        CartaCentroN3 = null
+        CartaCentroE1 = null
+        CartaCentroE2 = null
+        CartaCentroE3 = null
+
+        //La ronda vuelve a 1
+        rondaCentro = 1
+
+        //si se canto el truco/retruco/vale cuatro se resetean
+        PuntosTruco = false
+        PuntosRetruco = false
+        PuntosValeCuatro = false
+        multiplicador = 1
+
+        //en caso de bug, se oculta los botones de voluntad
+        BotonesVoluntad.style.display = "none"
 
 
-    //Se resetea las cartas que tiro el bot
-    cartasUsadasBot = []
+        //Se resetea las cartas que tiro el bot
+        cartasUsadasBot = []
 
-    // Ocultar cartas del centro
-    for (let i = 1; i <= 3; i++){
-        document.getElementById("CCN" + i).style.backgroundImage = "none"
-        document.getElementById("CCN" + i).style.visibility = "hidden"
-        document.getElementById("CCE" + i).style.backgroundImage = "none"
-        document.getElementById("CCE" + i).style.visibility = "hidden"
-    }
-
-    // Mostrar nuevamente las cartas de los 2 jugadores
-    for (let i = 1; i <= 10; i++){
-        let carta = document.getElementById("carta" + i)
-        if (carta){
-            carta.classList.remove("oculto")
+        // Ocultar cartas del centro
+        for (let i = 1; i <= 3; i++){
+            document.getElementById("CCN" + i).style.backgroundImage = "none"
+            document.getElementById("CCN" + i).style.visibility = "hidden"
+            document.getElementById("CCN" + i).classList.remove("CartaReversa")
+            document.getElementById("CCE" + i).style.backgroundImage = "none"
+            document.getElementById("CCE" + i).style.visibility = "hidden"
         }
+
+        // Mostrar nuevamente las cartas de los 2 jugadores
+        for (let i = 1; i <= 10; i++){
+            let carta = document.getElementById("carta" + i)
+            if (carta){
+                carta.classList.remove("oculto")
+                if (i <= 5){
+                    carta.classList.remove("CartaReversa")
+                }
+            }
+            
+        }
+
+        //Devuelve el boton de truco a lo normal
+        truco.textContent = "TRUCO"
+        truco.classList.remove("PalabrasLargas")
+        truco.classList.remove("PalabrasLargas-NH")
+        truco.classList.remove("PalabrasExtraLargas")
+        truco.classList.remove("PalabrasExtraLargas-NH")
+        truco.classList.add("BarraInferiorBTN")
+
+        //Varialbe necesarias para el funcionamiento de la barra inferior
+        BotonEnvido = false
+        EnvidoEnvido = 0
+        Regresar = false
+        Cant_Envido = 0
+
+        //Se reinician las jeraquias
+        CantidadJeraquia1 = 0
+        CantidadJeraquia2 = 0
+        CantidadJeraquia3 = 0
+        CantidadJeraquia4 = 0
+        CantidadJeraquia5 = 0
+
+        // Turno entre partidas intermitente
+        turno = turnoF 
+
+        // Preparar el turno del siguiente por si se necesita después
+        if (turnoF === "Bot"){
+            turnoF = "Jugador"
+        }
+        else if (turnoF === "Jugador"){
+            turnoF = "Bot"
+        }
+
+
+        //Crea el mazo nuevo, cambia el texto del turno y actualiza los botones
+        crearmazo()
+        TXTurno.textContent = "Turno: " + turno
+        actualizarBoton()
+
+        
+
+        // Si toca al bot empezar la nueva mano, que juegue la primer carta
+        if (turno === "Bot"){
+            // un pequeño delay para que se vea la UI del nuevo mazo antes de jugar
+            setTimeout(() => {
+                CartaBot()
+            }, 1000)
+        }
+
     }
-
-    //Devuelve el boton de truco a lo normal
-    truco.textContent = "TRUCO"
-    truco.classList.remove("PalabrasLargas")
-    truco.classList.remove("PalabrasLargas-NH")
-    truco.classList.remove("PalabrasExtraLargas")
-    truco.classList.remove("PalabrasExtraLargas-NH")
-    truco.classList.add("BarraInferiorBTN")
-
-    //Varialbe necesarias para el funcionamiento de la barra inferior
-    BotonEnvido = false
-    EnvidoEnvido = 0
-    Regresar = false
-    Cant_Envido = 0
-
-    //Se reinician las jeraquias
-    CantidadJeraquia1 = 0
-    CantidadJeraquia2 = 0
-    CantidadJeraquia3 = 0
-    CantidadJeraquia4 = 0
-    CantidadJeraquia5 = 0
-
-// Turno entre partidas intermitente
-turno = turnoF 
-
-// Preparar el turno del siguiente por si se necesita después
-turnoF = (turno === "Jugador") ? "Bot" : "Jugador"
-
-
-    //Crea el mazo nuevo, cambia el texto del turno y actualiza los botones
-    crearmazo()
-    TXTurno.textContent = "Turno: " + turno
-    actualizarBoton()
-
-    //Se verifica si es momento de la tienda
-    VerificarTienda()
-
-    // Si toca al bot empezar la nueva mano, que juegue la primer carta
-if (turno === "Bot"){
-  // un pequeño delay para que se vea la UI del nuevo mazo antes de jugar
-  setTimeout(() => {
-    CartaBot()
-  }, 600)
-}
 
 }
 
@@ -196,17 +220,22 @@ let cartas = []
 function crearmazo(){
     //Array donde se guardan cada carta
     cartas = []
+
+    //Se repite para cada carta
     for (let i = 1; i <= 10; i++){
-        //Crea las cartas para cada carta
+        //Crea las cartas con la funcion
         let nuevaCarta = crearcarta()
         
+        //Revisa si ya fue creada
         for (let j = 0; j < cartas.length; j++){
             while ( nuevaCarta.numero === cartas[j].numero && nuevaCarta.palo === cartas[j].palo){
+                //si ya fue creada se vuelve a revisar con otra
                 nuevaCarta = crearcarta()
                 j = 0
             }
                 
         }
+        //al final se marca como ya usada
         cartas.push(nuevaCarta)
 
         //Se conoce su jerarquia y su valor envido desde el principio
@@ -215,6 +244,7 @@ function crearmazo(){
         nuevaCarta.jerarquia = estatscartas.jerarquia
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
+        //les pone imagenes
         if (i <= 5){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
@@ -241,58 +271,62 @@ EnvidoBot = calcularEnvido(carta6, carta7, carta8, carta9, carta10)
 
 // Función que calcular el envido dependiendo de las 5 cartas que entra
 function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
+
     // Se guardan las cartas y un array para los palos
-    let Cartas = [carta1, carta2, carta3, carta4, carta5];
-    let palos = {};
-    let camaleonValor = [];
+    let Cartas = [carta1, carta2, carta3, carta4, carta5]
+    let palos = {}
+    let camaleonValor = []
 
-    // Recorremos las cartas para agrupar por palo y detectar las cartas camaleon
+    // Recorremos las cartas para agrupar por palo y detectar las cartas con el modificador camaleon
     Cartas.forEach(carta => {
-        if (carta.camaleon) {
-            camaleonValor.push(carta.valorenvido); // Guardamos el valor de las cartas camaleon
-        } else {
-            if (!palos[carta.palo]) palos[carta.palo] = [];
-            palos[carta.palo].push(carta.valorenvido);
+        //revisa si tiene valor
+        if (carta.camaleon){
+            camaleonValor.push(carta.valorenvido) // Guardamos el valor de las cartas con camaleon
         }
-    });
+        else{
+            if (!palos[carta.palo]) palos[carta.palo] = []
+            palos[carta.palo].push(carta.valorenvido)
+        }
+    })
 
-    let envidoMaximo = 0;
+    let envidoMaximo = 0
 
-    // Primero, consideramos el valor de las cartas camaleon para todos los palos
+    // Primero, consideramos el valor de las cartas con camaleon para todos los palos
     if (camaleonValor.length > 0) {
         // Agregamos los valores de las cartas camaleon a cada palo
         Object.keys(palos).forEach(palo => {
-            palos[palo] = palos[palo].concat(camaleonValor);
-        });
+            palos[palo] = palos[palo].concat(camaleonValor)
+        })
     }
 
     // Calculamos el envido máximo para cada palo
     for (let palo in palos){
-        let grupo = palos[palo];
+        let grupo = palos[palo]
 
         if (grupo.length >= 3) {
-            grupo.sort((a, b) => b - a); // Ordenamos de mayor a menor
-            let suma = grupo[0] + grupo[1] + grupo[2] + 20;
-            if (suma > envidoMaximo) envidoMaximo = suma;
+            grupo.sort((a, b) => b - a) // Ordenamos de mayor a menor
+            let suma = grupo[0] + grupo[1] + grupo[2] + 20
+            if (suma > envidoMaximo) envidoMaximo = suma
         }
         else if (grupo.length === 2) {
-            let suma = grupo[0] + grupo[1];
-            if (suma > envidoMaximo) envidoMaximo = suma;
+            let suma = grupo[0] + grupo[1]
+            if (suma > envidoMaximo) envidoMaximo = suma
         }
         else {
-            let valor = grupo[0];
-            if (valor > envidoMaximo) envidoMaximo = valor;
+            let valor = grupo[0]
+            if (valor > envidoMaximo) envidoMaximo = valor
         }
     }
 
-    let EnvidoJugador = envidoMaximo;
-    return EnvidoJugador;
+
+    let Envido = envidoMaximo
+    return Envido
 }
 
   
 
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
-function CartasCentro(quien, numero, palo){ 
+function CartasCentro(quien, numero, palo, carta){ 
 //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
 
     let CartasCentro1 = document.getElementById("CC" + quien + "1")
@@ -319,14 +353,19 @@ function CartasCentro(quien, numero, palo){
     else{
         identificar_cartas("CC" + quien + "1", numero, palo)
         document.getElementById("CC" + quien + "1").style.visibility = "visible"
+        if (carta.camaleon){
+            document.getElementById("CC" + quien + "1").classList.add("CartaReversa")
+        }
     }
 }
 
 //Establecer el valor Envido y Jerárquico dependiendo de la carta
 function EVNR(numero, palo){
     let valorenvido = 0
+
+    //revisa si son figuras
     if (numero >= 10){
-        if (ReyesEnvido === true){  //Si se tiene modificador valen mas
+        if (ReyesEnvido === true){  //Si se tiene modificador valen mas (+5)
             valorenvido = 5
         }
         else if (ReyesEnvido === false){
@@ -336,6 +375,7 @@ function EVNR(numero, palo){
     else{
         valorenvido = numero // del 1 al 9 valen su número
     }
+
     //Variable para saber el orden jerárquico
     let jerarquia = 0
 
@@ -363,22 +403,22 @@ function EVNR(numero, palo){
     else if (numero == 7 && palo == "oro"){ //7 de Oro
         jerarquia = 13
     }
-    else if (numero == 3){
+    else if (numero == 3){ //los 3
         jerarquia = 12
     }
-    else if (numero == 2){
+    else if (numero == 2){ //los 2
         jerarquia = 11
     }
-    else if (numero == 1 && (palo == "oro" || palo == "copa")){
+    else if (numero == 1 && (palo == "oro" || palo == "copa")){ //anchos falsos
         jerarquia = 10
     }
-    else if (numero == 12){
+    else if (numero == 12){ //los 12
         jerarquia = 9
     }
-    else if (numero == 11){
+    else if (numero == 11){ //los 11
         jerarquia = 8
     }
-    else if (numero == 10){
+    else if (numero == 10){ //los 10
         jerarquia = 7
     }
     else if (numero == 9 && (palo == "basto" || palo == "copa")){
@@ -403,8 +443,9 @@ function EVNR(numero, palo){
     return { valorenvido: valorenvido, jerarquia: jerarquia }
 }
 
-//Crea el mazo para crear la primer mano, no preguntes porque esta aca
+//Crea el mazo para crear la primer mano, no pregunten porque esta aca
 crearmazo()
+
 
 //Cartas Centro Nosotros
 let CartaCentroN1 = null
@@ -547,24 +588,24 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
             }, 500)
         }
     }
-  if (PuntosValeCuatro) multiplicador = 4
+    if (PuntosValeCuatro) multiplicador = 4
     else if (PuntosRetruco) multiplicador = 3
     else if (PuntosTruco) multiplicador = 2
 
     //Revisa si ya se gano la mano y se suman los puntos
-    setTimeout(function(){
-        if (empatadas === 3){
-            resetearRonda()
-        }
-        else if (N_ganadas >= 2){
-            GuardarPuntos("NOS", 1 * multiplicador)
-            resetearRonda()
-        }
-        else if (E_ganadas >= 2){
-            GuardarPuntos("ELLOS", 1 * multiplicador)
-            resetearRonda()
-        }
-    }, 500) //Delay para verlo mejor 
+        setTimeout(function(){
+            if (empatadas === 3){
+                resetearRonda()
+            }
+            else if (N_ganadas >= 2){
+                GuardarPuntos("NOS", 1 * multiplicador)
+                resetearRonda()
+            }
+            else if (E_ganadas >= 2){
+                GuardarPuntos("ELLOS", 1 * multiplicador)
+                resetearRonda()
+            }
+        }, 1000) //Delay para verlo mejor 
 }
 
 //Cambia el turno al contrario
@@ -610,7 +651,7 @@ click1.addEventListener("click", function(){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
             click1.classList.add("oculto") 
-            CartasCentro("N", carta1.numero, carta1.palo) 
+            CartasCentro("N", carta1.numero, carta1.palo, carta1) 
             guardarCartaCentro(carta1, "N") 
             verificarCartas()
             ascenso1.classList.add("Oculto") 
@@ -656,10 +697,11 @@ click2.addEventListener("click", function(){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
             click2.classList.add("oculto") 
-            CartasCentro("N", carta2.numero, carta2.palo) 
+            CartasCentro("N", carta2.numero, carta2.palo, carta2) 
             guardarCartaCentro(carta2, "N") 
             verificarCartas() 
             ascenso2.classList.add("Oculto") 
+            click2.classList.remove("CartaReversa")
             }      
         }
         else{
@@ -684,6 +726,13 @@ click2.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 ascenso2.textContent = "+ " + CantidadJeraquia2 + " Jerarquía"
             }
+            else if (ModificadorTocado === "0"){
+                click2.classList.add("CartaReversa")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                carta2.camaleon = true
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            }
         }
     } 
 })
@@ -694,10 +743,11 @@ click3.addEventListener("click", function(){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
             click3.classList.add("oculto") 
-            CartasCentro("N", carta3.numero, carta3.palo) 
+            CartasCentro("N", carta3.numero, carta3.palo, carta3) 
             guardarCartaCentro(carta3, "N") 
             verificarCartas() 
             ascenso3.classList.add("Oculto") 
+            click3.classList.remove("CartaReversa")
             }      
         }
         else{
@@ -722,6 +772,13 @@ click3.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 ascenso3.textContent = "+ " + CantidadJeraquia3 + " Jerarquía"
             }
+            else if (ModificadorTocado === "0"){
+                click3.classList.add("CartaReversa")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                carta3.camaleon = true
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            }
         }
     } 
 })
@@ -732,10 +789,11 @@ click4.addEventListener("click", function(){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
             click4.classList.add("oculto") 
-            CartasCentro("N", carta4.numero, carta4.palo) 
+            CartasCentro("N", carta4.numero, carta4.palo, carta4) 
             guardarCartaCentro(carta4, "N") 
             verificarCartas()
             ascenso4.classList.add("Oculto")  
+            click4.classList.remove("CartaReversa")
             }      
         }
         else{
@@ -760,6 +818,13 @@ click4.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 ascenso4.textContent = "+ " + CantidadJeraquia4 + " Jerarquía"
             }
+            else if (ModificadorTocado === "0"){
+                click4.classList.add("CartaReversa")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                carta4.camaleon = true
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+            }
         }
     } 
 })
@@ -770,10 +835,11 @@ click5.addEventListener("click", function(){
             cartastiradas++ 
             if (cartastiradas <= 3){ 
             click5.classList.add("oculto") 
-            CartasCentro("N", carta5.numero, carta5.palo) 
+            CartasCentro("N", carta5.numero, carta5.palo, carta5) 
             guardarCartaCentro(carta5, "N") 
             verificarCartas() 
             ascenso5.classList.add("Oculto") 
+            click5.classList.remove("CartaReversa")
             }      
         }
         else{
@@ -797,6 +863,13 @@ click5.addEventListener("click", function(){
                 document.getElementById(TarotSeleccionada).classList.add("oculto")
                 TarotSeleccionada = ""
                 ascenso5.textContent = "+ " + CantidadJeraquia5 + " Jerarquía"
+            }
+            else if (ModificadorTocado === "0"){
+                click5.classList.add("CartaReversa")
+                document.getElementById(TarotSeleccionada).classList.add("oculto")
+                TarotSeleccionada = ""
+                carta5.camaleon = true
+                EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
             }
         }
     } 
@@ -836,7 +909,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Truco")
-              }, 1200)           
+              }, 1500)           
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
             sonido.play()  // Reproduce el sonido
@@ -894,7 +967,8 @@ let CartasBot = []
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
-    if (turno === "Bot"){
+    //solo tira carta si es su turno y no se termino el juego
+    if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) ){
 
         //Las 5 cartas del bot
         CartasBot = [carta6, carta7, carta8, carta9, carta10]
@@ -924,7 +998,7 @@ function CartaBot(){
             document.getElementById("carta" + indiceCartaReal).classList.add("oculto")
     
             // La pone en el centro visualmente
-            CartasCentro("E", cartaElegida.numero, cartaElegida.palo)
+            CartasCentro("E", cartaElegida.numero, cartaElegida.palo, cartaElegida)
     
             // La guarda como carta jugada
             guardarCartaCentro(cartaElegida, "E")
@@ -935,9 +1009,10 @@ function CartaBot(){
     }
 }  
 
-  if(turno === "Bot"){
-  CartaBot()
-}
+
+    if(turno === "Bot"){
+        CartaBot()
+    }
   
 //Easter Egg sigma
 let MazoIMG = document.getElementById("Mazo")
@@ -1106,15 +1181,24 @@ flor.addEventListener("click", function(){
 //Boton mazo
 mazo.addEventListener("click", function(){
     if (turno === "Jugador"){
-        if (cartastiradas === 0 && cartastiro === 0){
-            GuardarPuntos("ELLOS", 2)
+        if (PuntosValeCuatro) multiplicador = 4
+        else if (PuntosRetruco) multiplicador = 3
+        else if (PuntosTruco) multiplicador = 2
+
+        if (multiplicador === 1){
+            if (cartastiradas === 0 && cartastiro === 0){
+                GuardarPuntos("ELLOS", 2)
+            }
+            else{
+                GuardarPuntos("ELLOS", 1)
+            }
         }
         else{
-            GuardarPuntos("ELLOS", 1)
+            GuardarPuntos("ELLOS", multiplicador * 1) 
         }
         setTimeout(function(){
-            resetearRonda()
-        }, 500)
+                    resetearRonda()
+            }, 1000)
     }
 })
 
@@ -1199,9 +1283,8 @@ function MostrarMensajeBot(Mostrar, Mensaje){ //Mostrar = true o Mostrar= false,
 let CantidadTienda = 0
 //Funcion que se encarga de llevar a la pantalla tienda, si es el caso
 function VerificarTienda(){
-    let puntos
 
-    if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5)){
+    if (CantidadTienda === 0 && puntosAcumulados["NOS"] >= 5){
         CantidadTienda++
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
         window.location.href = "../Pantalla Tienda/Tienda.html"
@@ -1352,6 +1435,9 @@ let VICTORIA = document.getElementById("VICTORIA")
 let PuntosHechos = document.getElementById("PuntosHechos")
 let PuntosBot = document.getElementById("PuntosBot")
 
+let BotPierde = new Audio("Sonidos/BotPierde.mp3")  // Creas el objeto Audio con la ruta
+let BotGana = new Audio("Sonidos/BotGana.mp3")  // Creas el objeto Audio con la ruta
+
 
 //Parte Enc argada de Sumar Puntos
 //Llamar a esta función para agregar puntos y sumarlos
@@ -1359,21 +1445,28 @@ function GuardarPuntos(id, sumar){ //
     
     puntosAcumulados[id] = sumar + puntosAcumulados[id]
     sumarPuntos(id, puntosAcumulados[id])
-    if (puntosAcumulados[id] >= 30){
-        setTimeout(function(){
-            if (id === "NOS"){
-                PuntosBot.textContent = "Puntos del Bot: " + puntosAcumulados["ELLOS"]
-                VICTORIA.style.display = "flex"
-                document.getElementById("Tarot" + id).textContent = "Cartas Tarot Compradas: " + TarotCompradas
-            }
-            else if (id === "ELLOS"){
-                PuntosHechos.textContent = "Puntos Hechos: " + puntosAcumulados["NOS"]
-                DERROTA.style.display = "flex"
-                document.getElementById("Tarot" + id).textContent = "Cartas Tarot Compradas: " + TarotCompradas
-            }
-        }, 1500)
-       
-    }
+
+    setTimeout(function(){
+        if (puntosAcumulados[id] >= 30){
+                if (id === "NOS"){
+                    BotPierde.play()
+                    setTimeout(function(){
+                        PuntosBot.textContent = "Puntos del Bot: " + puntosAcumulados["ELLOS"]
+                        VICTORIA.style.display = "flex"
+                        document.getElementById("Tarot" + id).textContent = "Cartas Tarot Compradas: " + TarotCompradas
+                    }, 1500)
+                }
+                else if (id === "ELLOS"){
+                    BotGana.play()
+                    setTimeout(function(){
+                        PuntosHechos.textContent = "Puntos Hechos: " + puntosAcumulados["NOS"]
+                        DERROTA.style.display = "flex"
+                        document.getElementById("Tarot" + id).textContent = "Cartas Tarot Compradas: " + TarotCompradas
+                    }, 1500)
+                }       
+        }
+    }, 3000)
+
 }
 //Función que se encarga de sumar puntos, pero no debe llamarsela directamente
 function sumarPuntos(idcarta, puntos){
