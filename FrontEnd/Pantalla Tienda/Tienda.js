@@ -2,12 +2,13 @@ connect2Server()
 
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {} // Guarda puntos acumulados por id
-
+let CantidadTienda
 //Parte donde se encarga de guardar los puntos del juego
 getEvent("pedirPuntos", (ans) => {
     if (ans?.ok) {
         GuardarPuntos("ELLOS", ans.infoJSON.ellos)
         GuardarPuntos("NOS", ans.infoJSON.nosotros)
+        CantidadTienda = ans.infoJSON.puntosTienda
       console.log("Info recibida:", ans.infoJSON)
     } else {
       console.log("Error al recibir puntos")
@@ -294,7 +295,9 @@ Vender.addEventListener("click", function(){
 
 let FinalizarCompra = document.getElementById("FinalizarCompra")
 FinalizarCompra.addEventListener("click", function(){
-    window.location.href = "../Pantalla Juego/Trucado.html"
+    postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+    window.location.href = "../Pantalla Juego/Trucado.html"        
+
 })
 
 

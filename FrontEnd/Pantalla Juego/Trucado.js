@@ -1284,12 +1284,12 @@ let CantidadTienda = 0
 //Funcion que se encarga de llevar a la pantalla tienda, si es el caso
 function VerificarTienda(){
 
-    if (CantidadTienda === 0 && puntosAcumulados["NOS"] >= 5){
+    if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5 )){
         CantidadTienda++
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
-    else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15)){
+    else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15 )){
         CantidadTienda++
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
         window.location.href = "../Pantalla Tienda/Tienda.html"
