@@ -293,8 +293,8 @@ Vender.addEventListener("click", function(){
 let FinalizarCompra = document.getElementById("FinalizarCompra")
 FinalizarCompra.addEventListener("click", function(){
     postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+    postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
     window.location.href = "../Pantalla Juego/Trucado.html"        
-
 })
 
 

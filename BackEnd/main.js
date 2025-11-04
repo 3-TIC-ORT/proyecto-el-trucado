@@ -6,6 +6,10 @@ subscribePOSTEvent("enviarPuntosBack", (data) => {
     guardarPuntos(data.puntosNos, data.puntosEllos, data.CantidadTienda)
 })
 
+subscribePOSTEvent("enviarModificadoresBack", (data) => {
+  fs.writeFileSync("modificadores.json",JSON.stringify({Modificador1: data.Modificador1, Modificador2: data.Modificador2, Modificador3: data.Modificador3}, null, 2))
+})
+
 subscribeGETEvent("pedirPuntos", () => {
     try {
       const infoJSON = JSON.parse(fs.readFileSync("./puntos.json", "utf-8"))
