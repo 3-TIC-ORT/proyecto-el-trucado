@@ -2,13 +2,13 @@ connect2Server()
 
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {} // Guarda puntos acumulados por id
-let CantidadTienda
+let CantidadTienda = 0
 //Parte donde se encarga de guardar los puntos del juego
 getEvent("pedirPuntos", (ans) => {
     if (ans?.ok) {
         GuardarPuntos("ELLOS", ans.infoJSON.ellos)
         GuardarPuntos("NOS", ans.infoJSON.nosotros)
-        CantidadTienda = ans.infoJSON.puntosTienda
+        CantidadTienda = ans.infoJSON.PuntosTienda
       console.log("Info recibida:", ans.infoJSON)
     } else {
       console.log("Error al recibir puntos")
