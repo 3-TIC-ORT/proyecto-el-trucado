@@ -66,8 +66,8 @@ let cartasUsadasBot = []
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
 let Modificador1 = "0"
-let Modificador2 = ""
-let Modificador3 = ""
+let Modificador2 = "0"
+let Modificador3 = "0"
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
@@ -324,7 +324,6 @@ function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
 }
 
   
-
 //Tirar Cartas en Orden y pone imagenes de la respectiva carta
 function CartasCentro(quien, numero, palo, carta){ 
 //quien (N = Nuestras Carta Centro, E = Carta Ellos Centro)
@@ -686,6 +685,7 @@ click1.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 carta1.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
             }
         }
     } 
@@ -732,6 +732,7 @@ click2.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 carta2.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
             }
         }
     } 
@@ -778,6 +779,7 @@ click3.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 carta3.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
             }
         }
     } 
@@ -824,6 +826,7 @@ click4.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 carta4.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
             }
         }
     } 
@@ -870,6 +873,7 @@ click5.addEventListener("click", function(){
                 TarotSeleccionada = ""
                 carta5.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+                actualizarBoton()
             }
         }
     } 
@@ -1261,6 +1265,7 @@ function actualizarBoton(){
     else{
         flor.classList.remove("BarraInferiorBTN")
         flor.classList.add("BarraInferiorBTN-NH")
+        console.log("no flor")
     }
 }
 //Función que mustra lo que hace el bot, Mensaje es el mensaje a mostrar
