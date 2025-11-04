@@ -1258,14 +1258,13 @@ function actualizarBoton(){
 
     
     // Flor habilitada solo si todas las cartas son del mismo palo y aún no tiraste
-    if (carta1.palo === carta2.palo && carta1.palo === carta3.palo && carta1.palo === carta4.palo && carta1.palo === carta5.palo && cartastiradas === 0 && turno === "Jugador"){
+    if ( ( (carta1.palo === carta2.palo) || carta1.camaleon || carta2.camaleon) && ( (carta1.palo === carta3.palo) || carta1.camaleon || carta3.camaleon) && ( (carta1.palo === carta4.palo) || carta1.camaleon || carta4.camaleon) && ( (carta1.palo === carta5.palo) || carta1.camaleon || carta5.camaleon) && cartastiradas === 0 && turno === "Jugador"){9
         flor.classList.remove("BarraInferiorBTN-NH")
         flor.classList.add("BarraInferiorBTN")
     }
     else{
         flor.classList.remove("BarraInferiorBTN")
         flor.classList.add("BarraInferiorBTN-NH")
-        console.log("no flor")
     }
 }
 //Función que mustra lo que hace el bot, Mensaje es el mensaje a mostrar
@@ -1309,14 +1308,13 @@ function VerificarTienda(){
 
 //Todos los modificadores, puede cambiar
 let Modificadores = [
-    { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
-    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras", valor: 1 },
-    { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2, categoria: "oro"},
-    { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1, categoria: "basto" },
-    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 3, categoria: "espada" },
-    { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1, categoria: "copa" },
-    { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 5 },
-    { nombre: "Ebullición", descripcion: "2% de que la carta que tire el bot tenga jerarquia 0", valor: 2}
+    { nombre: "Camaleón"},
+    { nombre: "Ascenso"},
+    { nombre: "Milipilli", categoria: "oro"},
+    { nombre: "Al palo", categoria: "basto" },
+    { nombre: "La Puntita", categoria: "espada" },
+    { nombre: "La Tercera", categoria: "copa" },
+    { nombre: "Reyes",}
 ]
 
 //Pone imagenes a las tarot
@@ -1335,8 +1333,6 @@ if (Modificador2){
 if (Modificador3){
     PonerTarot(Modificadores[Modificador3].nombre, "Tarot3")
 }
-
-
 
 let Tarot1 = document.getElementById("Tarot1")
 let Tarot2 = document.getElementById("Tarot2")
