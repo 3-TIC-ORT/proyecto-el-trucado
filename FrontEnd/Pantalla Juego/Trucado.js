@@ -38,10 +38,12 @@ if (Modificador3){
 //Funcionalidad de los botones
 let Volver = document.getElementById("Volver")
 Volver.addEventListener("click", function(){
-    puntosAcumulados["ELLOS"] = 0
+        puntosAcumulados["ELLOS"] = 0
         puntosAcumulados["NOS"] = 0
         CantidadTienda = 0
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        let stringVacio = ""
+        postEvent("enviarModificadoresBack", {Modificador1: stringVacio, Modificador2: stringVacio, Modificador3: stringVacio})
      
     window.location.href = "../Pantalla Principal/Inicio.html"
 })
@@ -1312,16 +1314,19 @@ function VerificarTienda(){
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5 )){
         CantidadTienda++
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15 )){
         CantidadTienda++
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
     else if (CantidadTienda === 2 && (puntosAcumulados["NOS"] >= 25)){
         CantidadTienda++
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+        postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
 }

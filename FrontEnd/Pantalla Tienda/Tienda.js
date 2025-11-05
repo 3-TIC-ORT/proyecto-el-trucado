@@ -14,7 +14,17 @@ getEvent("pedirPuntos", (ans) => {
       console.log("Error al recibir puntos")
     }
   })
-  
+
+  getEvent("pedirMods", (ans) => {
+    if (ans?.ok){
+        TarotRegaladas(ans.infoModsJSON.Modificador1, Modificadores[parseInt(ans.infoModsJSON.Modificador1)])
+        TarotRegaladas(ans.infoModsJSON.Modificador2, Modificadores[parseInt(ans.infoModsJSON.Modificador2)])
+        TarotRegaladas(ans.infoModsJSON.Modificador3, Modificadores[parseInt(ans.infoModsJSON.Modificador3)])
+       console.log(`Modificadores recibidos: ${ans.infoModsJSON}`)
+        } else {
+            console.log("Error al recibir modificadores")
+        }
+    })
 
 
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite
@@ -191,6 +201,54 @@ function TarotCompradas(Tarot, Valor) {
         Tarot1.classList.remove("Oculto")
         TarotObtenidas.textContent = " 1 / 3 "
         GuardarPuntos("NOS", -Valor)
+        ValorTarot1 = Valor - 1
+        TarotComprada1 = Tarot + ""
+    }
+}
+
+function TarotRegaladas(Tarot, Valor) {
+    //Las tarot que tenes
+    Tarot1 = document.getElementById("Tarot1") 
+    Tarot2 = document.getElementById("Tarot2") 
+    Tarot3 = document.getElementById("Tarot3") 
+
+    // Obtenemos los estilos computados de cada carta
+    let estilo1 = window.getComputedStyle(Tarot1)
+    let estilo2 = window.getComputedStyle(Tarot2)
+    let estilo3 = window.getComputedStyle(Tarot3)
+
+    //Revisa si tienen imagenes
+    if (estilo1.display !== 'none') {
+        if (estilo2.display !== 'none') {
+            if (estilo3.display !== 'none') {
+                // Los tres tienen imagen, no pasa nada
+                console.log("Ya compraste 3 cartas") //opcional
+            }
+            else{
+                Tarot3.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
+                Tarot3.style.backgroundSize = "cover"
+                Tarot3.classList.remove("Oculto")
+                TarotObtenidas.textContent = " 3 / 3 "
+                ValorTarot3 = Valor - 1
+                TarotComprada3 = Tarot + ""
+
+            }
+        } 
+        else{
+            Tarot2.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
+            Tarot2.style.backgroundSize = "cover"
+            Tarot2.classList.remove("Oculto")
+            TarotObtenidas.textContent = " 2 / 3 "
+            ValorTarot2 = Valor - 1
+            TarotComprada2 = Tarot + ""
+
+        }
+    }
+    else{
+        Tarot1.style.backgroundImage = "url('Imagenes/" + Modificadores[Tarot].nombre + ".png')"
+        Tarot1.style.backgroundSize = "cover"
+        Tarot1.classList.remove("Oculto")
+        TarotObtenidas.textContent = " 1 / 3 "
         ValorTarot1 = Valor - 1
         TarotComprada1 = Tarot + ""
     }
