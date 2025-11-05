@@ -19,6 +19,14 @@ subscribeGETEvent("pedirPuntos", () => {
     }
   })
   
+subscribeGETEvent("pedirMods", () => {
+  try {
+    let infoModsJSON = JSON.parse(fs.readFileSync("./modificadores.json", "utf-8"))
+    return {ok:true, infoModsJSON}
+  } catch {
+    return {ok: false}
+  }
+})
 
 function guardarPuntos(puntosGuardadosNos,puntosGuardadosEllos, CantidadTienda){
 

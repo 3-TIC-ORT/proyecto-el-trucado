@@ -12,6 +12,27 @@ window.addEventListener("load", () => {
           console.log("Error al recibir puntos")
         }
       })
+    getEvent("pedirMods", (ans) => {
+        if (ans?.ok){
+            Modificador1 = ans.infoModsJSON.Modificador1
+            Modificador2 = ans.infoModsJSON.Modificador2
+            Modificador3 = ans.infoModsJSON.Modificador3
+            
+//Las tres tarot que podes usar
+if (Modificador1){
+    PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
+}
+if (Modificador2){
+    PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
+}
+if (Modificador3){
+    PonerTarot(Modificadores[Modificador3].nombre, "Tarot3")
+}
+            console.log(`Modificadores recibidos: ${ans.infoModsJSON}`)
+        } else {
+            console.log("Error al recibir modificadores")
+        }
+    })
 })
 
 //Funcionalidad de los botones
@@ -65,9 +86,9 @@ let cartasUsadasBot = []
 
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
-let Modificador1 = "0"
-let Modificador2 = "0"
-let Modificador3 = "0"
+let Modificador1 = ""
+let Modificador2 = ""
+let Modificador3 = ""
 
 //Revisa si esta el modificador de reyes
 let ReyesEnvido  = false
@@ -1323,16 +1344,7 @@ function PonerTarot(Tarot, idCarta){
     document.getElementById(idCarta).style.backgroundSize = "cover"
 }
 
-//Las tres tarot que podes usar
-if (Modificador1){
-    PonerTarot(Modificadores[Modificador1].nombre, "Tarot1")
-}
-if (Modificador2){
-    PonerTarot(Modificadores[Modificador2].nombre, "Tarot2")
-}
-if (Modificador3){
-    PonerTarot(Modificadores[Modificador3].nombre, "Tarot3")
-}
+
 
 let Tarot1 = document.getElementById("Tarot1")
 let Tarot2 = document.getElementById("Tarot2")
