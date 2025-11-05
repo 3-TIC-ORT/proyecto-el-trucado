@@ -584,6 +584,7 @@ body{
 
 
 #GloboTexto{
+    display: none;
     z-index: 2;
     background-image: url(IMAGENES/Globo\ de\ Texto.png);
     background-size: cover;
@@ -592,17 +593,28 @@ body{
     font-size: 1rem;
     position: absolute;
     text-align: center;
-    display: none;
     justify-content: center;
     align-items: center;
-    margin-top: 3rem;
-    margin-left: 52rem;
+    margin-top: 5rem;
+    margin-left: 42rem;
     transition: all 0.5s;
 }
 
 #TextoCantado{
-    padding: 0 0 0 20px;
+    padding: 5px 20px 0 0;
     transition: all 0.5s;
+}
+
+.Oponente{
+    position: absolute;
+    height: 8rem;
+    width: 8rem;
+    margin-top: 2rem;
+    margin-left: 58rem;
+    transition: all 0.3s;
+}
+.Oponente:hover{
+    transform: scale(1.2) translate(0, 10px);
 }
 
 
