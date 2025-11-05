@@ -3,10 +3,11 @@ import { subscribeGETEvent, subscribePOSTEvent, realTimeEvent, startServer } fro
 startServer(3000)
 
 subscribePOSTEvent("enviarPuntosBack", (data) => {
-    guardarPuntos(data.puntosNos, data.puntosEllos, data.CantidadTienda)
+    guardarPuntos(data.puntosNos, data.puntosEllos, data.CantidadTienda, data.modifcadoresComprados)
 })
 
 subscribePOSTEvent("enviarModificadoresBack", (data) => {
+  console.log("Modificadores recibidos:", data)
   fs.writeFileSync("modificadores.json",JSON.stringify({Modificador1: data.Modificador1, Modificador2: data.Modificador2, Modificador3: data.Modificador3}, null, 2))
 })
 
@@ -28,7 +29,7 @@ subscribeGETEvent("pedirMods", () => {
   }
 })
 
-function guardarPuntos(puntosGuardadosNos,puntosGuardadosEllos, CantidadTienda){
+function guardarPuntos(puntosGuardadosNos,puntosGuardadosEllos, CantidadTienda, modifcadoresComprados){
 
 fs.writeFileSync("puntos.json",JSON.stringify({ ellos: puntosGuardadosEllos, nosotros: puntosGuardadosNos, PuntosTienda: CantidadTienda}, null, 2))
 

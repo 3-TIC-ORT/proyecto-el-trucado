@@ -3,12 +3,14 @@ connect2Server()
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {} // Guarda puntos acumulados por id
 let CantidadTienda = 0
+let TarotCompradasVariable = 0
 //Parte donde se encarga de guardar los puntos del juego
 getEvent("pedirPuntos", (ans) => {
     if (ans?.ok) {
         GuardarPuntos("ELLOS", ans.infoJSON.ellos)
         GuardarPuntos("NOS", ans.infoJSON.nosotros)
         CantidadTienda = ans.infoJSON.PuntosTienda
+        TarotCompradasVariable = ans.infoJSON.modifcadoresComprados 
       console.log("Info recibida:", ans.infoJSON)
     } else {
       console.log("Error al recibir puntos")
@@ -114,6 +116,7 @@ Venta1.addEventListener("click", function(){
     if (Modificadores[Modificador1].valor <= puntosAcumulados["NOS"]){
         TarotCompradas(Modificador1, Modificadores[Modificador1].valor)
         Venta1.classList.add("Oculto")
+        TarotCompradasVariable++
     }
     else{
         SaldoInsuficiente.style.display =  'block'
@@ -126,6 +129,8 @@ Venta2.addEventListener("click", function(){
     if (Modificadores[Modificador2].valor <= puntosAcumulados["NOS"]){
         TarotCompradas(Modificador2, Modificadores[Modificador2].valor)
         Venta2.classList.add("Oculto")
+        TarotCompradasVariable++
+
     }
     else{
         SaldoInsuficiente.style.display =  'block'
@@ -138,6 +143,8 @@ Venta3.addEventListener("click", function(){
     if (Modificadores[Modificador3].valor <= puntosAcumulados["NOS"]){
         TarotCompradas(Modificador3, Modificadores[Modificador3].valor)
         Venta3.classList.add("Oculto")
+        TarotCompradasVariable++
+
     }
     else{
         SaldoInsuficiente.style.display =  'block'
@@ -358,7 +365,7 @@ Vender.addEventListener("click", function(){
 
 let FinalizarCompra = document.getElementById("FinalizarCompra")
 FinalizarCompra.addEventListener("click", function(){
-    postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
+    postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradasVariable})
     postEvent("enviarModificadoresBack", {Modificador1: TarotComprada1, Modificador2: TarotComprada2, Modificador3: TarotComprada3})
     window.location.href = "../Pantalla Juego/Trucado.html"        
 })
