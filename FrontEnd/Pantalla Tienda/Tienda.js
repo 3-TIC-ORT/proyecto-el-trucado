@@ -137,6 +137,9 @@ Venta3.addEventListener("click", function(){
     }
 })
 
+let TarotComprada1 = ""
+let TarotComprada2 = ""
+let TarotComprada3 = ""
 
 
 
@@ -167,6 +170,8 @@ function TarotCompradas(Tarot, Valor) {
                 TarotObtenidas.textContent = " 3 / 3 "
                 GuardarPuntos("NOS", -Valor)
                 ValorTarot3 = Valor - 1
+                TarotComprada3 = Tarot + ""
+
             }
         } 
         else{
@@ -176,6 +181,8 @@ function TarotCompradas(Tarot, Valor) {
             TarotObtenidas.textContent = " 2 / 3 "
             GuardarPuntos("NOS", -Valor)
             ValorTarot2 = Valor - 1
+            TarotComprada2 = Tarot + ""
+
         }
     }
     else{
@@ -185,6 +192,7 @@ function TarotCompradas(Tarot, Valor) {
         TarotObtenidas.textContent = " 1 / 3 "
         GuardarPuntos("NOS", -Valor)
         ValorTarot1 = Valor - 1
+        TarotComprada1 = Tarot + ""
     }
 }
 
@@ -293,7 +301,7 @@ Vender.addEventListener("click", function(){
 let FinalizarCompra = document.getElementById("FinalizarCompra")
 FinalizarCompra.addEventListener("click", function(){
     postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda})
-    postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
+    postEvent("enviarModificadoresBack", {Modificador1: TarotComprada1, Modificador2: TarotComprada2, Modificador3: TarotComprada3})
     window.location.href = "../Pantalla Juego/Trucado.html"        
 })
 
