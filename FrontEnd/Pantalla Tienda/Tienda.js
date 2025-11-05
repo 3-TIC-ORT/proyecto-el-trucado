@@ -20,7 +20,7 @@ getEvent("pedirPuntos", (ans) => {
 //Genera un numero aleatorio (0 - 9) para definir al modificador, no se repite
 let ModificadoresUtilizados = []
 function GeneradorModificadores(){
-    let NmrModificador = Math.floor(Math.random() * 10)
+    let NmrModificador = Math.floor(Math.random() * 7)
     if (ModificadoresUtilizados.includes(NmrModificador)){
         return GeneradorModificadores()
     }
