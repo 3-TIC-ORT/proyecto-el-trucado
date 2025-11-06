@@ -1001,8 +1001,8 @@ let CartasBot = []
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
-    //solo tira carta si es su turno y no se termino el juego
-    if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) ){
+    //solo tira carta si es su turno, no se termino el juego y no esta cantado nada
+    if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) && !BotonesVoluntadBlock){
 
         //Las 5 cartas del bot
         CartasBot = [carta6, carta7, carta8, carta9, carta10]
@@ -1391,6 +1391,9 @@ Tarot1.addEventListener("click", function(){
             Tarot1Selected = false
 
             TarotSeleccionada = ""
+            Modificador1 = ""
+            postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
+
         }
     }
 })
@@ -1420,6 +1423,9 @@ Tarot2.addEventListener("click", function(){
             Tarot2Selected = false
 
             TarotSeleccionada = ""
+            Modificador2 = ""
+            postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
+
         }
     }
 })
@@ -1449,6 +1455,8 @@ Tarot3.addEventListener("click", function(){
             Tarot3Selected = false
 
             TarotSeleccionada = ""
+            Modificador3 = ""
+            postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
         }
     }
 })
