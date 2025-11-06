@@ -717,6 +717,16 @@ click1.addEventListener("click", function(){
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
             }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
+            }
         }
     } 
 }) 
@@ -763,6 +773,16 @@ click2.addEventListener("click", function(){
                 carta2.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
+            }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
             }
         }
     } 
@@ -811,6 +831,16 @@ click3.addEventListener("click", function(){
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
             }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
+            }
         }
     } 
 })
@@ -858,6 +888,16 @@ click4.addEventListener("click", function(){
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
             }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
+            }
         }
     } 
 })
@@ -904,6 +944,16 @@ click5.addEventListener("click", function(){
                 carta5.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
+            }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
             }
         }
     } 

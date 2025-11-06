@@ -19,9 +19,9 @@ getEvent("pedirPuntos", (ans) => {
 
   getEvent("pedirMods", (ans) => {
     if (ans?.ok){
-        TarotRegaladas(ans.infoModsJSON.Modificador1, Modificadores[parseInt(ans.infoModsJSON.Modificador1)])
-        TarotRegaladas(ans.infoModsJSON.Modificador2, Modificadores[parseInt(ans.infoModsJSON.Modificador2)])
-        TarotRegaladas(ans.infoModsJSON.Modificador3, Modificadores[parseInt(ans.infoModsJSON.Modificador3)])
+        TarotRegaladas(ans.infoModsJSON.Modificador1, Modificadores[parseInt(ans.infoModsJSON.Modificador1)].valor)
+        TarotRegaladas(ans.infoModsJSON.Modificador2, Modificadores[parseInt(ans.infoModsJSON.Modificador2)].valor)
+        TarotRegaladas(ans.infoModsJSON.Modificador3, Modificadores[parseInt(ans.infoModsJSON.Modificador3)].valor)
        console.log(`Modificadores recibidos: ${ans.infoModsJSON}`)
         } else {
             console.log("Error al recibir modificadores")
@@ -238,7 +238,6 @@ function TarotRegaladas(Tarot, Valor) {
                 TarotObtenidas.textContent = " 3 / 3 "
                 ValorTarot3 = Valor - 1
                 TarotComprada3 = Tarot + ""
-
             }
         } 
         else{
@@ -248,7 +247,6 @@ function TarotRegaladas(Tarot, Valor) {
             TarotObtenidas.textContent = " 2 / 3 "
             ValorTarot2 = Valor - 1
             TarotComprada2 = Tarot + ""
-
         }
     }
     else{
