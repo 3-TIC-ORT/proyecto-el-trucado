@@ -55,6 +55,15 @@ Volver.addEventListener("click", function(){
 let MenuPrincipal = document.querySelectorAll(".MenuPrincipal")
 MenuPrincipal.forEach(boton => {
     boton.addEventListener("click", function(){
+        puntosAcumulados["ELLOS"] = 0
+        puntosAcumulados["NOS"] = 0
+        CantidadTienda = 0
+        Modificador1 = ""
+        Modificador2 = ""
+        Modificador3 = ""
+        console.log("Datos enviados:", {Modificador1, Modificador2, Modificador3})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
+        postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
         window.location.href = "../Pantalla Principal/Inicio.html"
     })
 })
@@ -275,7 +284,7 @@ function crearmazo(){
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
         //les pone imagenes
-        if (i <= 5){
+        if (i <= 10){"HOLA"
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -962,6 +971,7 @@ click5.addEventListener("click", function(){
 //el div de los botones de quiero y no quiero
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
 let BotonesVoluntadBlock = false
+let trucoCantado = false
 //funcion para que el bot cante truco
 function BotCantaTruco(){
             
@@ -977,10 +987,11 @@ function BotCantaTruco(){
     let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
-    if (PuntosTruco === false && PuntosRetruco === false){
+    if (!PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
         if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
             sonido.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
+            trucoCantado = true
             setTimeout(() => {
                 console.log("TRUCO")
                 PuntosTruco = true
@@ -995,9 +1006,10 @@ function BotCantaTruco(){
                 MostrarMensajeBot(true, "Truco")
               }, 1500)           
         }
-        else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
+        else if (ValorJerarquia > 41 && ValorAleatorio < 4){
             sonido.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
+            trucoCantado = true
             setTimeout(() => {
                 console.log("TRUCO")
                 PuntosTruco = true
@@ -1011,6 +1023,54 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Truco")
               }, 1200)
+        }
+    }
+    else if (PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
+        if (ValorJerarquia < 61 && ValorAleatorio < 0.05){
+            trucoCantado = true
+            BotonesVoluntadBlock = true
+            setTimeout(() =>{
+                console.log("RETRUCO")
+                PuntosTruco = false
+                PuntosRetruco = true
+                PuntosValeCuatro = false
+                MostrarMensajeBot(true, "Retruco")
+            },1200)
+        }
+        else if (ValorJerarquia > 61 && ValorAleatorio > 4){
+            trucoCantado = true
+            BotonesVoluntadBlock = true
+            setTimeout(() =>{
+                console.log("RETRUCO")
+                PuntosTruco = false
+                PuntosRetruco = true
+                PuntosValeCuatro = false
+                MostrarMensajeBot(true, "Retruco")
+            },1200)
+        }
+    }
+    else if (!PuntosTruco  && !untosRetruco  && !PuntosValeCuatro){
+        if (ValorJerarquia < 81 && ValorAleatorio < 0.01){
+            trucoCantado = true
+            BotonesVoluntadBlock = true
+            setTimeout(() =>{
+                console.log("VALE CUATRO")
+                PuntosTruco = false
+                PuntosRetruco = false
+                PuntosValeCuatro = true
+                MostrarMensajeBot(true, "Vale Cuatro")
+            },1200)
+        }
+        else if(ValorJerarquia < 81 && ValorAleatorio > 4){
+            trucoCantado = true
+            BotonesVoluntadBlock = true
+            setTimeout(() =>{
+                console.log("VALE CUATRO")
+                PuntosTruco = false
+                PuntosRetruco = false
+                PuntosValeCuatro = true
+                MostrarMensajeBot(true, "Vale Cuatro")
+            },1200)
         }
     }
 }
@@ -1029,6 +1089,7 @@ noquiero.addEventListener("click", function(){
         resetearRonda()
         GuardarPuntos("ELLOS", 1 * multiplicador)
     }, 750)
+    trucoCantado = true
     BotonesVoluntadBlock = false
     MostrarMensajeBot(false, "")
 })
@@ -1037,6 +1098,7 @@ quiero.addEventListener("click", function(){
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
     BotonesVoluntadBlock = false
+    trucoCantado = true
     MostrarMensajeBot(false, "")
 })
 
@@ -1052,6 +1114,7 @@ let CartasBot = []
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
     //solo tira carta si es su turno, no se termino el juego y no esta cantado nada
+    if (!trucoCantado){
     if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) && !BotonesVoluntadBlock){
 
         //Las 5 cartas del bot
@@ -1092,6 +1155,7 @@ function CartaBot(){
         }, 800)
     }
 }  
+}
 
 
     if(turno === "Bot"){
@@ -1441,8 +1505,7 @@ Tarot1.addEventListener("click", function(){
             Tarot1Selected = false
 
             TarotSeleccionada = ""
-            Modificador1 = ""
-            postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
+
 
         }
     }
@@ -1473,8 +1536,7 @@ Tarot2.addEventListener("click", function(){
             Tarot2Selected = false
 
             TarotSeleccionada = ""
-            Modificador2 = ""
-            postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
+
 
         }
     }
@@ -1505,8 +1567,7 @@ Tarot3.addEventListener("click", function(){
             Tarot3Selected = false
 
             TarotSeleccionada = ""
-            Modificador3 = ""
-            postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
+
         }
     }
 })
