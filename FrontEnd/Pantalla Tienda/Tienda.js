@@ -10,7 +10,7 @@ getEvent("pedirPuntos", (ans) => {
         GuardarPuntos("ELLOS", ans.infoJSON.ellos)
         GuardarPuntos("NOS", ans.infoJSON.nosotros)
         CantidadTienda = ans.infoJSON.PuntosTienda
-        TarotCompradasVariable = ans.infoJSON.modifcadoresComprados 
+        TarotCompradasVariable = ans.infoJSON.modificadoresComprados 
       console.log("Info recibida:", ans.infoJSON)
     } else {
       console.log("Error al recibir puntos")
@@ -365,7 +365,7 @@ Vender.addEventListener("click", function(){
 
 let FinalizarCompra = document.getElementById("FinalizarCompra")
 FinalizarCompra.addEventListener("click", function(){
-    postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradasVariable})
+    postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradasVariable})
     postEvent("enviarModificadoresBack", {Modificador1: TarotComprada1, Modificador2: TarotComprada2, Modificador3: TarotComprada3})
     window.location.href = "../Pantalla Juego/Trucado.html"        
 })
