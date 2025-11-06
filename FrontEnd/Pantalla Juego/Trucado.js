@@ -979,6 +979,10 @@ function BotCantaTruco(){
     let ValorJerarquia = 0
     let ValorAleatorio = Math.random()
     
+    if (BotonesVoluntadBlock) return          // si los botones están activos, no canta
+    if (BotonesVoluntad.style.display === 'flex') return   // si se están mostrando, no canta
+    if (trucoCantado) return                  // ya cantó y espera respuesta
+    
     //bucle para fijarse el valor de jerarquia de la mano del bot
     for (let i = 0; i < CartasBot.length; i++){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
@@ -987,6 +991,7 @@ function BotCantaTruco(){
     let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
+    
     if (!PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
         if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
             sonido.play()  // Reproduce el sonido
@@ -1006,7 +1011,7 @@ function BotCantaTruco(){
                 MostrarMensajeBot(true, "Truco")
               }, 1500)           
         }
-        else if (ValorJerarquia > 41 && ValorAleatorio < 4){
+        else if (ValorJerarquia > 41 && ValorAleatorio < 0.4){
             sonido.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
             trucoCantado = true
@@ -1034,10 +1039,16 @@ function BotCantaTruco(){
                 PuntosTruco = false
                 PuntosRetruco = true
                 PuntosValeCuatro = false
+                truco.textContent = "Vale Cuatro"
+                truco.classList.add("PalabrasExtraLargas")
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
             },1200)
         }
-        else if (ValorJerarquia > 61 && ValorAleatorio > 4){
+        else if (ValorJerarquia > 61 && ValorAleatorio > 0.4){
             trucoCantado = true
             BotonesVoluntadBlock = true
             setTimeout(() =>{
@@ -1045,11 +1056,17 @@ function BotCantaTruco(){
                 PuntosTruco = false
                 PuntosRetruco = true
                 PuntosValeCuatro = false
+                truco.textContent = "Vale Cuatro"
+                truco.classList.add("PalabrasExtraLargas")
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
             },1200)
         }
     }
-    else if (!PuntosTruco  && !untosRetruco  && !PuntosValeCuatro){
+    else if (!PuntosTruco  && PuntosRetruco  && !PuntosValeCuatro){
         if (ValorJerarquia < 81 && ValorAleatorio < 0.01){
             trucoCantado = true
             BotonesVoluntadBlock = true
@@ -1061,7 +1078,7 @@ function BotCantaTruco(){
                 MostrarMensajeBot(true, "Vale Cuatro")
             },1200)
         }
-        else if(ValorJerarquia < 81 && ValorAleatorio > 4){
+        else if(ValorJerarquia > 81 && ValorAleatorio > 0.4){
             trucoCantado = true
             BotonesVoluntadBlock = true
             setTimeout(() =>{
@@ -1085,11 +1102,11 @@ noquiero.addEventListener("click", function(){
     if (PuntosValeCuatro) multiplicador = 3
     else if (PuntosRetruco) multiplicador = 2
     else if (PuntosTruco) multiplicador = 1
+    display = "none"
     setTimeout(function(){
         resetearRonda()
         GuardarPuntos("ELLOS", 1 * multiplicador)
     }, 750)
-    trucoCantado = true
     BotonesVoluntadBlock = false
     MostrarMensajeBot(false, "")
 })
@@ -1097,8 +1114,9 @@ noquiero.addEventListener("click", function(){
 quiero.addEventListener("click", function(){
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
+    display = "none"
     BotonesVoluntadBlock = false
-    trucoCantado = true
+    trucoCantado = false
     MostrarMensajeBot(false, "")
 })
 
@@ -1113,20 +1131,22 @@ let CartasBot = []
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
+
+     //Las 5 cartas del bot
+     CartasBot = [carta6, carta7, carta8, carta9, carta10]
+
+    //se fija si puede cantar truco
+    setTimeout(() => {
+        if (cartastiro >= 1 && cartastiradas >= 1){
+            BotCantaTruco()
+        }
+    }, 500)
+
     //solo tira carta si es su turno, no se termino el juego y no esta cantado nada
+    setTimeout(() => {
     if (!trucoCantado){
     if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) && !BotonesVoluntadBlock){
-
-        //Las 5 cartas del bot
-        CartasBot = [carta6, carta7, carta8, carta9, carta10]
-        
-        //se fija si puede cantar truco
-        setTimeout(() => {
-            if (cartastiro >= 1 && cartastiradas >= 1){
-                BotCantaTruco()
-            }
-        }, 1500)
-        
+       
         // Filtra las que todavía no usó
         let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
     
@@ -1154,7 +1174,9 @@ function CartaBot(){
             verificarCartas()
         }, 800)
     }
-}  
+
+} 
+}, 100)
 }
 
 
