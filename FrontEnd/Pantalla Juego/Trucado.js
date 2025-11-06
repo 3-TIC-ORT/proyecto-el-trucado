@@ -1034,6 +1034,10 @@ function BotCantaTruco(){
                 PuntosTruco = false
                 PuntosRetruco = true
                 PuntosValeCuatro = false
+                truco.textContent = "Vale Cuatro"
+                truco.classList.add("PalabrasExtraLargas")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
             },1200)
         }
@@ -1045,6 +1049,10 @@ function BotCantaTruco(){
                 PuntosTruco = false
                 PuntosRetruco = true
                 PuntosValeCuatro = false
+                truco.textContent = "Vale Cuatro"
+                truco.classList.add("PalabrasExtraLargas")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
             },1200)
         }
@@ -1058,6 +1066,9 @@ function BotCantaTruco(){
                 PuntosTruco = false
                 PuntosRetruco = false
                 PuntosValeCuatro = true
+                truco.classList.add("PalabrasExtraLargas-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Vale Cuatro")
             },1200)
         }
@@ -1069,6 +1080,9 @@ function BotCantaTruco(){
                 PuntosTruco = false
                 PuntosRetruco = false
                 PuntosValeCuatro = true
+                truco.classList.add("PalabrasExtraLargas-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Vale Cuatro")
             },1200)
         }
