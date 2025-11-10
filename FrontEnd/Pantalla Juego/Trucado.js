@@ -1,5 +1,7 @@
 connect2Server()
 
+//Cantidad de tiendas en la partida
+let CantidadTienda = 0
 //Cada vez que se entra a la pagina se pide al back los puntos
 window.addEventListener("load", () => {
     getEvent("pedirPuntos", (ans) => {
@@ -102,6 +104,8 @@ let TarotCompradas = 0
 // Array global para guardar las cartas que el bot ya tiró en esta mano
 let cartasUsadasBot = []
 
+//Array para guardar las cartas del bot
+let CartasBot = []
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
 let Modificador1 = ""
@@ -306,6 +310,9 @@ carta9 = cartas[8]
 carta10 = cartas[9]
 //Se calcula el envido de bot
 EnvidoBot = calcularEnvido(carta6, carta7, carta8, carta9, carta10)
+
+//Las 5 cartas del bot
+CartasBot = [carta6, carta7, carta8, carta9, carta10]
 }
 
 // Función que calcular el envido dependiendo de las 5 cartas que entra
@@ -650,7 +657,10 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
 function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     if (turno === "Jugador"){
         turno = "Bot"
+    // no ejecutar CartaBot si recién tiró (previene canto tardío)
+    if (cartastiro < 3){
         CartaBot()
+    }
     }
     else{
         turno = "Jugador"
@@ -1128,21 +1138,18 @@ quiero.addEventListener("click", function(){
 //Tirar solo 3 cartas bot
 let cartastiro = 0
 
-//Array para guardar las cartas del bot
-let CartasBot = []
+
 
 //Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
 function CartaBot(){
 
-     //Las 5 cartas del bot
-     CartasBot = [carta6, carta7, carta8, carta9, carta10]
 
     //se fija si puede cantar truco
     setTimeout(() => {
-        if (cartastiro >= 1 && cartastiradas >= 1){
+        if (cartastiro >= 1 && cartastiradas >= 1 && turno === "Bot" && !trucoCantado && !BotonesVoluntadBlock){
             BotCantaTruco()
         }
-    }, 500)
+    }, 300)
 
     //solo tira carta si es su turno, no se termino el juego y no esta cantado nada
     setTimeout(() => {
@@ -1451,8 +1458,7 @@ function MostrarMensajeBot(Mostrar, Mensaje){ //Mostrar = true o Mostrar= false,
     }
 }
 
-//Cantidad de tiendas en la partida
-let CantidadTienda = 0
+
 //Funcion que se encarga de llevar a la pantalla tienda, si es el caso
 function VerificarTienda(){
 
