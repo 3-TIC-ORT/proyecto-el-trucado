@@ -406,9 +406,7 @@ body{
     margin-top: 21.875rem;
     transition: transform 1s;
 }
-#Medialuna:hover{
-    transform: scale(1.5) rotate(-30deg);
-}
+
 
 /*Pantalla de Perdida*/
 .PantallaPerdida{
