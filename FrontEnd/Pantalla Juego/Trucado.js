@@ -150,6 +150,11 @@ function resetearRonda(){
         //Se verifica si es momento de la tienda
         VerificarTienda()
 
+        //Se saca mensaje en caso bug y se oculta
+        MostrarMensajeBot(false, "")
+        BotonesVoluntad.style.display = "none"
+        BotonesVoluntadBlock = false
+
         //Todos los valores vuelven a original, 0
         N_ganadas = 0
         E_ganadas = 0
@@ -284,7 +289,7 @@ function crearmazo(){
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
         //les pone imagenes
-        if (i <= 10){"HOLA"
+        if (i <= 5){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -1116,10 +1121,12 @@ noquiero.addEventListener("click", function(){
 quiero.addEventListener("click", function(){
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
-    display = "none"
     BotonesVoluntadBlock = false
     trucoCantado = false
     MostrarMensajeBot(false, "")
+    if (turno === "Bot"){
+        CartaBot()
+    }
 })
 
 
@@ -1139,7 +1146,7 @@ function CartaBot(){
 
     //se fija si puede cantar truco
     setTimeout(() => {
-        if (cartastiro >= 1 && cartastiradas >= 1){
+        if (cartastiro >= 1 && cartastiradas >= 1){ //agregue algo que hay que sacar depsues
             BotCantaTruco()
         }
     }, 500)
@@ -1426,7 +1433,11 @@ function actualizarBoton(){
 
     
     // Flor habilitada solo si todas las cartas son del mismo palo y aún no tiraste
-    if ( ( (carta1.palo === carta2.palo) || carta1.camaleon || carta2.camaleon) && ( (carta1.palo === carta3.palo) || carta1.camaleon || carta3.camaleon) && ( (carta1.palo === carta4.palo) || carta1.camaleon || carta4.camaleon) && ( (carta1.palo === carta5.palo) || carta1.camaleon || carta5.camaleon) && cartastiradas === 0 && turno === "Jugador"){9
+    if ( ( (carta1.palo === carta2.palo) || carta1.camaleon || carta2.camaleon) && 
+         ( (carta1.palo === carta3.palo) || carta1.camaleon || carta3.camaleon) &&
+         ( (carta1.palo === carta4.palo) || carta1.camaleon || carta4.camaleon) && 
+         ( (carta1.palo === carta5.palo) || carta1.camaleon || carta5.camaleon) && 
+            cartastiradas === 0 && turno === "Jugador"){
         flor.classList.remove("BarraInferiorBTN-NH")
         flor.classList.add("BarraInferiorBTN")
     }
@@ -1435,9 +1446,11 @@ function actualizarBoton(){
         flor.classList.add("BarraInferiorBTN-NH")
     }
 }
+
+let GloboTexto = document.getElementById("GloboTexto")
+
 //Función que mustra lo que hace el bot, Mensaje es el mensaje a mostrar
 function MostrarMensajeBot(Mostrar, Mensaje){ //Mostrar = true o Mostrar= false, indica si lo muestra o lo oculta
-    let GloboTexto = document.getElementById("GloboTexto")
     let MensajeTexto = document.getElementById("TextoCantado")
 
     
@@ -1461,6 +1474,7 @@ function VerificarTienda(){
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
+        console.log("Enviando tienda...")
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15 )){
         CantidadTienda++
