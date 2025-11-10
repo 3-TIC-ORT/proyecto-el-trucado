@@ -1147,23 +1147,16 @@ let cartastiro = 0
 
 
 
-//Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
-function CartaBot(){
+function CartaBot() {
+    // Si ya ha jugado una carta o el juego no está en curso, no hace nada
+    if (cartastiro > 0 && ganadorUltimaMano === null) {
+        return
+    }
 
-
-    //se fija si puede cantar truco
-    setTimeout(() => {
-        if (cartastiro >= 1 && cartastiradas >= 1 && turno === "Bot" && !trucoCantado && !BotonesVoluntadBlock){
-            BotCantaTruco()
-        }
-    }, 300)
-
-    //solo tira carta si es su turno, no se termino el juego y no esta cantado nada
-    setTimeout(() => {
-    if (!trucoCantado){
-    if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) && !BotonesVoluntadBlock){
-       
-        // Filtra las que todavía no usó
+    // Solo tira carta si es su turno, no se terminó el juego y no está cantado nada
+    if (turno === "Bot" && !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) && !BotonesVoluntadBlock) {
+        
+        // Filtra las cartas que aún no se han usado
         let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
     
         // Elige una carta aleatoria entre las disponibles
@@ -1171,13 +1164,12 @@ function CartaBot(){
             
         // Guarda el índice real de esa carta
         let indiceReal = CartasBot.indexOf(cartaElegida)
-        cartasUsadasBot.push(indiceReal) // la marca como usada
+        cartasUsadasBot.push(indiceReal) // La marca como usada
     
-        // Simula que el bot “piensa” 800ms
+        // Simula el tiempo de "pensamiento" del bot (800ms)
         setTimeout(() => {
-            cartastiro++
-            // Oculta la carta jugada del bot
-            let indiceCartaReal = indiceReal + 6 // carta6 → índice 0
+            cartastiro++  // Incrementa el contador de cartas jugadas
+            let indiceCartaReal = indiceReal + 6 // Ajusta el índice para el display visual
             document.getElementById("carta" + indiceCartaReal).classList.add("oculto")
     
             // La pone en el centro visualmente
@@ -1188,17 +1180,19 @@ function CartaBot(){
 
             // Verifica si hay que comparar
             verificarCartas()
+
+            // Aquí llamamos a BotCantaTruco después de que se haya jugado la carta
+            if (ganadorUltimaMano === "Bot" && !trucoCantado && !BotonesVoluntadBlock) {
+                BotCantaTruco()  // Canta truco solo después de jugar la carta
+            }
+
         }, 800)
     }
-
-} 
-}, 100)
 }
 
-
-    if(turno === "Bot"){
-        CartaBot()
-    }
+if (turno === "Bot") {
+    CartaBot()
+}
   
 //Easter Egg sigma
 let MazoIMG = document.getElementById("Mazo")
