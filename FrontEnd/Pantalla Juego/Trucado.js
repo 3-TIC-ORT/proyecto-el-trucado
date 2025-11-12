@@ -306,6 +306,7 @@ carta4 = cartas[3]
 carta5 = cartas[4]
 //Se calcula el envido de jugador
 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
+alert(EnvidoJugador)
 
 //Cartas Bot (carta6 - 10)
 carta6 = cartas[5]
@@ -323,55 +324,67 @@ CartasBot = [carta6, carta7, carta8, carta9, carta10]
 // Función que calcular el envido dependiendo de las 5 cartas que entra
 function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
 
-    // Se guardan las cartas y un array para los palos
-    let Cartas = [carta1, carta2, carta3, carta4, carta5]
-    let palos = {}
-    let camaleonValor = []
+    //Mete a las cartas en un array
+    let CartasEnvido = [carta1, carta2, carta3, carta4, carta5]
 
-    // Recorremos las cartas para agrupar por palo y detectar las cartas con el modificador camaleon
-    Cartas.forEach(carta => {
-        //revisa si tiene valor
-        if (carta.camaleon){
-            camaleonValor.push(carta.valorenvido) // Guardamos el valor de las cartas con camaleon
+    //inicializa un array para guardar las cartas de cada palo
+    let palos = [
+        [], //espada
+        [], //oro
+        [], //basto
+        []  //copa
+    ]
+
+    //Reparte las cartas dependiendo del palo
+    for (let i = 0; i < 5; i++){
+        //si es camaleon, cuenta para todos los palos
+        if (CartasEnvido[i].camaleon === true){
+            palos[0].push(CartasEnvido[i].valorenvido)
+            palos[1].push(CartasEnvido[i].valorenvido)
+            palos[2].push(CartasEnvido[i].valorenvido)
+            palos[3].push(CartasEnvido[i].valorenvido)
         }
-        else{
-            if (!palos[carta.palo]) palos[carta.palo] = []
-            palos[carta.palo].push(carta.valorenvido)
+        //si no se guarda en su palo
+        else if (CartasEnvido[i].palo === "espada"){
+            palos[0].push(CartasEnvido[i].valorenvido)
         }
-    })
-
-    let envidoMaximo = 0
-
-    // Primero, consideramos el valor de las cartas con camaleon para todos los palos
-    if (camaleonValor.length > 0) {
-        // Agregamos los valores de las cartas camaleon a cada palo
-        Object.keys(palos).forEach(palo => {
-            palos[palo] = palos[palo].concat(camaleonValor)
-        })
-    }
-
-    // Calculamos el envido máximo para cada palo
-    for (let palo in palos){
-        let grupo = palos[palo]
-
-        if (grupo.length >= 3) {
-            grupo.sort((a, b) => b - a) // Ordenamos de mayor a menor
-            let suma = grupo[0] + grupo[1] + grupo[2] + 20
-            if (suma > envidoMaximo) envidoMaximo = suma
+        else if (CartasEnvido[i].palo === "oro"){
+            palos[1].push(CartasEnvido[i].valorenvido)
         }
-        else if (grupo.length === 2) {
-            let suma = grupo[0] + grupo[1]
-            if (suma > envidoMaximo) envidoMaximo = suma
+        else if (CartasEnvido[i].palo === "basto"){
+            palos[2].push(CartasEnvido[i].valorenvido)
         }
-        else {
-            let valor = grupo[0]
-            if (valor > envidoMaximo) envidoMaximo = valor
+        else if (CartasEnvido[i].palo === "copa"){
+            palos[3].push(CartasEnvido[i].valorenvido)
         }
     }
 
+    //inicializa las variable que calculan el tanto
+    let EnvidoMaximo = 0
+    let EnvidoActual = 0
 
-    let Envido = envidoMaximo
-    return Envido
+    //recorre los cuatro palos
+    for (let i = 0; i < 4; i++){
+        //reincia la variable del envido
+        EnvidoActual = 0
+
+        //en caso de ser mas de 3 cartas, se le suma 20
+        if (palos[i].length >= 3){
+            EnvidoActual = EnvidoActual + 20
+        }
+
+        //recorre todos los palos y suma sus valores envido
+        for (let j = 0; j < palos[i].length; j++){
+            EnvidoActual = EnvidoActual + palos[i][j]
+        }
+
+        //si el envido del palo es mayor que el 
+        if (EnvidoActual > EnvidoMaximo){
+            EnvidoMaximo = EnvidoActual
+        }
+    }
+
+    return (EnvidoMaximo)
 }
 
   
