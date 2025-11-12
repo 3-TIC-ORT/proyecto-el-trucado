@@ -306,7 +306,6 @@ carta4 = cartas[3]
 carta5 = cartas[4]
 //Se calcula el envido de jugador
 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-alert(EnvidoJugador)
 
 //Cartas Bot (carta6 - 10)
 carta6 = cartas[5]
@@ -1019,13 +1018,16 @@ function BotCantaTruco(){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
     
-    let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoTruco = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoReTruco = new Audio("Sonidos/ReTruco.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoValeTruco = new Audio("Sonidos/ValeCuatro.mp3")  // Creas el objeto Audio con la ruta
+
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
     //Jerarquia de mano promedio: 41
     if (!PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
         if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
-            sonido.play()  // Reproduce el sonido
+            SonidoTruco.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
             trucoCantado = true
             setTimeout(() => {
@@ -1045,7 +1047,7 @@ function BotCantaTruco(){
             return true
         }
         else if (ValorJerarquia > 41 && ValorAleatorio < 0.4){
-            sonido.play()  // Reproduce el sonido
+            SonidoTruco.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
             trucoCantado = true
             setTimeout(() => {
@@ -1061,7 +1063,7 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Truco")
                 ultimoCantadorTruco = "Bot"
-              }, 1200)
+              }, 1500)
             return true
         }
     }
@@ -1080,7 +1082,7 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
                 ultimoCantadorTruco = "Bot"
-            },1200)
+            },1500)
             return true
         }
         else if (ValorJerarquia > 61 && ValorAleatorio > 0.4){
@@ -1097,7 +1099,7 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
                 ultimoCantadorTruco = "Bot"
-            },1200)
+            },1500)
             return true
         }
     }
@@ -1115,7 +1117,7 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Vale Cuatro")
                 ultimoCantadorTruco = "Bot"
-            },1200)
+            },1500)
             return true
         }
         else if(ValorJerarquia > 81 && ValorAleatorio > 0.4){
@@ -1131,7 +1133,7 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Vale Cuatro")
                 ultimoCantadorTruco = "Bot"
-            },1200)
+            },1500)
             return true
         }
     }
