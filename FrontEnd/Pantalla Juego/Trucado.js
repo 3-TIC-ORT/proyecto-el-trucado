@@ -1043,27 +1043,7 @@ function BotCantaTruco(){
     //Jerarquia promedio: 8,2
     //Jerarquia de mano promedio: 41
     if (!PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
-        if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
-            SonidoTruco.play()  // Reproduce el sonido
-            BotonesVoluntadBlock = true
-            trucoCantado = true
-            setTimeout(() => {
-                console.log("TRUCO")
-                PuntosTruco = true
-                PuntosRetruco = false
-                PuntosValeCuatro = false
-                truco.textContent = "RETRUCO"
-                truco.classList.add("PalabrasLargas")
-                envido.classList.add("BarraInferiorBTN-NH")
-                flor.classList.add("BarraInferiorBTN-NH")
-                mazo.classList.add("BarraInferiorBTN-NH")
-                BotonesVoluntad.style.display = "flex"
-                MostrarMensajeBot(true, "Truco")
-                ultimoCantadorTruco = "Bot"
-              }, 1500)
-            return true
-        }
-        else if (ValorJerarquia > 41 && ValorAleatorio < 0.4){
+        if ( (ValorJerarquia < 41 && ValorAleatorio < 0.1) || (ValorJerarquia > 41 && ValorAleatorio < 0.4) ){ //mano promedio
             SonidoTruco.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
             trucoCantado = true
@@ -1085,7 +1065,7 @@ function BotCantaTruco(){
         }
     }
     else if (PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
-        if (ValorJerarquia < 61 && ValorAleatorio < 0.05){
+        if ( (ValorJerarquia < 61 && ValorAleatorio < 0.05) || (ValorJerarquia > 61 && ValorAleatorio > 0.4) ){
             trucoCantado = true
             BotonesVoluntadBlock = true
             setTimeout(() =>{
@@ -1095,23 +1075,8 @@ function BotCantaTruco(){
                 PuntosValeCuatro = false
                 truco.textContent = "Vale Cuatro"
                 truco.classList.add("PalabrasExtraLargas")
-                mazo.classList.add("BarraInferiorBTN-NH")
-                BotonesVoluntad.style.display = "flex"
-                MostrarMensajeBot(true, "Retruco")
-                ultimoCantadorTruco = "Bot"
-            },1500)
-            return true
-        }
-        else if (ValorJerarquia > 61 && ValorAleatorio > 0.4){
-            trucoCantado = true
-            BotonesVoluntadBlock = true
-            setTimeout(() =>{
-                console.log("RETRUCO")
-                PuntosTruco = false
-                PuntosRetruco = true
-                PuntosValeCuatro = false
-                truco.textContent = "Vale Cuatro"
-                truco.classList.add("PalabrasExtraLargas")
+                truco.classList.remove("PalabrasLargas-NH")
+                truco.classList.remove("BarraInferiorBTN-NH")
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
@@ -1121,23 +1086,7 @@ function BotCantaTruco(){
         }
     }
     else if (!PuntosTruco  && PuntosRetruco  && !PuntosValeCuatro){
-        if (ValorJerarquia < 81 && ValorAleatorio < 0.01){
-            trucoCantado = true
-            BotonesVoluntadBlock = true
-            setTimeout(() =>{
-                console.log("VALE CUATRO")
-                PuntosTruco = false
-                PuntosRetruco = false
-                PuntosValeCuatro = true
-                truco.classList.add("PalabrasExtraLargas-NH")
-                mazo.classList.add("BarraInferiorBTN-NH")
-                BotonesVoluntad.style.display = "flex"
-                MostrarMensajeBot(true, "Vale Cuatro")
-                ultimoCantadorTruco = "Bot"
-            },1500)
-            return true
-        }
-        else if(ValorJerarquia > 81 && ValorAleatorio > 0.4){
+        if ( (ValorJerarquia < 81 && ValorAleatorio < 0.01) || (ValorJerarquia > 81 && ValorAleatorio > 0.4) ){
             trucoCantado = true
             BotonesVoluntadBlock = true
             setTimeout(() =>{
