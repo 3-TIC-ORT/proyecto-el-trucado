@@ -150,7 +150,7 @@ function resetearRonda(){
 
     //no reinicia ronda si ya termino partida
     if ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30)){
-
+        ultimoCantadorTruco = null
         //Se verifica si es momento de la tienda
         VerificarTienda()
 
@@ -258,7 +258,7 @@ function resetearRonda(){
                 CartaBot()
             }, 1000)
         }
-
+        
     }
 
 }
@@ -987,6 +987,8 @@ click5.addEventListener("click", function(){
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
 let BotonesVoluntadBlock = false
 let trucoCantado = false
+let ultimoCantadorTruco = null
+
 //funcion para que el bot cante truco
 function BotCantaTruco(){
             
@@ -994,9 +996,10 @@ function BotCantaTruco(){
     let ValorJerarquia = 0
     let ValorAleatorio = Math.random()
     
+    if (ultimoCantadorTruco === "Bot") return false // si el bot fue el ultimo en cantar truco, no canta
     if (BotonesVoluntadBlock) return false          // si los botones están activos, no canta
     if (BotonesVoluntad.style.display === 'flex') return false   // si se están mostrando, no canta
-    if (trucoCantado) return false                  // ya cantó y espera respuesta
+    if (trucoCantado) return false                  // si ya cantó y espera respuesta
     
     //bucle para fijarse el valor de jerarquia de la mano del bot
     for (let i = 0; i < CartasBot.length; i++){
@@ -1006,7 +1009,7 @@ function BotCantaTruco(){
     let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
-    
+    //Jerarquia de mano promedio: 41
     if (!PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
         if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
             sonido.play()  // Reproduce el sonido
@@ -1024,6 +1027,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Truco")
+                ultimoCantadorTruco = "Bot"
               }, 1500)
             return true
         }
@@ -1043,6 +1047,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Truco")
+                ultimoCantadorTruco = "Bot"
               }, 1200)
             return true
         }
@@ -1061,6 +1066,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
+                ultimoCantadorTruco = "Bot"
             },1200)
             return true
         }
@@ -1077,6 +1083,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
+                ultimoCantadorTruco = "Bot"
             },1200)
             return true
         }
@@ -1094,6 +1101,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Vale Cuatro")
+                ultimoCantadorTruco = "Bot"
             },1200)
             return true
         }
@@ -1109,6 +1117,7 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Vale Cuatro")
+                ultimoCantadorTruco = "Bot"
             },1200)
             return true
         }
@@ -1235,6 +1244,8 @@ truco.addEventListener("click", function(){
     setTimeout(function(){
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
+            //evita que el jugador cante si fue el ultimo en cantar
+            if (ultimoCantadorTruco === "Jugador") return
             if (PuntosTruco === false && PuntosRetruco === false){
                 truco.textContent = "RETRUCO"
                 truco.classList.remove("BarraInferiorBTN")
@@ -1244,6 +1255,7 @@ truco.addEventListener("click", function(){
                 PuntosTruco = true
                 PuntosRetruco = false
                 PuntosValeCuatro = false
+                ultimoCantadorTruco = "Jugador"
             }
             else if (PuntosTruco === true){
                 truco.textContent = "VALE CUATRO"
@@ -1254,6 +1266,7 @@ truco.addEventListener("click", function(){
                 PuntosRetruco = true
                 PuntosValeCuatro = false
                 BotonesVoluntad.style.display = "none"
+                ultimoCantadorTruco = "Jugador"
             }
             else if (PuntosRetruco === true){
                 truco.classList.add("PalabrasExtraLargas-NH")
@@ -1261,6 +1274,7 @@ truco.addEventListener("click", function(){
                 PuntosRetruco = false
                 PuntosValeCuatro = true
                 BotonesVoluntad.style.display = "none"
+                ultimoCantadorTruco = "Jugador"
             }
         }
         //Cuando se toca el boton REGRESAR
