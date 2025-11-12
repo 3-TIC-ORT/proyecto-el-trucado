@@ -1,5 +1,23 @@
 connect2Server()
 
+//Multiplicador para cada cantidad de puntos de truco
+let PuntosTruco = false
+let PuntosRetruco = false
+let PuntosValeCuatro = false
+let ultimoCantadorTruco = null
+
+
+//Todos los modificadores, puede cambiar
+let Modificadores = [
+    { nombre: "Camaleón"},
+    { nombre: "Ascenso"},
+    { nombre: "Milipilli", categoria: "oro"},
+    { nombre: "Al palo", categoria: "basto" },
+    { nombre: "La Puntita", categoria: "espada" },
+    { nombre: "La Tercera", categoria: "copa" },
+    { nombre: "Reyes",}
+]
+
 //Cantidad de tiendas en la partida
 let CantidadTienda = 0
 //Cada vez que se entra a la pagina se pide al back los puntos
@@ -306,7 +324,6 @@ carta4 = cartas[3]
 carta5 = cartas[4]
 //Se calcula el envido de jugador
 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
-alert(EnvidoJugador)
 
 //Cartas Bot (carta6 - 10)
 carta6 = cartas[5]
@@ -1000,7 +1017,6 @@ click5.addEventListener("click", function(){
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
 let BotonesVoluntadBlock = false
 let trucoCantado = false
-let ultimoCantadorTruco = null
 
 //funcion para que el bot cante truco
 function BotCantaTruco(){
@@ -1244,10 +1260,6 @@ let Regresar = false
 let Cant_Envido = 0
 let PuntosEnvidos 
 
-//Multiplicador para cada cantidad de puntos de truco
-let PuntosTruco = false
-let PuntosRetruco = false
-let PuntosValeCuatro = false
 
 //Boton truco
 truco.addEventListener("click", function(){
@@ -1528,16 +1540,6 @@ function VerificarTienda(){
 }
 
 
-//Todos los modificadores, puede cambiar
-let Modificadores = [
-    { nombre: "Camaleón"},
-    { nombre: "Ascenso"},
-    { nombre: "Milipilli", categoria: "oro"},
-    { nombre: "Al palo", categoria: "basto" },
-    { nombre: "La Puntita", categoria: "espada" },
-    { nombre: "La Tercera", categoria: "copa" },
-    { nombre: "Reyes",}
-]
 
 //Pone imagenes a las tarot
 function PonerTarot(Tarot, idCarta){
