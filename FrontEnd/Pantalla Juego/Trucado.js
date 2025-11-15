@@ -1024,7 +1024,7 @@ let mateRandom = Math.random()
         mateTocado = true
     }
     else if (mateTocado && mateRandom <= 0.5 && mateRandom > .25){
-        MostrarMensajeBot(true, "No lo toques   ͡° ͜ʖ ͡° ")
+        MostrarMensajeBot(true, "No lo toques bb   ͡° ͜ʖ ͡° ")
     }
     else {
         MostrarMensajeBot(false, "")
