@@ -1,5 +1,5 @@
 connect2Server()
-
+let TarotCompradas = 0
 //Cada vez que se entra a la pagina se pide al back los puntos
 window.addEventListener("load", () => {
     getEvent("pedirPuntos", (ans) => {
@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
             GuardarPuntos("ELLOS", ans.infoJSON.ellos)
             GuardarPuntos("NOS", ans.infoJSON.nosotros)
             CantidadTienda = ans.infoJSON.PuntosTienda
-            TarotCompradas = ans.infoJSON.modifcadoresComprados
+            TarotCompradas = ans.infoJSON.modificadoresComprados
           console.log("Info recibida:", ans.infoJSON)
         } else {
           console.log("Error al recibir puntos")
@@ -45,7 +45,7 @@ Volver.addEventListener("click", function(){
         Modificador2 = ""
         Modificador3 = ""
         console.log("Datos enviados:", {Modificador1, Modificador2, Modificador3})
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradas})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
      
     window.location.href = "../Pantalla Principal/Inicio.html"
@@ -72,7 +72,7 @@ PlayAgain.forEach(boton => {
         Modificador2 = ""
         Modificador3 = ""
         TarotCompradas = 0
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradas})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
     }
         location.reload()    
@@ -87,7 +87,6 @@ let puntosAcumulados = {
 } // Guarda puntos acumulados por id
 
 //Cantidad de tarot compradas en el juego
-let TarotCompradas = 0
 
 
 // Array global para guardar las cartas que el bot ya tiró en esta mano
@@ -1320,19 +1319,19 @@ function VerificarTienda(){
 
     if (CantidadTienda === 0 && (puntosAcumulados["NOS"] >= 5 || puntosAcumulados["ELLOS"] >= 5 )){
         CantidadTienda++
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradas})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15 )){
         CantidadTienda++
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradas})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
     else if (CantidadTienda === 2 && (puntosAcumulados["NOS"] >= 25)){
         CantidadTienda++
-        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modifcadoresComprados: TarotCompradas})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
     }
