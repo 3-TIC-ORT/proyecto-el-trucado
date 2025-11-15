@@ -6,7 +6,6 @@ let PuntosRetruco = false
 let PuntosValeCuatro = false
 let ultimoCantadorTruco = null
 
-
 //Todos los modificadores, puede cambiar
 let Modificadores = [
     { nombre: "Camaleón"},
@@ -115,7 +114,6 @@ let puntosAcumulados = {
     ELLOS: 0
 } // Guarda puntos acumulados por id
 
-//Cantidad de tarot compradas en el juego
 
 
 // Array global para guardar las cartas que el bot ya tiró en esta mano
@@ -1011,6 +1009,29 @@ click5.addEventListener("click", function(){
         }
     } 
 })
+
+let mate = document.getElementById("Mate")
+let mateClicks = 0
+let mateTocado = false
+mate.addEventListener("click", () => {
+mateClicks++
+let mateRandom = Math.random()
+    if (mateClicks === 3){
+        MostrarMensajeBot(true, "Deja de tocar el mate, no rompas")
+    }
+    else if (mateRandom <= 0.25){
+        MostrarMensajeBot(true, "No toques el mate")
+        mateTocado = true
+    }
+    else if (mateTocado && mateRandom <= 0.5 && mateRandom > .25){
+        MostrarMensajeBot(true, "No lo toques   ͡° ͜ʖ ͡° ")
+    }
+    else {
+        MostrarMensajeBot(false, "")
+    }
+})
+
+
 
 //el div de los botones de quiero y no quiero
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
