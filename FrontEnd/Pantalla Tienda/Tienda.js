@@ -1,5 +1,16 @@
 connect2Server()
 
+//Todos los modificadores, puede cambiar
+let Modificadores = [
+    { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
+    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras", valor: 1 },
+    { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2 },
+    { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1 },
+    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 3 },
+    { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1 },
+    { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 5 },
+]
+
 //Variable que sirve para la función de agregar puntos
 let puntosAcumulados = {} // Guarda puntos acumulados por id
 let CantidadTienda = 0
@@ -19,11 +30,12 @@ getEvent("pedirPuntos", (ans) => {
 
   getEvent("pedirMods", (ans) => {
     if (ans?.ok){
-        TarotRegaladas(ans.infoModsJSON.Modificador1, Modificadores[parseInt(ans.infoModsJSON.Modificador1)])
-        TarotRegaladas(ans.infoModsJSON.Modificador2, Modificadores[parseInt(ans.infoModsJSON.Modificador2)])
-        TarotRegaladas(ans.infoModsJSON.Modificador3, Modificadores[parseInt(ans.infoModsJSON.Modificador3)])
-       console.log(`Modificadores recibidos: ${ans.infoModsJSON}`)
-        } else {
+        TarotRegaladas(ans.infoModsJSON.Modificador1, Modificadores[parseInt(ans.infoModsJSON.Modificador1)].valor)
+        TarotRegaladas(ans.infoModsJSON.Modificador2, Modificadores[parseInt(ans.infoModsJSON.Modificador2)].valor)
+        TarotRegaladas(ans.infoModsJSON.Modificador3, Modificadores[parseInt(ans.infoModsJSON.Modificador3)].valor)
+        console.log(`Modificadores recibidos: ${ans.infoModsJSON}`)
+        }
+        else{
             console.log("Error al recibir modificadores")
         }
     })
@@ -42,16 +54,6 @@ function GeneradorModificadores(){
     } 
 }
 
-//Todos los modificadores, puede cambiar
-let Modificadores = [
-    { nombre: "Camaleón", descripcion: "Transforma una carta en todos los palos (solo envido)", valor: 3},
-    { nombre: "Ascenso", descripcion: "Una carta específica tiene +1 de jerarquía contra otras", valor: 1 },
-    { nombre: "Milipilli", descripcion: "Transforma una cartas a ORO", valor: 2 },
-    { nombre: "Al palo", descripcion: "Transforma una cartas a BASTO", valor: 1 },
-    { nombre: "La Puntita", descripcion: "Transforma una cartas a ESPADA", valor: 3 },
-    { nombre: "La Tercera", descripcion: "Transforma una cartas a COPA", valor: 1 },
-    { nombre: "Reyes", descripcion: "Las figuras cuentan como +5 en envido en vez de +0", valor: 5 },
-]
 
 //Modificadores a comprar
 let Venta1 = document.getElementById("Venta1")
@@ -122,7 +124,7 @@ Venta1.addEventListener("click", function(){
         SaldoInsuficiente.style.display =  'block'
         setTimeout(function() {
             SaldoInsuficiente.style.display =  'none'
-        }, 1000)
+        }, 1500)
     }
 })
 Venta2.addEventListener("click", function(){
@@ -136,7 +138,7 @@ Venta2.addEventListener("click", function(){
         SaldoInsuficiente.style.display =  'block'
         setTimeout(function() {
             SaldoInsuficiente.style.display =  'none'
-        }, 1000)
+        }, 1500)
     }
 })
 Venta3.addEventListener("click", function(){
@@ -150,7 +152,7 @@ Venta3.addEventListener("click", function(){
         SaldoInsuficiente.style.display =  'block'
         setTimeout(function() {
             SaldoInsuficiente.style.display =  'none'
-        }, 1000)
+        }, 1500)
     }
 })
 
@@ -238,7 +240,6 @@ function TarotRegaladas(Tarot, Valor) {
                 TarotObtenidas.textContent = " 3 / 3 "
                 ValorTarot3 = Valor - 1
                 TarotComprada3 = Tarot + ""
-
             }
         } 
         else{
@@ -248,7 +249,6 @@ function TarotRegaladas(Tarot, Valor) {
             TarotObtenidas.textContent = " 2 / 3 "
             ValorTarot2 = Valor - 1
             TarotComprada2 = Tarot + ""
-
         }
     }
     else{

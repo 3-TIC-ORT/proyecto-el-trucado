@@ -59,3 +59,54 @@
         }
     })
 
+
+
+// Se guardan las cartas y un array para los palos
+    let Cartas = [carta1, carta2, carta3, carta4, carta5]
+    let palos = {}
+    let camaleonValor = []
+
+    // Recorremos las cartas para agrupar por palo y detectar las cartas con el modificador camaleon
+    Cartas.forEach(carta => {
+        //revisa si tiene valor
+        if (carta.camaleon){
+            camaleonValor.push(carta.valorenvido) // Guardamos el valor de las cartas con camaleon
+        }
+        else{
+            if (!palos[carta.palo]) palos[carta.palo] = []
+            palos[carta.palo].push(carta.valorenvido)
+        }
+    })
+
+    let envidoMaximo = 0
+
+    // Primero, consideramos el valor de las cartas con camaleon para todos los palos
+    if (camaleonValor.length > 0) {
+        // Agregamos los valores de las cartas camaleon a cada palo
+        Object.keys(palos).forEach(palo => {
+            palos[palo] = palos[palo].concat(camaleonValor)
+        })
+    }
+
+    // Calculamos el envido máximo para cada palo
+    for (let palo in palos){
+        let grupo = palos[palo]
+
+        if (grupo.length >= 3) {
+            grupo.sort((a, b) => b - a) // Ordenamos de mayor a menor
+            let suma = grupo[0] + grupo[1] + grupo[2] + 20
+            if (suma > envidoMaximo) envidoMaximo = suma
+        }
+        else if (grupo.length === 2) {
+            let suma = grupo[0] + grupo[1]
+            if (suma > envidoMaximo) envidoMaximo = suma
+        }
+        else {
+            let valor = grupo[0]
+            if (valor > envidoMaximo) envidoMaximo = valor
+        }
+    }
+
+
+    let Envido = envidoMaximo
+    return Envido

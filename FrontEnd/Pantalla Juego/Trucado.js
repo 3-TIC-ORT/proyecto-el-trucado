@@ -1,5 +1,25 @@
 connect2Server()
-let TarotCompradas = 0
+
+//Multiplicador para cada cantidad de puntos de truco
+let PuntosTruco = false
+let PuntosRetruco = false
+let PuntosValeCuatro = false
+let ultimoCantadorTruco = null
+
+
+//Todos los modificadores, puede cambiar
+let Modificadores = [
+    { nombre: "Camaleón"},
+    { nombre: "Ascenso"},
+    { nombre: "Milipilli", categoria: "oro"},
+    { nombre: "Al palo", categoria: "basto" },
+    { nombre: "La Puntita", categoria: "espada" },
+    { nombre: "La Tercera", categoria: "copa" },
+    { nombre: "Reyes",}
+]
+
+//Cantidad de tiendas en la partida
+let CantidadTienda = 0
 //Cada vez que se entra a la pagina se pide al back los puntos
 window.addEventListener("load", () => {
     getEvent("pedirPuntos", (ans) => {
@@ -55,6 +75,15 @@ Volver.addEventListener("click", function(){
 let MenuPrincipal = document.querySelectorAll(".MenuPrincipal")
 MenuPrincipal.forEach(boton => {
     boton.addEventListener("click", function(){
+        puntosAcumulados["ELLOS"] = 0
+        puntosAcumulados["NOS"] = 0
+        CantidadTienda = 0
+        Modificador1 = ""
+        Modificador2 = ""
+        Modificador3 = ""
+        console.log("Datos enviados:", {Modificador1, Modificador2, Modificador3})
+        postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
+        postEvent("enviarModificadoresBack", {Modificador1, Modificador2, Modificador3})
         window.location.href = "../Pantalla Principal/Inicio.html"
     })
 })
@@ -92,6 +121,8 @@ let puntosAcumulados = {
 // Array global para guardar las cartas que el bot ya tiró en esta mano
 let cartasUsadasBot = []
 
+//Array para guardar las cartas del bot
+let CartasBot = []
 
 //Cargar cartas tarot de la pantalla tienda (Joaquin), si no hay = ""
 let Modificador1 = ""
@@ -136,9 +167,14 @@ function resetearRonda(){
 
     //no reinicia ronda si ya termino partida
     if ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30)){
-
+        ultimoCantadorTruco = null
         //Se verifica si es momento de la tienda
         VerificarTienda()
+
+        //Se saca mensaje en caso bug y se oculta
+        MostrarMensajeBot(false, "")
+        BotonesVoluntad.style.display = "none"
+        BotonesVoluntadBlock = false
 
         //Todos los valores vuelven a original, 0
         N_ganadas = 0
@@ -239,7 +275,7 @@ function resetearRonda(){
                 CartaBot()
             }, 1000)
         }
-
+        
     }
 
 }
@@ -296,60 +332,75 @@ carta9 = cartas[8]
 carta10 = cartas[9]
 //Se calcula el envido de bot
 EnvidoBot = calcularEnvido(carta6, carta7, carta8, carta9, carta10)
+
+//Las 5 cartas del bot
+CartasBot = [carta6, carta7, carta8, carta9, carta10]
 }
 
 // Función que calcular el envido dependiendo de las 5 cartas que entra
 function calcularEnvido(carta1, carta2, carta3, carta4, carta5){
 
-    // Se guardan las cartas y un array para los palos
-    let Cartas = [carta1, carta2, carta3, carta4, carta5]
-    let palos = {}
-    let camaleonValor = []
+    //Mete a las cartas en un array
+    let CartasEnvido = [carta1, carta2, carta3, carta4, carta5]
 
-    // Recorremos las cartas para agrupar por palo y detectar las cartas con el modificador camaleon
-    Cartas.forEach(carta => {
-        //revisa si tiene valor
-        if (carta.camaleon){
-            camaleonValor.push(carta.valorenvido) // Guardamos el valor de las cartas con camaleon
+    //inicializa un array para guardar las cartas de cada palo
+    let palos = [
+        [], //espada
+        [], //oro
+        [], //basto
+        []  //copa
+    ]
+
+    //Reparte las cartas dependiendo del palo
+    for (let i = 0; i < 5; i++){
+        //si es camaleon, cuenta para todos los palos
+        if (CartasEnvido[i].camaleon === true){
+            palos[0].push(CartasEnvido[i].valorenvido)
+            palos[1].push(CartasEnvido[i].valorenvido)
+            palos[2].push(CartasEnvido[i].valorenvido)
+            palos[3].push(CartasEnvido[i].valorenvido)
         }
-        else{
-            if (!palos[carta.palo]) palos[carta.palo] = []
-            palos[carta.palo].push(carta.valorenvido)
+        //si no se guarda en su palo
+        else if (CartasEnvido[i].palo === "espada"){
+            palos[0].push(CartasEnvido[i].valorenvido)
         }
-    })
-
-    let envidoMaximo = 0
-
-    // Primero, consideramos el valor de las cartas con camaleon para todos los palos
-    if (camaleonValor.length > 0) {
-        // Agregamos los valores de las cartas camaleon a cada palo
-        Object.keys(palos).forEach(palo => {
-            palos[palo] = palos[palo].concat(camaleonValor)
-        })
-    }
-
-    // Calculamos el envido máximo para cada palo
-    for (let palo in palos){
-        let grupo = palos[palo]
-
-        if (grupo.length >= 3) {
-            grupo.sort((a, b) => b - a) // Ordenamos de mayor a menor
-            let suma = grupo[0] + grupo[1] + grupo[2] + 20
-            if (suma > envidoMaximo) envidoMaximo = suma
+        else if (CartasEnvido[i].palo === "oro"){
+            palos[1].push(CartasEnvido[i].valorenvido)
         }
-        else if (grupo.length === 2) {
-            let suma = grupo[0] + grupo[1]
-            if (suma > envidoMaximo) envidoMaximo = suma
+        else if (CartasEnvido[i].palo === "basto"){
+            palos[2].push(CartasEnvido[i].valorenvido)
         }
-        else {
-            let valor = grupo[0]
-            if (valor > envidoMaximo) envidoMaximo = valor
+        else if (CartasEnvido[i].palo === "copa"){
+            palos[3].push(CartasEnvido[i].valorenvido)
         }
     }
 
+    //inicializa las variable que calculan el tanto
+    let EnvidoMaximo = 0
+    let EnvidoActual = 0
 
-    let Envido = envidoMaximo
-    return Envido
+    //recorre los cuatro palos
+    for (let i = 0; i < 4; i++){
+        //reincia la variable del envido
+        EnvidoActual = 0
+
+        //en caso de ser mas de 3 cartas, se le suma 20
+        if (palos[i].length >= 3){
+            EnvidoActual = EnvidoActual + 20
+        }
+
+        //recorre todos los palos y suma sus valores envido
+        for (let j = 0; j < palos[i].length; j++){
+            EnvidoActual = EnvidoActual + palos[i][j]
+        }
+
+        //si el envido del palo es mayor que el 
+        if (EnvidoActual > EnvidoMaximo){
+            EnvidoMaximo = EnvidoActual
+        }
+    }
+
+    return (EnvidoMaximo)
 }
 
   
@@ -640,7 +691,10 @@ function CompararCartas(carta1, carta2){ //Carta1 si o si es nustra carta, y car
 function cambiarTurno(){ //Se encarga de cambiar de turno al tirar una carta
     if (turno === "Jugador"){
         turno = "Bot"
+    // no ejecutar CartaBot si recién tiró (previene canto tardío)
+    if (cartastiro < 3){
         CartaBot()
+    }
     }
     else{
         turno = "Jugador"
@@ -716,6 +770,16 @@ click1.addEventListener("click", function(){
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
             }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
+            }
         }
     } 
 }) 
@@ -762,6 +826,16 @@ click2.addEventListener("click", function(){
                 carta2.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
+            }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
             }
         }
     } 
@@ -810,6 +884,16 @@ click3.addEventListener("click", function(){
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
             }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
+            }
         }
     } 
 })
@@ -856,6 +940,16 @@ click4.addEventListener("click", function(){
                 carta4.camaleon = true
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
+            }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
             }
         }
     } 
@@ -904,6 +998,16 @@ click5.addEventListener("click", function(){
                 EnvidoJugador = calcularEnvido(carta1, carta2, carta3, carta4, carta5)
                 actualizarBoton()
             }
+
+            if (ModificadorTocado === Modificador1){
+                Modificador1 = ""
+            }
+            else if (ModificadorTocado === Modificador2){
+                Modificador2 = ""
+            }
+            else if (ModificadorTocado === Modificador3){
+                Modificador3 = ""
+            }
         }
     } 
 })
@@ -911,6 +1015,8 @@ click5.addEventListener("click", function(){
 //el div de los botones de quiero y no quiero
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
 let BotonesVoluntadBlock = false
+let trucoCantado = false
+
 //funcion para que el bot cante truco
 function BotCantaTruco(){
             
@@ -918,18 +1024,28 @@ function BotCantaTruco(){
     let ValorJerarquia = 0
     let ValorAleatorio = Math.random()
     
+    if (ultimoCantadorTruco === "Bot") return false // si el bot fue el ultimo en cantar truco, no canta
+    if (BotonesVoluntadBlock) return false          // si los botones están activos, no canta
+    if (BotonesVoluntad.style.display === 'flex') return false   // si se están mostrando, no canta
+    if (trucoCantado) return false                  // si ya cantó y espera respuesta
+    
     //bucle para fijarse el valor de jerarquia de la mano del bot
     for (let i = 0; i < CartasBot.length; i++){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
     
-    let sonido = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoTruco = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoReTruco = new Audio("Sonidos/ReTruco.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoValeTruco = new Audio("Sonidos/ValeCuatro.mp3")  // Creas el objeto Audio con la ruta
+
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
-    if (PuntosTruco === false && PuntosRetruco === false){
-        if (ValorJerarquia < 41 && ValorAleatorio < 0.1){ //mano promedio
-            sonido.play()  // Reproduce el sonido
+    //Jerarquia de mano promedio: 41
+    if (!PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
+        if ( (ValorJerarquia < 41 && ValorAleatorio < 0.1) || (ValorJerarquia > 41 && ValorAleatorio < 0.4) ){ //mano promedio
+            SonidoTruco.play()  // Reproduce el sonido
             BotonesVoluntadBlock = true
+            trucoCantado = true
             setTimeout(() => {
                 console.log("TRUCO")
                 PuntosTruco = true
@@ -942,26 +1058,52 @@ function BotCantaTruco(){
                 mazo.classList.add("BarraInferiorBTN-NH")
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Truco")
-              }, 1500)           
-        }
-        else if (ValorJerarquia > 41 && ValorAleatorio < 0.6){
-            sonido.play()  // Reproduce el sonido
-            BotonesVoluntadBlock = true
-            setTimeout(() => {
-                console.log("TRUCO")
-                PuntosTruco = true
-                PuntosRetruco = false
-                PuntosValeCuatro = false
-                truco.textContent = "RETRUCO"
-                truco.classList.add("PalabrasLargas")
-                envido.classList.add("BarraInferiorBTN-NH")
-                flor.classList.add("BarraInferiorBTN-NH")
-                mazo.classList.add("BarraInferiorBTN-NH")
-                BotonesVoluntad.style.display = "flex"
-                MostrarMensajeBot(true, "Truco")
-              }, 1200)
+                ultimoCantadorTruco = "Bot"
+              }, 1500)
+            return true
         }
     }
+    else if (PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
+        if ( (ValorJerarquia < 61 && ValorAleatorio < 0.05) || (ValorJerarquia > 61 && ValorAleatorio > 0.4) ){
+            trucoCantado = true
+            BotonesVoluntadBlock = true
+            setTimeout(() =>{
+                console.log("RETRUCO")
+                PuntosTruco = false
+                PuntosRetruco = true
+                PuntosValeCuatro = false
+                truco.textContent = "Vale Cuatro"
+                truco.classList.add("PalabrasExtraLargas")
+                truco.classList.remove("PalabrasLargas-NH")
+                truco.classList.remove("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                MostrarMensajeBot(true, "Retruco")
+                ultimoCantadorTruco = "Bot"
+            },1500)
+            return true
+        }
+    }
+    else if (!PuntosTruco  && PuntosRetruco  && !PuntosValeCuatro){
+        if ( (ValorJerarquia < 81 && ValorAleatorio < 0.01) || (ValorJerarquia > 81 && ValorAleatorio > 0.4) ){
+            trucoCantado = true
+            BotonesVoluntadBlock = true
+            setTimeout(() =>{
+                console.log("VALE CUATRO")
+                PuntosTruco = false
+                PuntosRetruco = false
+                PuntosValeCuatro = true
+                truco.classList.add("PalabrasExtraLargas-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                MostrarMensajeBot(true, "Vale Cuatro")
+                ultimoCantadorTruco = "Bot"
+            },1500)
+            return true
+        }
+    }
+
+    return false
 }
 
 //Botones de voluntad
@@ -974,6 +1116,7 @@ noquiero.addEventListener("click", function(){
     if (PuntosValeCuatro) multiplicador = 3
     else if (PuntosRetruco) multiplicador = 2
     else if (PuntosTruco) multiplicador = 1
+    display = "none"
     setTimeout(function(){
         resetearRonda()
         GuardarPuntos("ELLOS", 1 * multiplicador)
@@ -986,7 +1129,11 @@ quiero.addEventListener("click", function(){
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
     BotonesVoluntadBlock = false
+    trucoCantado = false
     MostrarMensajeBot(false, "")
+    if (turno === "Bot"){
+        CartaBot()
+    }
 })
 
 
@@ -995,25 +1142,24 @@ quiero.addEventListener("click", function(){
 //Tirar solo 3 cartas bot
 let cartastiro = 0
 
-//Array para guardar las cartas del bot
-let CartasBot = []
 
-//Funcion que para que el BOT tire cartas, (todavia se esta diseñando) 
-function CartaBot(){
-    //solo tira carta si es su turno y no se termino el juego
-    if (turno === "Bot" && ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ) ){
 
-        //Las 5 cartas del bot
-        CartasBot = [carta6, carta7, carta8, carta9, carta10]
+function CartaBot() {
+    // Si ya ha jugado una carta o el juego no está en curso, no hace nada
+    if (cartastiro > 0 && ganadorUltimaMano === null) {
+        return
+    }
+
+    // Solo tira carta si es su turno, no se terminó el juego y no está cantado nada
+    if (turno === "Bot" && !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) && !BotonesVoluntadBlock) {
         
-        //se fija si puede cantar truco
-        setTimeout(() => {
-            if (cartastiro >= 1 && cartastiradas >= 1){
-                BotCantaTruco()
-            }
-        }, 1500)
-        
-        // Filtra las que todavía no usó
+        // INTENTO DE CANTAR ANTES DE TIRAR: si decide cantar, se detiene y espera respuesta
+        if (BotCantaTruco()) {
+            // Bot ya inició canto y espera respuesta del jugador, no tirar carta ahora.
+            return
+        }
+
+        // Filtra las cartas que aún no se han usado
         let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
     
         // Elige una carta aleatoria entre las disponibles
@@ -1021,13 +1167,12 @@ function CartaBot(){
             
         // Guarda el índice real de esa carta
         let indiceReal = CartasBot.indexOf(cartaElegida)
-        cartasUsadasBot.push(indiceReal) // la marca como usada
+        cartasUsadasBot.push(indiceReal) // La marca como usada
     
-        // Simula que el bot “piensa” 800ms
+        // Simula el tiempo de "pensamiento" del bot (800ms)
         setTimeout(() => {
-            cartastiro++
-            // Oculta la carta jugada del bot
-            let indiceCartaReal = indiceReal + 6 // carta6 → índice 0
+            cartastiro++  // Incrementa el contador de cartas jugadas
+            let indiceCartaReal = indiceReal + 6 // Ajusta el índice para el display visual
             document.getElementById("carta" + indiceCartaReal).classList.add("oculto")
     
             // La pone en el centro visualmente
@@ -1038,14 +1183,15 @@ function CartaBot(){
 
             // Verifica si hay que comparar
             verificarCartas()
+
+            // Nota: la llamada a BotCantaTruco() después de tirar fue removida para evitar canto tardío.
         }, 800)
     }
-}  
+}
 
-
-    if(turno === "Bot"){
-        CartaBot()
-    }
+if (turno === "Bot") {
+    CartaBot()
+}
   
 //Easter Egg sigma
 let MazoIMG = document.getElementById("Mazo")
@@ -1065,10 +1211,6 @@ let Regresar = false
 let Cant_Envido = 0
 let PuntosEnvidos 
 
-//Multiplicador para cada cantidad de puntos de truco
-let PuntosTruco = false
-let PuntosRetruco = false
-let PuntosValeCuatro = false
 
 //Boton truco
 truco.addEventListener("click", function(){
@@ -1078,6 +1220,8 @@ truco.addEventListener("click", function(){
     setTimeout(function(){
         //Cuando se toca el boton TRUCO
         if (Regresar === false){
+            //evita que el jugador cante si fue el ultimo en cantar
+            if (ultimoCantadorTruco === "Jugador") return
             if (PuntosTruco === false && PuntosRetruco === false){
                 truco.textContent = "RETRUCO"
                 truco.classList.remove("BarraInferiorBTN")
@@ -1087,6 +1231,7 @@ truco.addEventListener("click", function(){
                 PuntosTruco = true
                 PuntosRetruco = false
                 PuntosValeCuatro = false
+                ultimoCantadorTruco = "Jugador"
             }
             else if (PuntosTruco === true){
                 truco.textContent = "VALE CUATRO"
@@ -1097,6 +1242,7 @@ truco.addEventListener("click", function(){
                 PuntosRetruco = true
                 PuntosValeCuatro = false
                 BotonesVoluntad.style.display = "none"
+                ultimoCantadorTruco = "Jugador"
             }
             else if (PuntosRetruco === true){
                 truco.classList.add("PalabrasExtraLargas-NH")
@@ -1104,6 +1250,7 @@ truco.addEventListener("click", function(){
                 PuntosRetruco = false
                 PuntosValeCuatro = true
                 BotonesVoluntad.style.display = "none"
+                ultimoCantadorTruco = "Jugador"
             }
         }
         //Cuando se toca el boton REGRESAR
@@ -1287,7 +1434,11 @@ function actualizarBoton(){
 
     
     // Flor habilitada solo si todas las cartas son del mismo palo y aún no tiraste
-    if ( ( (carta1.palo === carta2.palo) || carta1.camaleon || carta2.camaleon) && ( (carta1.palo === carta3.palo) || carta1.camaleon || carta3.camaleon) && ( (carta1.palo === carta4.palo) || carta1.camaleon || carta4.camaleon) && ( (carta1.palo === carta5.palo) || carta1.camaleon || carta5.camaleon) && cartastiradas === 0 && turno === "Jugador"){9
+    if ( ( (carta1.palo === carta2.palo) || carta1.camaleon || carta2.camaleon) && 
+         ( (carta1.palo === carta3.palo) || carta1.camaleon || carta3.camaleon) &&
+         ( (carta1.palo === carta4.palo) || carta1.camaleon || carta4.camaleon) && 
+         ( (carta1.palo === carta5.palo) || carta1.camaleon || carta5.camaleon) && 
+            cartastiradas === 0 && turno === "Jugador"){
         flor.classList.remove("BarraInferiorBTN-NH")
         flor.classList.add("BarraInferiorBTN")
     }
@@ -1296,9 +1447,11 @@ function actualizarBoton(){
         flor.classList.add("BarraInferiorBTN-NH")
     }
 }
+
+let GloboTexto = document.getElementById("GloboTexto")
+
 //Función que mustra lo que hace el bot, Mensaje es el mensaje a mostrar
 function MostrarMensajeBot(Mostrar, Mensaje){ //Mostrar = true o Mostrar= false, indica si lo muestra o lo oculta
-    let GloboTexto = document.getElementById("GloboTexto")
     let MensajeTexto = document.getElementById("TextoCantado")
 
     
@@ -1312,8 +1465,7 @@ function MostrarMensajeBot(Mostrar, Mensaje){ //Mostrar = true o Mostrar= false,
     }
 }
 
-//Cantidad de tiendas en la partida
-let CantidadTienda = 0
+
 //Funcion que se encarga de llevar a la pantalla tienda, si es el caso
 function VerificarTienda(){
 
@@ -1322,6 +1474,7 @@ function VerificarTienda(){
         postEvent("enviarPuntosBack", {puntosNos: puntosAcumulados["NOS"], puntosEllos: puntosAcumulados["ELLOS"], CantidadTienda: CantidadTienda, modificadoresComprados: TarotCompradas})
         postEvent("enviarModificadoresBack", {Modificador1: Modificador1, Modificador2: Modificador2, Modificador3: Modificador3})
         window.location.href = "../Pantalla Tienda/Tienda.html"
+        console.log("Enviando tienda...")
     }
     else if (CantidadTienda === 1 && (puntosAcumulados["NOS"] >= 15 || puntosAcumulados["ELLOS"] >= 15 )){
         CantidadTienda++
@@ -1338,16 +1491,6 @@ function VerificarTienda(){
 }
 
 
-//Todos los modificadores, puede cambiar
-let Modificadores = [
-    { nombre: "Camaleón"},
-    { nombre: "Ascenso"},
-    { nombre: "Milipilli", categoria: "oro"},
-    { nombre: "Al palo", categoria: "basto" },
-    { nombre: "La Puntita", categoria: "espada" },
-    { nombre: "La Tercera", categoria: "copa" },
-    { nombre: "Reyes",}
-]
 
 //Pone imagenes a las tarot
 function PonerTarot(Tarot, idCarta){
@@ -1390,6 +1533,8 @@ Tarot1.addEventListener("click", function(){
             Tarot1Selected = false
 
             TarotSeleccionada = ""
+
+
         }
     }
 })
@@ -1419,6 +1564,8 @@ Tarot2.addEventListener("click", function(){
             Tarot2Selected = false
 
             TarotSeleccionada = ""
+
+
         }
     }
 })
@@ -1448,6 +1595,7 @@ Tarot3.addEventListener("click", function(){
             Tarot3Selected = false
 
             TarotSeleccionada = ""
+
         }
     }
 })
