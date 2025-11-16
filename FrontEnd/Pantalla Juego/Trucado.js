@@ -5,6 +5,17 @@ let PuntosTruco = false
 let PuntosRetruco = false
 let PuntosValeCuatro = false
 let ultimoCantadorTruco = null
+let Cant_Envido = 0
+let EnvidoLock = false // bloquea cualquier nuevo canto de envido/real una vez concluida la secuencia
+// Flags para gestión de Envido/Real
+let RealAfterEnvido = false // true si Real fue cantado después de un Envido
+let ultimoCantadorEnvido = null // "Bot" o "Jugador"
+//Varialbe necesarias para el funcionamiento de la barra inferior
+let BotonEnvido = false
+let EnvidoEnvido = 0
+let Regresar = false
+let PuntosEnvidos 
+
 
 //Todos los modificadores, puede cambiar
 let Modificadores = [
@@ -238,7 +249,11 @@ function resetearRonda(){
         BotonEnvido = false
         EnvidoEnvido = 0
         Regresar = false
-        Cant_Envido = 0
+    Cant_Envido = 0
+    PuntosEnvidos = 0
+    EnvidoLock = false
+    RealAfterEnvido = false
+    ultimoCantadorEnvido = null
 
         //Se reinician las jeraquias
         CantidadJeraquia1 = 0
@@ -308,7 +323,7 @@ function crearmazo(){
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
         //les pone imagenes
-        if (i <= 5){
+        if (i <= 10){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -1031,6 +1046,86 @@ let mateRandom = Math.random()
     }
 })
 
+function BotCantaEnvido(){
+    // Decide si el bot canta Envido / Real Envido.
+    // Condiciones básicas: no cantar si ya se tiró alguna carta o si la UI está bloqueada
+    if (cartastiradas > 0) return false
+    if (BotonesVoluntadBlock) return false
+    if (EnvidoLock) return false // ya se cantó en esta mano
+    // evita que el mismo lado cante dos veces seguidas
+    if (ultimoCantadorEnvido === "Bot") return false
+
+    let valorEnvido = EnvidoBot || 0
+    let aleatorio = Math.random()
+
+    // Si ya hubo un canto de envido (Cant_Envido === 1), intentar subir a Real Envido en manos buenas
+    if (Cant_Envido === 1){
+        if (valorEnvido >= 28 && aleatorio < 0.5){
+            // Canta Real Envido
+            setTimeout(() => {
+                MostrarMensajeBot(true, "Real Envido")
+                BotonesVoluntadBlock = true
+                BotonesVoluntad.style.display = "flex"
+                // Marcar que hubo otro canto de envido
+                // Si ya había un envido, este Real se suma al anterior
+                Cant_Envido++
+                RealAfterEnvido = true
+                ultimoCantadorEnvido = "Bot"
+                // Al llegar a 2, cerrar la posibilidad de futuros envidos en esta mano
+                EnvidoLock = true
+                // Deshabilitar botones inferiores mientras se responde (no permitir elevar)
+                envido.classList.add("BarraInferiorBTN-NH")
+                flor.classList.add("BarraInferiorBTN-NH")
+                mazo.style.display = 'none'
+                PuntosEnvidos = 2 // 2 = Real Envido (convención simple)
+            }, 800)
+            return true
+        }
+        return false
+    }
+
+    // algoritmo para cantar Envido: mayor valor => mayor probabilidad
+    // valorEnvido típico: 0-33. Ajusta probabilidades razonables.
+    if ((valorEnvido >= 31) ||
+        (valorEnvido >= 27 && aleatorio < 0.9) ||
+        (valorEnvido >= 23 && aleatorio < 0.6) ||
+        (valorEnvido >= 20 && aleatorio < 0.3) ||
+        (aleatorio < 0.03)) { // probabilidad chica de mentir con envido bajo
+
+        setTimeout(() => {
+            MostrarMensajeBot(true, "Envido")
+            BotonesVoluntadBlock = true
+            BotonesVoluntad.style.display = "flex"
+            Cant_Envido++
+            RealAfterEnvido = false
+            ultimoCantadorEnvido = "Bot"
+            // Mostrar el mismo menú de Envido que aparece cuando el jugador abre Envido
+            truco.textContent = "REGRESAR"
+            truco.classList.add("PalabrasLargas")
+            truco.classList.remove("BarraInferiorBTN")
+            truco.classList.remove("PalabrasLargas-NH")
+
+            flor.textContent = "REAL ENVIDO"
+            flor.classList.add("PalabrasLargas")
+            flor.classList.remove("BarraInferiorBTN")
+            flor.classList.remove("BarraInferiorBTN-NH")
+
+            // Ocultar mazo y marcar estado de menú
+            mazo.style.display = 'none'
+            Regresar = true
+            BotonEnvido = true
+
+            // Deshabilitar el botón de Envido para evitar recantos del mismo jugador
+            envido.classList.add("BarraInferiorBTN-NH")
+
+            PuntosEnvidos = 1 // 1 = Envido
+        }, 800)
+
+        return true
+    }
+
+    return false
+}
 
 
 //el div de los botones de quiero y no quiero
@@ -1133,6 +1228,40 @@ let noquiero = document.getElementById("NOQUIERO")
 
 noquiero.addEventListener("click", function(){
     console.log("Jugador: No Quiero")
+    // Si hay un canto de Envido pendiente, resolverlo aquí
+    if (PuntosEnvidos){
+        // Determinar quién cantó el envido
+        let cantante = (ultimoCantadorEnvido === "Bot") ? "ELLOS" : "NOS"
+        // Si es Real Envido
+        if (PuntosEnvidos === 2){
+            if (RealAfterEnvido){
+                // Real fue cantado después de Envido -> rechazo da 2 puntos al cantante
+                GuardarPuntos(cantante, 2)
+            } else {
+                // Real cantado primero -> rechazo da 1 punto
+                GuardarPuntos(cantante, 1)
+            }
+        }
+        else if (PuntosEnvidos === 1){
+            // Rechazo de Envido simple -> 1 punto al cantante
+            GuardarPuntos(cantante, 1)
+        }
+
+    // Limpiar estado de envido
+    PuntosEnvidos = 0
+    Cant_Envido = 0
+    RealAfterEnvido = false
+    ultimoCantadorEnvido = null
+    EnvidoLock = true // bloquear nuevos cantos de envido esta mano
+    BotonesVoluntadBlock = false
+    BotonesVoluntad.style.display = "none"
+    MostrarMensajeBot(false, "")
+    // Restaurar UI inferior como si se apretó REGRESAR
+    restoreEnvidoUI()
+    return
+    }
+
+    // Si no es Envido, sigue la lógica de Truco (rechazo termina la mano)
     multiplicador = 1
     if (PuntosValeCuatro) multiplicador = 3
     else if (PuntosRetruco) multiplicador = 2
@@ -1147,6 +1276,51 @@ noquiero.addEventListener("click", function(){
 })
 
 quiero.addEventListener("click", function(){
+    // Si hay un canto de Envido pendiente, resolver Envido
+    if (PuntosEnvidos){
+        console.log("Jugador: Quiero (Envido)")
+        // Determinar puntos por tipo de envido
+        let puntosARepartir = 0
+        if (PuntosEnvidos === 1) puntosARepartir = 2 // Envido
+        else if (PuntosEnvidos === 2){
+            // Si Real fue cantado después de un Envido, el total posible es 5 (2 + 3)
+            if (RealAfterEnvido) puntosARepartir = 5
+            else puntosARepartir = 3
+        }
+
+        // Comparar Envidos: en empate gana quien empezó la ronda (turnoF)
+        let ganadorEnvido = null
+        if ((EnvidoBot || 0) > (EnvidoJugador || 0)){
+            ganadorEnvido = "ELLOS"
+        }
+        else if ((EnvidoBot || 0) < (EnvidoJugador || 0)){
+            ganadorEnvido = "NOS"
+        }
+        else {
+            // Empate -> gana quien empezó la ronda (turnoF)
+            ganadorEnvido = (turnoF === "Jugador") ? "NOS" : "ELLOS"
+        }
+
+        GuardarPuntos(ganadorEnvido, puntosARepartir)
+    // Limpiar estado de envido
+    PuntosEnvidos = 0
+    Cant_Envido = 0
+    RealAfterEnvido = false
+    ultimoCantadorEnvido = null
+    EnvidoLock = true // bloquear nuevos cantos de envido esta mano
+    BotonesVoluntadBlock = false
+    BotonesVoluntad.style.display = "none"
+    MostrarMensajeBot(false, "")
+    // Restaurar UI inferior como si se apretó REGRESAR
+    restoreEnvidoUI()
+    // Si es el turno del bot, hacer que continúe jugando
+    if (turno === "Bot"){
+        CartaBot()
+    }
+    return
+    }
+
+    // Si no es Envido, seguir con Truco
     BotonesVoluntad.style.display = "none"
     console.log("Jugador: Quiero")
     BotonesVoluntadBlock = false
@@ -1174,21 +1348,26 @@ function CartaBot() {
     // Solo tira carta si es su turno, no se terminó el juego y no está cantado nada
     if (turno === "Bot" && !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) && !BotonesVoluntadBlock) {
         
-        // INTENTO DE CANTAR ANTES DE TIRAR: si decide cantar, se detiene y espera respuesta
+        // INTENTO DE CANTAR ANTES DE TIRAR: envido tiene prioridad si todavía no se tiró ninguna carta
+        if (cartastiradas === 0 && cartastiro === 0){
+            if (BotCantaEnvido()){
+                // Bot cantó Envido y espera respuesta del jugador
+                return
+            }
+        }
+
+        // Intentar cantar truco si no cantó envido
         if (BotCantaTruco()) {
             // Bot ya inició canto y espera respuesta del jugador, no tirar carta ahora.
             return
         }
 
-        // Filtra las cartas que aún no se han usado
-        let CartasDisponiblesBot = CartasBot.filter((_, i) => !cartasUsadasBot.includes(i))
-    
-        // Elige una carta aleatoria entre las disponibles
-        let cartaElegida = CartasDisponiblesBot[Math.floor(Math.random() * CartasDisponiblesBot.length)]
-            
-        // Guarda el índice real de esa carta
-        let indiceReal = CartasBot.indexOf(cartaElegida)
-        cartasUsadasBot.push(indiceReal) // La marca como usada
+    // Elegir carta con criterio (no aleatorio)
+    let indiceReal = elegirCartaBot()
+    if (typeof indiceReal === 'undefined' || indiceReal === null) indiceReal = CartasBot.findIndex((_, i) => !cartasUsadasBot.includes(i))
+    if (indiceReal === -1) indiceReal = 0
+    let cartaElegida = CartasBot[indiceReal]
+    cartasUsadasBot.push(indiceReal) // La marca como usada
     
         // Simula el tiempo de "pensamiento" del bot (800ms)
         setTimeout(() => {
@@ -1225,12 +1404,7 @@ let flor = document.getElementById("flor")
 let mazo = document.getElementById("irmazo")
 actualizarBoton()
 
-//Varialbe necesarias para el funcionamiento de la barra inferior
-let BotonEnvido = false
-let EnvidoEnvido = 0
-let Regresar = false
-let Cant_Envido = 0
-let PuntosEnvidos 
+
 
 
 //Boton truco
@@ -1253,6 +1427,10 @@ truco.addEventListener("click", function(){
                 PuntosRetruco = false
                 PuntosValeCuatro = false
                 ultimoCantadorTruco = "Jugador"
+                // Simular respuesta del bot al Truco cantado por el jugador
+                setTimeout(() => {
+                    RespuestaDelBotParaTruco(1)
+                }, 800)
             }
             else if (PuntosTruco === true){
                 truco.textContent = "VALE CUATRO"
@@ -1264,6 +1442,10 @@ truco.addEventListener("click", function(){
                 PuntosValeCuatro = false
                 BotonesVoluntad.style.display = "none"
                 ultimoCantadorTruco = "Jugador"
+                // Simular respuesta del bot al Retruco cantado por el jugador
+                setTimeout(() => {
+                    RespuestaDelBotParaTruco(2)
+                }, 800)
             }
             else if (PuntosRetruco === true){
                 truco.classList.add("PalabrasExtraLargas-NH")
@@ -1272,6 +1454,10 @@ truco.addEventListener("click", function(){
                 PuntosValeCuatro = true
                 BotonesVoluntad.style.display = "none"
                 ultimoCantadorTruco = "Jugador"
+                // Simular respuesta del bot al Vale Cuatro cantado por el jugador
+                setTimeout(() => {
+                    RespuestaDelBotParaTruco(3)
+                }, 800)
             }
         }
         //Cuando se toca el boton REGRESAR
@@ -1298,6 +1484,11 @@ truco.addEventListener("click", function(){
 //Boton envido
 envido.addEventListener("click", function(){
     setTimeout(function(){
+        // No permitir abrir/enviar envido si ya se completó la secuencia esta mano
+        if (EnvidoLock) return
+        // Evitar que el mismo jugador cante dos veces seguidas
+        if (ultimoCantadorEnvido === "Jugador") return
+
         //Se toca el boton ENVIDO, entra al menu envido
         if (BotonEnvido === false){    
             truco.textContent = "REGRESAR"
@@ -1321,7 +1512,8 @@ envido.addEventListener("click", function(){
         }
         //Se toca envido para cantarlo
         else if (BotonEnvido === true){
-            if (Cant_Envido < 2){
+            // Previene cantar si ya se cantó Real primero (Envido bloqueado)
+            if (Cant_Envido < 2 && !EnvidoLock && ultimoCantadorEnvido !== "Jugador"){
                 alert ("Envido")
 
                 flor.textContent = "FLOR"
@@ -1332,6 +1524,9 @@ envido.addEventListener("click", function(){
                 Regresar = false
                 BotonEnvido = false
                 Cant_Envido++
+                PuntosEnvidos = 1
+                ultimoCantadorEnvido = "Jugador"
+                RealAfterEnvido = false
 
                 truco.textContent = "TRUCO"
                 truco.classList.remove("PalabrasLargas")
@@ -1343,6 +1538,67 @@ envido.addEventListener("click", function(){
 
                 //Mostrar boton mazo
                 mazo.style.display = 'block'
+                // Simular respuesta del bot al Envido del jugador
+                setTimeout(() => {
+                    // evitar que el bot cante otras cosas mientras responde
+                    BotonesVoluntadBlock = true
+                    // algoritmo para decidir: No Quiero / Quiero / Real
+                    let ale = Math.random()
+                    let diff = (EnvidoBot || 0) - (EnvidoJugador || 0)
+                    // Si la mano del bot es claramente mejor (un poquito de trampa 😈), puede subir a Real
+                    if (diff >= 3 && ale < 0.45){
+                        // Bot eleva a Real Envido
+                        MostrarMensajeBot(true, "Real Envido")
+                        PuntosEnvidos = 2
+                        RealAfterEnvido = true
+                        ultimoCantadorEnvido = "Bot"
+                        // mostrar opciones al jugador para que responda
+                        BotonesVoluntad.style.display = 'flex'
+                        // ajustar UI inferior como cuando el bot canta Real
+                        truco.textContent = "TRUCO"
+                        truco.classList.remove("BarraInferiorBTN")
+                        truco.classList.add("PalabrasLargas")
+                        // bloquear envido para evitar recantos
+                        envido.classList.add("BarraInferiorBTN-NH")
+                    }
+                    else if ( (diff >= 0 && ale < 0.75) || ale < 0.15){
+                        // Bot acepta (QUIERO)
+                        MostrarMensajeBot(true, "Quiero")
+                        // decidir ganador del Envido ahora (2 puntos)
+                        let ganador = null
+                        if ((EnvidoBot || 0) > (EnvidoJugador || 0)) ganador = "ELLOS"
+                        else if ((EnvidoBot || 0) < (EnvidoJugador || 0)) ganador = "NOS"
+                        else ganador = (turnoF === "Jugador") ? "NOS" : "ELLOS"
+                        GuardarPuntos(ganador, 2)
+                        // limpiar y restaurar UI
+                        PuntosEnvidos = 0
+                        Cant_Envido = 0
+                        RealAfterEnvido = false
+                        ultimoCantadorEnvido = null
+                        EnvidoLock = true
+                        BotonesVoluntadBlock = false
+                        MostrarMensajeBot(false, "")
+                        restoreEnvidoUI()
+                    }
+                    else {
+                        // Bot rechaza (NO QUIERO)
+                        MostrarMensajeBot(true, "No Quiero")
+                        // Mostrar "No Quiero" unos instantes antes de resolver para que el jugador lo vea
+                        setTimeout(() => {
+                            // jugador (cantante) recibe 1 punto
+                            GuardarPuntos("NOS", 1)
+                            // limpiar y restaurar UI
+                            PuntosEnvidos = 0
+                            Cant_Envido = 0
+                            RealAfterEnvido = false
+                            ultimoCantadorEnvido = null
+                            EnvidoLock = true
+                            BotonesVoluntadBlock = false
+                            MostrarMensajeBot(false, "")
+                            restoreEnvidoUI()
+                        }, 900)
+                    }
+                }, 800)
             }
         }
     }, 500)
@@ -1350,10 +1606,57 @@ envido.addEventListener("click", function(){
 
 //Boton flor
 flor.addEventListener("click", function(){
+    //Permitir que el jugador eleve a Real cuando el bot cantó Envido (BotonesVoluntad visible)
+    if (BotonesVoluntad.style.display === 'flex' && PuntosEnvidos === 1 && ultimoCantadorEnvido === "Bot" && !EnvidoLock){
+        // El jugador canta Real en respuesta al Envido del bot
+        PuntosEnvidos = 2
+        RealAfterEnvido = true
+        ultimoCantadorEnvido = "Jugador"
+        EnvidoLock = true
+        // ocultar temporalmente el panel y simular respuesta del bot
+        BotonesVoluntad.style.display = "none"
+        BotonesVoluntadBlock = true
+        // pequeña pausa y decidir si el bot acepta el Real
+        setTimeout(() => {
+            let aceptacion
+            if ((EnvidoBot || 0) >= (EnvidoJugador || 0)){
+                aceptacion = (Math.random() < 0.85)
+            } else {
+                aceptacion = (Math.random() < 0.25)
+            }
+            if (aceptacion){
+                // Bot acepta el Real -> comparar y asignar puntos
+                let puntosARepartir = RealAfterEnvido ? 5 : 3
+                let ganador = null
+                if ((EnvidoBot || 0) > (EnvidoJugador || 0)) ganador = "ELLOS"
+                else if ((EnvidoBot || 0) < (EnvidoJugador || 0)) ganador = "NOS"
+                else ganador = (turnoF === "Jugador") ? "NOS" : "ELLOS"
+                GuardarPuntos(ganador, puntosARepartir)
+            } else {
+                // Bot rechaza el Real -> el cantante (jugador) recibe 2 puntos (Real after Envido)
+                GuardarPuntos("NOS", 2)
+            }
+            // limpiar estado
+            PuntosEnvidos = 0
+            Cant_Envido = 0
+            RealAfterEnvido = false
+            ultimoCantadorEnvido = null
+            BotonesVoluntadBlock = false
+            MostrarMensajeBot(false, "")
+            // Restaurar UI inferior como si se hubiese presionado REGRESAR
+            restoreEnvidoUI()
+            // si es turno del bot, que continúe
+            if (turno === "Bot") CartaBot()
+        }, 800)
+        return
+    }
+
     //Se toca el boton REAL ENVIDO
     if (BotonEnvido === true){
+        // Real Envido cantado por el jugador
         alert ("Real Envido")
 
+        let prevCant = Cant_Envido
         flor.textContent = "FLOR"
         flor.classList.remove("PalabrasLargas")
         flor.classList.remove("BarraInferiorBTN")
@@ -1361,7 +1664,18 @@ flor.addEventListener("click", function(){
 
         Regresar = false
         BotonEnvido = false
-        envido.classList.add("BarraInferiorBTN-NH")
+        // Bloquear el envido siguiente si se cantó Real (no se puede "elevar" después)
+        if (prevCant >= 1){
+            // Real después de Envido: suma (2+3)
+            Cant_Envido++
+            RealAfterEnvido = true
+        } else {
+            // Real primero: marcar para bloquear posteriores Envidos
+            Cant_Envido = 2
+            RealAfterEnvido = false
+        }
+        PuntosEnvidos = 2
+        ultimoCantadorEnvido = "Jugador"
 
         truco.textContent = "TRUCO"
         truco.classList.remove("PalabrasLargas")
@@ -1451,6 +1765,20 @@ function actualizarBoton(){
     //Envido desactivado si ya se tiro una carta
     if (cartastiradas > 0){
         envido.classList.add("BarraInferiorBTN-NH")
+        envido.classList.remove("BarraInferiorBTN")
+    }
+
+    // Envido desactivado si ya se cantó en esta mano o si está bloqueado por resolución
+    // (evita que se cante dos veces seguidas y mantiene la UI consistente)
+    if ( (typeof Cant_Envido !== 'undefined' && Cant_Envido > 0) || EnvidoLock ){
+        envido.classList.add("BarraInferiorBTN-NH")
+        envido.classList.remove("BarraInferiorBTN")
+    } else {
+        // Si no fue cantado, habilitar solo cuando corresponda (turno jugador y sin cartas tiradas)
+        if (turno === "Jugador" && cartastiradas === 0 && !BotonEnvido){
+            envido.classList.remove("BarraInferiorBTN-NH")
+            envido.classList.add("BarraInferiorBTN")
+        }
     }
 
     
@@ -1484,6 +1812,34 @@ function MostrarMensajeBot(Mostrar, Mensaje){ //Mostrar = true o Mostrar= false,
         GloboTexto.style.display = "none"
         MensajeTexto.textContent = ""
     }
+}
+
+// Restaurar la UI inferior a su estado normal (como si se presionó REGRESAR)
+function restoreEnvidoUI(){
+    // Restaurar texto y clases de flor
+    flor.textContent = "FLOR"
+    flor.classList.remove("PalabrasLargas")
+    flor.classList.remove("BarraInferiorBTN")
+    flor.classList.add("BarraInferiorBTN-NH")
+
+    // Reset del estado de menu
+    Regresar = false
+    BotonEnvido = false
+
+    // Restaurar truco a su estado normal
+    truco.textContent = "TRUCO"
+    truco.classList.remove("PalabrasLargas")
+    truco.classList.remove("PalabrasLargas-NH")
+    truco.classList.remove("PalabrasExtraLargas")
+    truco.classList.remove("PalabrasExtraLargas-NH")
+    truco.classList.add("BarraInferiorBTN")
+
+    // Reactivar boton envido y mostrar mazo
+    envido.classList.remove("BarraInferiorBTN-NH")
+    mazo.style.display = 'block'
+
+    // Actualizar visuales en base al turno
+    actualizarBoton()
 }
 
 
@@ -1687,4 +2043,198 @@ function sumarPuntos(idcarta, puntos){
             img[i].src = imagenTransparente
         }
     }
+}
+
+// Simula la respuesta del bot cuando el jugador canta Truco/Retruco/Vale Cuatro
+// level: 1 = Truco, 2 = Retruco, 3 = Vale Cuatro
+function RespuestaDelBotParaTruco(level){
+    // No responder si ya hay un panel de voluntad activo o está bloqueado
+    if (BotonesVoluntadBlock) return
+    BotonesVoluntadBlock = true
+
+    // Calcular jerarquía total de la mano del bot y cuántas cartas le quedan
+    let ValorJerarquia = 0
+    for (let i = 0; i < CartasBot.length; i++){
+        ValorJerarquia += (CartasBot[i].jerarquia || 0)
+    }
+    let cartasRestantes = CartasBot.length - cartasUsadasBot.length
+
+    // Factores adicionales: si quedan pocas cartas, el bot es más conservador
+    let ale = Math.random()
+    let accion = "aceptar"
+
+    // Ajustar umbrales dinámicamente
+    // baseline por carta: jerarquía media
+    let media = (cartasRestantes > 0) ? (ValorJerarquia / (CartasBot.length)) : (ValorJerarquia / 5)
+    // penalizar si pocas cartas
+    let penalizacion = (cartasRestantes <= 1) ? 0.85 : (cartasRestantes === 2 ? 0.9 : 1)
+
+    if (level === 1){ // Truco
+        if (media * penalizacion > 18){
+            if (ale < 0.65) accion = "subir"
+            else if (ale < 0.98) accion = "aceptar"
+            else accion = "rechazar"
+        }
+        else if (media * penalizacion > 12){
+            if (ale < 0.25) accion = "subir"
+            else if (ale < 0.9) accion = "aceptar"
+            else accion = "rechazar"
+        }
+        else {
+            if (ale < 0.05) accion = "subir"
+            else if (ale < 0.35) accion = "aceptar"
+            else accion = "rechazar"
+        }
+    }
+    else if (level === 2){ // Retruco
+        if (media * penalizacion > 20){
+            if (ale < 0.45) accion = "subir"
+            else if (ale < 0.9) accion = "aceptar"
+            else accion = "rechazar"
+        }
+        else if (media * penalizacion > 14){
+            if (ale < 0.12) accion = "subir"
+            else if (ale < 0.75) accion = "aceptar"
+            else accion = "rechazar"
+        }
+        else {
+            if (ale < 0.03) accion = "subir"
+            else if (ale < 0.3) accion = "aceptar"
+            else accion = "rechazar"
+        }
+    }
+    else if (level === 3){ // Vale Cuatro
+        if (media * penalizacion > 22){
+            if (ale < 0.95) accion = "aceptar"
+            else accion = "rechazar"
+        }
+        else if (media * penalizacion > 16){
+            if (ale < 0.7) accion = "aceptar"
+            else accion = "rechazar"
+        }
+        else {
+            if (ale < 0.25) accion = "aceptar"
+            else accion = "rechazar"
+        }
+    }
+
+    setTimeout(() => {
+        if (accion === "rechazar"){
+            // Bot dice NO QUIERO -> el cantante (Jugador) pierde y el bot gana los puntos
+            MostrarMensajeBot(true, "No Quiero")
+            // calcular multiplicador actual
+            let multiplicadorLocal = 1
+            if (PuntosValeCuatro) multiplicadorLocal = 3
+            else if (PuntosRetruco) multiplicadorLocal = 2
+            else if (PuntosTruco) multiplicadorLocal = 1
+
+            // Mostrar el NO QUIERO un momento antes de resolver para que sea visible
+            setTimeout(() => {
+                resetearRonda()
+                GuardarPuntos("ELLOS", 1 * multiplicadorLocal)
+                BotonesVoluntadBlock = false
+                MostrarMensajeBot(false, "")
+            }, 900)
+            return
+        }
+
+        if (accion === "aceptar"){
+            // Bot dice QUIERO -> simplemente acepta y la partida continúa
+            MostrarMensajeBot(true, "Quiero")
+            setTimeout(() => {
+                BotonesVoluntadBlock = false
+                MostrarMensajeBot(false, "")
+                // si era turno del bot, que juegue
+                if (turno === "Bot") CartaBot()
+            }, 500)
+            return
+        }
+
+        if (accion === "subir"){
+            // Bot eleva: si level 1 -> Retruco, si 2 -> Vale Cuatro
+            if (level === 1){
+                // Convertir a Retruco
+                PuntosTruco = false
+                PuntosRetruco = true
+                PuntosValeCuatro = false
+                truco.textContent = "VALE CUATRO"
+                truco.classList.add("PalabrasExtraLargas")
+                truco.classList.remove("PalabrasLargas-NH")
+                truco.classList.remove("BarraInferiorBTN-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                MostrarMensajeBot(true, "Retruco")
+                ultimoCantadorTruco = "Bot"
+            }
+            else if (level === 2){
+                // Convertir a Vale Cuatro
+                PuntosTruco = false
+                PuntosRetruco = false
+                PuntosValeCuatro = true
+                truco.classList.add("PalabrasExtraLargas-NH")
+                mazo.classList.add("BarraInferiorBTN-NH")
+                BotonesVoluntad.style.display = "flex"
+                MostrarMensajeBot(true, "Vale Cuatro")
+                ultimoCantadorTruco = "Bot"
+            }
+
+            // Mantener el bloqueo visible para que el jugador tenga que responder
+            // No liberar BotonesVoluntadBlock aquí; se dejará hasta que el jugador responda
+            return
+        }
+
+    }, 800)
+}
+
+// Elige una carta del bot con criterio: intenta superar la carta rival si juega segundo,
+// y si juega primero elige según la fuerza media de la mano para conservar o gastar.
+function elegirCartaBot(){
+    // índices disponibles
+    let disponibles = []
+    for (let i = 0; i < CartasBot.length; i++){
+        if (!cartasUsadasBot.includes(i)) disponibles.push(i)
+    }
+    if (disponibles.length === 0) return 0
+
+    // Determinar si el jugador ya puso carta en la ronda actual
+    let objetivo = null
+    if (rondaCentro === 1 && CartaCentroN1 && !CartaCentroE1) objetivo = CartaCentroN1
+    else if (rondaCentro === 2 && CartaCentroN2 && !CartaCentroE2) objetivo = CartaCentroN2
+    else if (rondaCentro === 3 && CartaCentroN3 && !CartaCentroE3) objetivo = CartaCentroN3
+
+    // Si hay objetivo (jugador puso primero), intentar ganar con la carta más baja que lo supere
+    if (objetivo){
+        let ganadoras = disponibles.filter(i => (CartasBot[i].jerarquia || 0) > (objetivo.jerarquia || 0))
+        if (ganadoras.length > 0){
+            ganadoras.sort((a,b) => (CartasBot[a].jerarquia || 0) - (CartasBot[b].jerarquia || 0))
+            // 10% de aleatoriedad entre las mejores
+            if (Math.random() < 0.1 && ganadoras.length > 1) return ganadoras[Math.floor(Math.random()*Math.min(2, ganadoras.length))]
+            return ganadoras[0]
+        }
+        // si no puede ganar, sacrificar la carta más baja
+        disponibles.sort((a,b) => (CartasBot[a].jerarquia || 0) - (CartasBot[b].jerarquia || 0))
+        return disponibles[0]
+    }
+
+    // Si el bot juega primero, decidir según fuerza media
+    let suma = disponibles.reduce((s,i) => s + (CartasBot[i].jerarquia || 0), 0)
+    let media = suma / disponibles.length
+
+    // Fuerza alta: jugar una carta alta para buscar ganar
+    if (media >= 20){
+        disponibles.sort((a,b) => (CartasBot[b].jerarquia || 0) - (CartasBot[a].jerarquia || 0))
+        // 20% probabilidad de guardar la máxima y jugar la segunda mejor
+        if (disponibles.length > 1 && Math.random() < 0.2) return disponibles[1]
+        return disponibles[0]
+    }
+
+    // Fuerza media: jugar carta intermedia
+    if (media >= 12){
+        disponibles.sort((a,b) => (CartasBot[b].jerarquia || 0) - (CartasBot[a].jerarquia || 0))
+        return disponibles[Math.floor(disponibles.length/2)]
+    }
+
+    // Fuerza baja: sacrificar la carta más baja
+    disponibles.sort((a,b) => (CartasBot[a].jerarquia || 0) - (CartasBot[b].jerarquia || 0))
+    return disponibles[0]
 }
