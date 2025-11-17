@@ -1315,7 +1315,12 @@ quiero.addEventListener("click", function(){
         }
 
         Popup.style.display = "block"
-        EnvidoTitulo.textContent = "! Ha ganado " + ganadorEnvido + " !"
+        if (ganadorEnvido === "NOS"){
+            EnvidoTitulo.textContent = "! GANASTE !"
+        }
+        else if (ganadorEnvido === "ELLOS"){
+            EnvidoTitulo.textContent = "Perdiste"
+        }
         EnvidoJugadorTexto.textContent = "Envido Jugador: " + EnvidoJugador
         EnvidoBotTexto.textContent = "Envido Bot: " + EnvidoBot
         document.getElementById("Envido" + ganadorEnvido).classList.add("EnvidoGanador")
