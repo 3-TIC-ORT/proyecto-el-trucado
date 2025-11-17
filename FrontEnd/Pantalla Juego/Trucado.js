@@ -2173,7 +2173,7 @@ function RespuestaDelBotParaTruco(level){
             // Mostrar el NO QUIERO un momento antes de resolver para que sea visible
             setTimeout(() => {
                 resetearRonda()
-                GuardarPuntos("ELLOS", 1 * multiplicadorLocal)
+                GuardarPuntos("NOS", 1 * multiplicadorLocal)
                 BotonesVoluntadBlock = false
                 MostrarMensajeBot(false, "")
             }, 900)
