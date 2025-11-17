@@ -175,7 +175,7 @@ function identificar_cartas (idcarta, numero, palo){
 function resetearRonda(){
 
     //no reinicia ronda si ya termino partida
-    if ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30)){
+    if ( !(puntosAcumulados["NOS"] >= 30) && !(puntosAcumulados["ELLOS"] >= 30) ){
         ultimoCantadorTruco = null
         //Se verifica si es momento de la tienda
         VerificarTienda()
@@ -1275,6 +1275,14 @@ noquiero.addEventListener("click", function(){
     MostrarMensajeBot(false, "")
 })
 
+let Popup = document.getElementById("Popup")
+let EnvidoTitulo = document.getElementById("TituloEnvido")
+let EnvidoJugadorTexto = document.getElementById("EnvidoNOS")
+let EnvidoBotTexto = document.getElementById("EnvidoELLOS")
+let EnvidoBoton = document.getElementById("BotonEnvido")
+let PopupEnvido = false
+
+
 quiero.addEventListener("click", function(){
     // Si hay un canto de Envido pendiente, resolver Envido
     if (PuntosEnvidos){
@@ -1301,23 +1309,38 @@ quiero.addEventListener("click", function(){
             ganadorEnvido = (turnoF === "Jugador") ? "NOS" : "ELLOS"
         }
 
-        GuardarPuntos(ganadorEnvido, puntosARepartir)
-    // Limpiar estado de envido
-    PuntosEnvidos = 0
-    Cant_Envido = 0
-    RealAfterEnvido = false
-    ultimoCantadorEnvido = null
-    EnvidoLock = true // bloquear nuevos cantos de envido esta mano
-    BotonesVoluntadBlock = false
-    BotonesVoluntad.style.display = "none"
-    MostrarMensajeBot(false, "")
-    // Restaurar UI inferior como si se apretó REGRESAR
-    restoreEnvidoUI()
-    // Si es el turno del bot, hacer que continúe jugando
-    if (turno === "Bot"){
-        CartaBot()
-    }
-    return
+        Popup.style.display = "block"
+        EnvidoTitulo.textContent = "! Ha ganado " + ganadorEnvido + " !"
+        EnvidoJugadorTexto.textContent = "Envido Jugador: " + EnvidoJugador
+        EnvidoBotTexto.textContent = "Envido Bot: " + EnvidoBot
+        document.getElementById("Envido" + ganadorEnvido).classList.add("EnvidoGanador")
+
+        PopupEnvido = true
+
+        EnvidoBoton.addEventListener("click", function(){
+            PopupEnvido = false
+            Popup.style.display = "none"
+            document.getElementById("Envido" + ganadorEnvido).classList.remove("EnvidoGanador")
+            GuardarPuntos(ganadorEnvido, puntosARepartir)
+
+            // Limpiar estado de envido
+            PuntosEnvidos = 0
+            Cant_Envido = 0
+            RealAfterEnvido = false
+            ultimoCantadorEnvido = null
+            EnvidoLock = true // bloquear nuevos cantos de envido esta mano
+            BotonesVoluntadBlock = false
+            BotonesVoluntad.style.display = "none"
+            MostrarMensajeBot(false, "")
+            // Restaurar UI inferior como si se apretó REGRESAR
+            restoreEnvidoUI()
+            // Si es el turno del bot, hacer que continúe jugando
+            if (turno === "Bot"){
+                CartaBot()
+            }
+            return
+        })
+        
     }
 
     // Si no es Envido, seguir con Truco
@@ -1514,7 +1537,6 @@ envido.addEventListener("click", function(){
         else if (BotonEnvido === true){
             // Previene cantar si ya se cantó Real primero (Envido bloqueado)
             if (Cant_Envido < 2 && !EnvidoLock && ultimoCantadorEnvido !== "Jugador"){
-                alert ("Envido")
 
                 flor.textContent = "FLOR"
                 flor.classList.remove("PalabrasLargas")
@@ -1671,7 +1693,6 @@ flor.addEventListener("click", function(){
     //Se toca el boton REAL ENVIDO
     if (BotonEnvido === true){
         // Real Envido cantado por el jugador
-        alert ("Real Envido")
 
         let prevCant = Cant_Envido
         flor.textContent = "FLOR"
@@ -1703,7 +1724,6 @@ flor.addEventListener("click", function(){
         mazo.style.display = 'block'
     }
     else if (BotonEnvido === false){
-        alert ("Flor")
         GuardarPuntos("NOS", 5)
         flor.classList.add("BarraInferiorBTN-NH")
         envido.classList.add("BarraInferiorBTN-NH")
