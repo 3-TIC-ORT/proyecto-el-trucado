@@ -1153,6 +1153,9 @@ function BotCantaTruco(){
     let SonidoTruco = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
     let SonidoReTruco = new Audio("Sonidos/ReTruco.mp3")  // Creas el objeto Audio con la ruta
     let SonidoValeTruco = new Audio("Sonidos/ValeCuatro.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoNoquiero = new Audio("Sonidos/NoQuiero.mp3")
+    let SonidoQuiero = new Audio("Sonidos/Quiero.mp3")
+
 
     //Jerarquia total: 394
     //Jerarquia promedio: 8,2
@@ -1181,6 +1184,7 @@ function BotCantaTruco(){
     }
     else if (PuntosTruco  && !PuntosRetruco  && !PuntosValeCuatro){
         if ( (ValorJerarquia < 61 && ValorAleatorio < 0.05) || (ValorJerarquia > 61 && ValorAleatorio > 0.4) ){
+            SonidoReTruco.play()
             trucoCantado = true
             BotonesVoluntadBlock = true
             setTimeout(() =>{
@@ -1202,6 +1206,7 @@ function BotCantaTruco(){
     }
     else if (!PuntosTruco  && PuntosRetruco  && !PuntosValeCuatro){
         if ( (ValorJerarquia < 81 && ValorAleatorio < 0.01) || (ValorJerarquia > 81 && ValorAleatorio > 0.4) ){
+            SonidoValeTruco.play()
             trucoCantado = true
             BotonesVoluntadBlock = true
             setTimeout(() =>{
