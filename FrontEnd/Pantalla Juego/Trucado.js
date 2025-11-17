@@ -323,7 +323,7 @@ function crearmazo(){
 
         // Cambiar a 5 para que cartas bot no tengan imagens (10 --> 5)
         //les pone imagenes
-        if (i <= 10){
+        if (i <= 5){
             identificar_cartas("carta" + i, nuevaCarta.numero, nuevaCarta.palo)
         }
     }
@@ -1025,6 +1025,8 @@ click5.addEventListener("click", function(){
     } 
 })
 
+
+//boludez historica de joaquin, no me deja sacarlo
 let mate = document.getElementById("Mate")
 let mateClicks = 0
 let mateTocado = false
@@ -1058,10 +1060,15 @@ function BotCantaEnvido(){
     let valorEnvido = EnvidoBot || 0
     let aleatorio = Math.random()
 
+    let SonidoEnvido = new Audio("Sonidos/Envido.mp3")  // Creas el objeto Audio con la ruta
+    let SonidoRealEnvido = new Audio("Sonidos/RealEnvido.mp3")  // Creas el objeto Audio con la ruta
+
+
     // Si ya hubo un canto de envido (Cant_Envido === 1), intentar subir a Real Envido en manos buenas
     if (Cant_Envido === 1){
         if (valorEnvido >= 28 && aleatorio < 0.5){
             // Canta Real Envido
+            SonidoRealEnvido.play()
             setTimeout(() => {
                 MostrarMensajeBot(true, "Real Envido")
                 BotonesVoluntadBlock = true
@@ -1078,7 +1085,7 @@ function BotCantaEnvido(){
                 flor.classList.add("BarraInferiorBTN-NH")
                 mazo.style.display = 'none'
                 PuntosEnvidos = 2 // 2 = Real Envido (convención simple)
-            }, 800)
+            }, 1500)
             return true
         }
         return false
@@ -1092,6 +1099,7 @@ function BotCantaEnvido(){
         (valorEnvido >= 20 && aleatorio < 0.3) ||
         (aleatorio < 0.03)) { // probabilidad chica de mentir con envido bajo
 
+        SonidoEnvido.play()
         setTimeout(() => {
             MostrarMensajeBot(true, "Envido")
             BotonesVoluntadBlock = true
@@ -1119,7 +1127,7 @@ function BotCantaEnvido(){
             envido.classList.add("BarraInferiorBTN-NH")
 
             PuntosEnvidos = 1 // 1 = Envido
-        }, 800)
+        }, 1500)
 
         return true
     }
@@ -1132,6 +1140,10 @@ function BotCantaEnvido(){
 let BotonesVoluntad = document.getElementById("BotonesVoluntad")
 let BotonesVoluntadBlock = false
 let trucoCantado = false
+
+let SonidoTruco = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
+let SonidoReTruco = new Audio("Sonidos/ReTruco.mp3")  // Creas el objeto Audio con la ruta
+let SonidoValeTruco = new Audio("Sonidos/ValeCuatro.mp3")  // Creas el objeto Audio con la ruta
 
 //funcion para que el bot cante truco
 function BotCantaTruco(){
@@ -1150,11 +1162,7 @@ function BotCantaTruco(){
         ValorJerarquia = ValorJerarquia + CartasBot[i].jerarquia
     }
     
-    let SonidoTruco = new Audio("Sonidos/Truco.mp3")  // Creas el objeto Audio con la ruta
-    let SonidoReTruco = new Audio("Sonidos/ReTruco.mp3")  // Creas el objeto Audio con la ruta
-    let SonidoValeTruco = new Audio("Sonidos/ValeCuatro.mp3")  // Creas el objeto Audio con la ruta
-    let SonidoNoquiero = new Audio("Sonidos/NoQuiero.mp3")
-    let SonidoQuiero = new Audio("Sonidos/Quiero.mp3")
+    
 
 
     //Jerarquia total: 394
@@ -1200,7 +1208,7 @@ function BotCantaTruco(){
                 BotonesVoluntad.style.display = "flex"
                 MostrarMensajeBot(true, "Retruco")
                 ultimoCantadorTruco = "Bot"
-            },1500)
+            },1000)
             return true
         }
     }
@@ -1252,18 +1260,21 @@ noquiero.addEventListener("click", function(){
             GuardarPuntos(cantante, 1)
         }
 
-    // Limpiar estado de envido
-    PuntosEnvidos = 0
-    Cant_Envido = 0
-    RealAfterEnvido = false
-    ultimoCantadorEnvido = null
-    EnvidoLock = true // bloquear nuevos cantos de envido esta mano
-    BotonesVoluntadBlock = false
-    BotonesVoluntad.style.display = "none"
-    MostrarMensajeBot(false, "")
-    // Restaurar UI inferior como si se apretó REGRESAR
-    restoreEnvidoUI()
-    return
+        // Limpiar estado de envido
+        PuntosEnvidos = 0
+        Cant_Envido = 0
+        RealAfterEnvido = false
+        ultimoCantadorEnvido = null
+        EnvidoLock = true // bloquear nuevos cantos de envido esta mano
+        BotonesVoluntadBlock = false
+        BotonesVoluntad.style.display = "none"
+        MostrarMensajeBot(false, "")
+        // Restaurar UI inferior como si se apretó REGRESAR
+        restoreEnvidoUI()
+        if (turno === "Bot"){
+            CartaBot()
+        }
+        return
     }
 
     // Si no es Envido, sigue la lógica de Truco (rechazo termina la mano)
@@ -1286,7 +1297,6 @@ let EnvidoJugadorTexto = document.getElementById("EnvidoNOS")
 let EnvidoBotTexto = document.getElementById("EnvidoELLOS")
 let EnvidoBoton = document.getElementById("BotonEnvido")
 let PopupEnvido = false
-
 
 quiero.addEventListener("click", function(){
     // Si hay un canto de Envido pendiente, resolver Envido
@@ -2092,6 +2102,9 @@ function sumarPuntos(idcarta, puntos){
     }
 }
 
+let SonidoQuiero = new Audio("Sonidos/Quiero.mp3")  // Creas el objeto Audio con la ruta
+let SonidoNoQuiero = new Audio("Sonidos/NoQuiero.mp3")  // Creas el objeto Audio con la ruta
+
 // Simula la respuesta del bot cuando el jugador canta Truco/Retruco/Vale Cuatro
 // level: 1 = Truco, 2 = Retruco, 3 = Vale Cuatro
 function RespuestaDelBotParaTruco(level){
@@ -2168,6 +2181,7 @@ function RespuestaDelBotParaTruco(level){
     setTimeout(() => {
         if (accion === "rechazar"){
             // Bot dice NO QUIERO -> el cantante (Jugador) pierde y el bot gana los puntos
+            SonidoNoQuiero.play()
             MostrarMensajeBot(true, "No Quiero")
             // calcular multiplicador actual
             let multiplicadorLocal = 1
@@ -2181,19 +2195,20 @@ function RespuestaDelBotParaTruco(level){
                 GuardarPuntos("NOS", 1 * multiplicadorLocal)
                 BotonesVoluntadBlock = false
                 MostrarMensajeBot(false, "")
-            }, 900)
+            }, 2000)
             return
         }
 
         if (accion === "aceptar"){
             // Bot dice QUIERO -> simplemente acepta y la partida continúa
+            SonidoQuiero.play()
             MostrarMensajeBot(true, "Quiero")
             setTimeout(() => {
                 BotonesVoluntadBlock = false
                 MostrarMensajeBot(false, "")
                 // si era turno del bot, que juegue
                 if (turno === "Bot") CartaBot()
-            }, 500)
+            }, 2000)
             return
         }
 
@@ -2201,28 +2216,34 @@ function RespuestaDelBotParaTruco(level){
             // Bot eleva: si level 1 -> Retruco, si 2 -> Vale Cuatro
             if (level === 1){
                 // Convertir a Retruco
-                PuntosTruco = false
-                PuntosRetruco = true
-                PuntosValeCuatro = false
-                truco.textContent = "VALE CUATRO"
-                truco.classList.add("PalabrasExtraLargas")
-                truco.classList.remove("PalabrasLargas-NH")
-                truco.classList.remove("BarraInferiorBTN-NH")
-                mazo.classList.add("BarraInferiorBTN-NH")
-                BotonesVoluntad.style.display = "flex"
-                MostrarMensajeBot(true, "Retruco")
-                ultimoCantadorTruco = "Bot"
+                SonidoReTruco.play()
+                setTimeout(() => {
+                    PuntosTruco = false
+                    PuntosRetruco = true
+                    PuntosValeCuatro = false
+                    truco.textContent = "VALE CUATRO"
+                    truco.classList.add("PalabrasExtraLargas")
+                    truco.classList.remove("PalabrasLargas-NH")
+                    truco.classList.remove("BarraInferiorBTN-NH")
+                    mazo.classList.add("BarraInferiorBTN-NH")
+                    BotonesVoluntad.style.display = "flex"
+                    MostrarMensajeBot(true, "Retruco")
+                    ultimoCantadorTruco = "Bot"
+                },1500)
             }
             else if (level === 2){
                 // Convertir a Vale Cuatro
-                PuntosTruco = false
-                PuntosRetruco = false
-                PuntosValeCuatro = true
-                truco.classList.add("PalabrasExtraLargas-NH")
-                mazo.classList.add("BarraInferiorBTN-NH")
-                BotonesVoluntad.style.display = "flex"
-                MostrarMensajeBot(true, "Vale Cuatro")
-                ultimoCantadorTruco = "Bot"
+                SonidoReTruco.play()
+                setTimeout(() => {
+                    PuntosTruco = false
+                    PuntosRetruco = false
+                    PuntosValeCuatro = true
+                    truco.classList.add("PalabrasExtraLargas-NH")
+                    mazo.classList.add("BarraInferiorBTN-NH")
+                    BotonesVoluntad.style.display = "flex"
+                    MostrarMensajeBot(true, "Vale Cuatro")
+                    ultimoCantadorTruco = "Bot"
+                },1500)
             }
 
             // Mantener el bloqueo visible para que el jugador tenga que responder
