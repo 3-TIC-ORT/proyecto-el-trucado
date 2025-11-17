@@ -1625,28 +1625,45 @@ flor.addEventListener("click", function(){
                 aceptacion = (Math.random() < 0.25)
             }
             if (aceptacion){
-                // Bot acepta el Real -> comparar y asignar puntos
-                let puntosARepartir = RealAfterEnvido ? 5 : 3
-                let ganador = null
-                if ((EnvidoBot || 0) > (EnvidoJugador || 0)) ganador = "ELLOS"
-                else if ((EnvidoBot || 0) < (EnvidoJugador || 0)) ganador = "NOS"
-                else ganador = (turnoF === "Jugador") ? "NOS" : "ELLOS"
-                GuardarPuntos(ganador, puntosARepartir)
+                // Bot acepta el Real -> mostrar mensaje y comparar puntos
+                MostrarMensajeBot(true, "Quiero")
+                setTimeout(() => {
+                    let puntosARepartir = RealAfterEnvido ? 5 : 3
+                    let ganador = null
+                    if ((EnvidoBot || 0) > (EnvidoJugador || 0)) ganador = "ELLOS"
+                    else if ((EnvidoBot || 0) < (EnvidoJugador || 0)) ganador = "NOS"
+                    else ganador = (turnoF === "Jugador") ? "NOS" : "ELLOS"
+                    GuardarPuntos(ganador, puntosARepartir)
+                    // limpiar estado
+                    PuntosEnvidos = 0
+                    Cant_Envido = 0
+                    RealAfterEnvido = false
+                    ultimoCantadorEnvido = null
+                    BotonesVoluntadBlock = false
+                    MostrarMensajeBot(false, "")
+                    // Restaurar UI inferior como si se hubiese presionado REGRESAR
+                    restoreEnvidoUI()
+                    // si es turno del bot, que continúe
+                    if (turno === "Bot") CartaBot()
+                }, 800)
             } else {
-                // Bot rechaza el Real -> el cantante (jugador) recibe 2 puntos (Real after Envido)
-                GuardarPuntos("NOS", 2)
+                // Bot rechaza el Real -> mostrar mensaje y asignar puntos al jugador
+                MostrarMensajeBot(true, "No Quiero")
+                setTimeout(() => {
+                    GuardarPuntos("NOS", 2)
+                    // limpiar estado
+                    PuntosEnvidos = 0
+                    Cant_Envido = 0
+                    RealAfterEnvido = false
+                    ultimoCantadorEnvido = null
+                    BotonesVoluntadBlock = false
+                    MostrarMensajeBot(false, "")
+                    // Restaurar UI inferior como si se hubiese presionado REGRESAR
+                    restoreEnvidoUI()
+                    // si es turno del bot, que continúe
+                    if (turno === "Bot") CartaBot()
+                }, 800)
             }
-            // limpiar estado
-            PuntosEnvidos = 0
-            Cant_Envido = 0
-            RealAfterEnvido = false
-            ultimoCantadorEnvido = null
-            BotonesVoluntadBlock = false
-            MostrarMensajeBot(false, "")
-            // Restaurar UI inferior como si se hubiese presionado REGRESAR
-            restoreEnvidoUI()
-            // si es turno del bot, que continúe
-            if (turno === "Bot") CartaBot()
         }, 800)
         return
     }
