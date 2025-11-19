@@ -382,7 +382,7 @@ function GuardarPuntos(id, sumar) { //
 }
 //Función que se encarga de sumar puntos, pero no debe llamarsela directamente
 function sumarPuntos(idcarta, puntos) {
-    let imagenTransparente = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAuMBgfsCyBYAAAAASUVORK5CYII="
+    let imagenTransparente = "../Pantalla Juego/IMAGENES/ImagenTransparente.png"
     let imgs = [
         document.getElementById(idcarta + "1"),
         document.getElementById(idcarta + "2"),

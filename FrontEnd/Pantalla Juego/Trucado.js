@@ -16,6 +16,8 @@ let EnvidoEnvido = 0
 let Regresar = false
 let PuntosEnvidos 
 
+let TarotCompradas = 0
+
 
 //Todos los modificadores, puede cambiar
 let Modificadores = [
